@@ -1,20 +1,41 @@
+body{
+    background-image: url("http://i.imgur.com/rlyrnEG.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    background-size: 100%;
+
+    font-family:"Ubuntu";
+}
+
 .body{
     position: relative;
     width: 80%;
     float: right;
     margin-right: 2%;
+
 }
 
 .barra_lateral{
-    position: relative;
+    background-color: rgba(104, 23, 63, 0.3);
+    position: fixed;
     width: 10%;
     height: 100%;
-    float: left;
-    /*padding: 2%;*/
+    top: 0;
+    left: 0;
+
 }
 
 .lateral_imag{
     width: 80%;
-    height: 80%;
-    float: center;
+    margin-left: 7%;
+    margin-top: 2%;
+}
+
+.Titulo{
+    text-align: right;
+    color: white;
+    text-shadow: 3px 2px grey;
+    font-size: 120%;
+
 }
