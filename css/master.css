@@ -61,3 +61,14 @@ input{
 	border: 0;
 	box-shadow: 0 10px 10px -10px  #444233 inset;
 }
+
+.barra_lateral img{
+  margin-top: 50px;
+  position: relative;
+  width: 80px;
+  height: auto;
+  background-color: #f07057;
+  padding: 20px;
+  float: left;
+  cursor: pointer;
+}
