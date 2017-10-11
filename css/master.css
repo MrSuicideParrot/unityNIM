@@ -8,6 +8,8 @@ body{
     padding: auto;
 }
 
+
+/* HEADER */
 header{
     margin: 0;
     text-align: center;
@@ -62,14 +64,13 @@ input{
 	box-shadow: 0 10px 10px -10px  #444233 inset;
 }
 
+/* BARRA LATERAL */
 .barra_lateral{
   list-style-type: none;
   margin: 0;
   padding: 0;
   width: 80px;
 }
-
-
 
 .barra_lateral img{
   margin-top: 50px;
