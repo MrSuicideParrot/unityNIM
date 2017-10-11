@@ -51,3 +51,48 @@ input{
     margin-right: 0.5%;
     margin-left: 0.5%;
 }
+
+.form{
+  position: absolute;
+  /*altura*/
+  width: 20%;
+  height:100%;
+}
+
+.form_header{
+   /*gradiendt */
+   position: relative;
+   background: #4d4d4d; /* For browsers that do not support gradients */
+   background: -webkit-linear-gradient(#808080, #4d4d4d); /* For Safari 5.1 to 6.0 */
+   background: -o-linear-gradient(#808080, #4d4d4d); /* For Opera 11.1 to 12.0 */
+   background: -moz-linear-gradient(#808080, #4d4d4d); /* For Firefox 3.6 to 15 */
+   background: linear-gradient(#808080, #4d4d4d); /* Standard syntax */
+   text-align: center;
+
+   /*Border */
+   border-top-left-radius: 6px;
+   border-top-right-radius: 6px;
+   margin: 0;
+
+   padding-top: 0.1%;
+   padding-bottom: 0.1%;
+}
+
+.form h3{
+  margin-top: 0%;
+  margin-bottom: 0%;
+}
+
+.Internal_content{
+  position: relative;
+  background: white;
+  height: 100%;
+}
+
+.login_escuro{
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #808080;
+
+}
