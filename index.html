@@ -1,66 +1,80 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
 
-  <link rel="stylesheet" href="css/master.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+        <link rel="stylesheet" href="css/master.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
 
-  <script src="main.js" charset="utf-8"></script>
+        <script src="main.js" charset="utf-8"></script>
 
-  <link rel="icon" href="img/icon.png">
-  <title>NIM</title>
-</head>
+        <link rel="icon" href="img/icon.png">
+        <title>NIM</title>
+    </head>
 
-<body>
-  <header>
-    <h1>NIM</h1>
-    <h4>The mathematical game of strategy, that will change your life.</h4>
-    <h6>Play with your friends or your cute computer!</h6>
-  </header>
+    <body>
+        <header>
+            <h1>NIM</h1>
+            <h4>The mathematical game of strategy, that will change your life.</h4>
+            <h6>Play with your friends or your cute computer!</h6>
+        </header>
 
-  <div class="divisor">
-      <div id="login_">
-          <form id="login_form" >
-            <label class="first_label"for="username">Username:</label><input type="text" name="username" value="admin">
-            <label for="password">Password:</label><input type="password" name="password" value="">
-            <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
-          </form>
-      </div>
-    <hr>
-  </div>
-  <ul class="barra_lateral" id="barra_lateral">
-    <li>
-      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Classificações">
-    </li>
-    <li>
-      <img type="image" src="img/preferences.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
-    </li>
-    <li>
-      <img type="image" src="img/info1600.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
-    </li>
+        <div class="divisor">
+            <div id="login_">
+                <form id="login_form" >
+                    <label class="first_label"for="username">Username:</label><input type="text" name="username" value="admin">
+                    <label for="password">Password:</label><input type="password" name="password" value="">
+                    <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
+                </form>
+            </div>
+            <hr>
+        </div>
+        <ul class="barra_lateral" id="barra_lateral">
+            <li>
+                <img type="image" src="img/Classification-512.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Classificações">
+            </li>
+            <li>
+                <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
+            </li>
+            <li>
+                <img type="image" src="img/info1600.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
+            </li>
 
-  </ul>
+        </ul>
 
-  <div class="area_trabalho">
-    <ul class="registo panel" id=registo>
-      <li>
-        <h3>Register</h3>
-      </li>
-      <li>
-        <label class="first_label"for="username">Username:</label><input type="text" name="regusername" value="newuser">
-      </li>
-      <li>
-        <label for="password">Password:</label><input type="password" name="regpassword" value="">
-      </li>
-      <li>
-        <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
-      </li>
-      <li>
-        <button type="button" onclick="alert('registado')">Submit</button>
-      </li>
+        <div class="area_trabalho">
+
+            <!-- REGISTO -->
+            <ul class="formulario panel" id=registo>
+                <li>
+                    <h3>Register</h3>
+                </li>
+                <li>
+                    <label class="first_label"for="username">Username:</label><input type="text" name="regusername" value="newuser">
+                </li>
+                <li>
+                    <label for="password">Password:</label><input type="password" name="regpassword" value="">
+                </li>
+                <li>
+                    <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
+                </li>
+                <li>
+                    <button type="button" onclick="alert('Tenta a tua sorte com admin admin... ;)')">Submit</button>
+                </li>
+            </ul>
+
+            <!-- CONFIGURACOES -->
+            <ul class="formulario panel" id="configuracao">
+                <li>
+                    <h3>Configurações</h3>
+                </li>
+                <li>
+                    <button type="button" onclick="alert('oi')">Submit</button>
+                </li>
+            </ul>
+
+        </div>
     </div>
-  </div>
 
-</body>
+    </body>
 </html>

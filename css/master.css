@@ -90,7 +90,9 @@ input{
     margin-left: 20%;
 }
 
-.registo{
+
+/* formulario  */
+.formulario{
   list-style-type: none;
   width: 26%;
   margin-top: 3%;
@@ -102,7 +104,7 @@ input{
  /* box-shadow: 0 10px 10px -10px  #444233 inset;*/
 }
 
-.registo h3{
+.formulario h3{
   color: #f07057;
 
   text-align: center;
@@ -112,7 +114,7 @@ input{
 
 }
 
-.registo label{
+.formulario label{
   display: inline-block;
   width: 44%;
   margin-right: 0.5%;
@@ -123,7 +125,7 @@ input{
   margin-bottom: 8%;
 }
 
-.registo button{
+.formulario button{
     width: 95%;
     margin-left: 2%;
     border: none;
@@ -135,4 +137,10 @@ input{
     background-color:#f07057;
     color: white;
     cursor: pointer;
+}
+
+
+/* painel de configurações */
+#configuracao{
+    display: none;
 }
