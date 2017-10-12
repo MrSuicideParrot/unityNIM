@@ -66,6 +66,7 @@ input{
 
 /* BARRA LATERAL */
 .barra_lateral{
+  float: left;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -80,4 +81,30 @@ input{
   height: auto;
   background-color: #f07057;
   padding: 20px;
+}
+
+.registo{
+  list-style-type: none;
+  width: 42%;
+  margin-top: 3%;
+  margin-left: 42%;
+}
+
+.registo h3{
+  text-decoration:underline;
+  text-decoration-color: #f07057;
+}
+
+.registo label{
+  display: inline-block;
+  width: 10.7%;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+  color: #444233;
+  text-transform: uppercase;
+}
+
+.registo img{
+  float: right;
+  margin-left: 0;
 }
