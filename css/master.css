@@ -26,16 +26,17 @@ header h4, h6{
     color: #444233;
 }
 
-.login{
+#login_{
     margin-top: 0.5%;
     margin-bottom: 0.5%;
     font-size: 135%;
-}
-.login label{
-    margin-right: 0.5%;
-    margin-left: 0.5%;
     color: #444233;
     text-transform: uppercase;
+}
+#login_ label{
+    margin-right: 0.5%;
+    margin-left: 0.5%;
+
 }
 
 .first_label{
@@ -71,7 +72,7 @@ input{
   margin: 0;
   padding: 0;
   width: 80px;
- /*display: none;*/
+ display: none;
 }
 
 .barra_lateral img{
@@ -83,28 +84,55 @@ input{
   padding: 20px;
 }
 
+
+.area_trabalho{
+    width: 60%;
+    margin-left: 20%;
+}
+
 .registo{
   list-style-type: none;
-  width: 42%;
+  width: 26%;
   margin-top: 3%;
-  margin-left: 42%;
+  margin-left: 36%;
+  height: 110%;
+  padding: 1%;
+  border: 1px;
+  border-color: #444233;
+ /* box-shadow: 0 10px 10px -10px  #444233 inset;*/
 }
 
 .registo h3{
-  text-decoration:underline;
-  text-decoration-color: #f07057;
+  color: #f07057;
+
+  text-align: center;
+  font-size: 188%;
+   margin-bottom: 8%;
+   padding: 1%;
+
 }
 
 .registo label{
   display: inline-block;
-  width: 10.7%;
+  width: 44%;
   margin-right: 0.5%;
   margin-left: 0.5%;
   color: #444233;
   text-transform: uppercase;
+  font-size: 140%;
+  margin-bottom: 8%;
 }
 
-.registo img{
-  float: right;
-  margin-left: 0;
+.registo button{
+    width: 95%;
+    margin-left: 2%;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration:none;
+    text-transform: full-width;
+    font-size: 25px;
+    background-color:#f07057;
+    color: white;
+    cursor: pointer;
 }

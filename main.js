@@ -1,4 +1,10 @@
 function login() {
-    var elements = document.getElementsByClassName('barra_lateral');
-    elements[0].style.display = "inline";
+    user = "Admin";
+    document.getElementById('registo').style.display = "none";
+    document.getElementById('login_form').style.display = "none";
+    document.getElementById('barra_lateral').style.display = "inline";
+
+
+
+    document.getElementById('login_').innerHTML += ('Welcome, '+user+"!");
 }

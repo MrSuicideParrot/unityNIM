@@ -20,16 +20,21 @@
   </header>
 
   <div class="divisor">
-    <form class="login" action="index.html" method="post">
-      <label class="first_label"for="username">Username:</label><input type="text" name="username" value="admin">
-      <label for="password">Password:</label><input type="password" name="password" value="">
-      <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
-    </form>
+      <div id="login_">
+          <form id="login_form" >
+            <label class="first_label"for="username">Username:</label><input type="text" name="username" value="admin">
+            <label for="password">Password:</label><input type="password" name="password" value="">
+            <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
+          </form>
+      </div>
     <hr>
   </div>
-  <ul class="barra_lateral">
+  <ul class="barra_lateral" id="barra_lateral">
     <li>
       <img type="image" src="img/Classification-512.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Classificações">
+    </li>
+    <li>
+      <img type="image" src="img/preferences.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
     </li>
     <li>
       <img type="image" src="img/info1600.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
@@ -38,7 +43,7 @@
   </ul>
 
   <div class="area_trabalho">
-    <ul class="registo">
+    <ul class="registo panel" id=registo>
       <li>
         <h3>Register</h3>
       </li>
@@ -52,7 +57,7 @@
         <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
       </li>
       <li>
-        <img type="image" src="img/240_F_113168763_JS3opQgPD3TMNx8ullZVtRPlga47HFfQ.jpg" class="login_icon " onclick="alert('registo')" alt="Register">
+        <button type="button" onclick="alert('registado')">Submit</button>
       </li>
     </div>
   </div>
