@@ -1,3 +1,9 @@
+
+/* VAriavies globais */
+var tamanho = 4;
+
+
+
 function login() {
     user = "Admin";
     document.getElementById('registo').style.display = "none";
@@ -21,5 +27,30 @@ function open_config(){
     // Inicialização do form
 
     painel.style.display = "inline";
+
+}
+
+
+function generate_table(){
+  var parent_element = document.getElementById('tabuleiro');
+
+  while (parent_element.hasChildNodes()) {
+    parent_element.removeChild(parent_element.lastChild);
+  }
+
+   for (var i = 0; i < tamanho; i++) {
+      var linha = document.createElement("tr");
+      var length_next =  Math.floor((Math.random() * tamanho) + 1);
+
+      for (var j = 0; j < length_next; j++) {
+        var elemento = document.createElement("td");
+        elemento.setAttribute("class", "peca_jogo");
+        elemento.textContent="Life";
+        linha.appendChild(elemento);
+      }
+
+      parent_element.appendChild(linha);
+  }
+
 
 }

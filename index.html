@@ -45,7 +45,7 @@
         <div class="area_trabalho">
 
             <!-- REGISTO -->
-            <ul class="formulario panel" id=registo>
+            <ul class="registo panel" id=registo>
                 <li>
                     <h3>Register</h3>
                 </li>
@@ -64,14 +64,41 @@
             </ul>
 
             <!-- CONFIGURACOES -->
-            <ul class="formulario panel" id="configuracao">
+            <ul class="configuracao panel" id="configuracao">
                 <li>
                     <h3>Configurações</h3>
                 </li>
                 <li>
+                  <div class="">
+                    <li>
+                      <label> Human vs Machine</label>
+                      <input type="radio" name="game_mod" value="machine" checked>
+                    </li>
+
+                    <li>
+                      <label> Human vs Human</label>
+                      <input type="radio" name="game_mod" value="men" checked>
+                    </li>
+
+
+
+                  </div>
+                  <div class="">
+
+                  </div>
+
+                </li>
+
+                <li>
                     <button type="button" onclick="alert('oi')">Submit</button>
                 </li>
             </ul>
+
+            <div id="tabuleiro_div">
+              <table id="tabuleiro">
+
+              </table>
+            </div>
 
         </div>
     </div>

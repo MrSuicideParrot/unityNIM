@@ -91,8 +91,8 @@ input{
 }
 
 
-/* formulario  */
-.formulario{
+/* registo  */
+.registo{
   list-style-type: none;
   width: 30%;
   margin-top: 3%;
@@ -102,9 +102,10 @@ input{
   border: 1px;
   border-color: #444233;
  /* box-shadow: 0 10px 10px -10px  #444233 inset;*/
+ display: none;
 }
 
-.formulario h3{
+.registo h3{
   color: #f07057;
 
   text-align: center;
@@ -114,7 +115,7 @@ input{
 
 }
 
-.formulario label{
+.registo label{
   display: inline-block;
   width: 44%;
   margin-right: 0.5%;
@@ -125,7 +126,7 @@ input{
   margin-bottom: 8%;
 }
 
-.formulario button{
+.registo button{
     width: 95%;
     margin-left: 2%;
     border: none;
@@ -143,4 +144,59 @@ input{
 /* painel de configurações */
 #configuracao{
     display: none;
+}
+
+.configuracao{
+  list-style-type: none;
+  width: 30%;
+  margin-top: 3%;
+  margin-left: 36%;
+  height: 110%;
+  padding: 1%;
+  border: 1px;
+  border-color: #444233;
+ /* box-shadow: 0 10px 10px -10px  #444233 inset;*/
+}
+
+.configuracao h3{
+  color: #f07057;
+
+  text-align: center;
+  font-size: 188%;
+   margin-bottom: 8%;
+   padding: 1%;
+
+}
+
+.configuracao label{
+  display: inline-block;
+  width: 44%;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+  color: #444233;
+  text-transform: uppercase;
+  font-size: 140%;
+  margin-bottom: 8%;
+}
+
+.configuracao button{
+    width: 95%;
+    margin-left: 2%;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration:none;
+    text-transform: full-width;
+    font-size: 25px;
+    background-color:#f07057;
+    color: white;
+    cursor: pointer;
+}
+
+#tabuleiro_dib{
+  float: right;
+}
+
+#tabuleiro{
+    /*display: none;*/
 }
