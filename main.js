@@ -59,5 +59,10 @@ function generate_table(){
 function display_game() {
   close_panels();
   document.getElementById('tabuleiro_div').style.display = 'table';
+}
 
+function init_game(){
+  document.getElementById('game_start').style.display = 'none';
+  document.getElementById('game_continue').style.display = 'inline';
+  generate_table();
 }
