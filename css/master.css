@@ -29,6 +29,7 @@ header h4, h6{
 #login_{
   margin-top: 0.5%;
   margin-bottom: 0.5%;
+  margin-left: 7%;
   font-size: 135%;
   color: #444233;
   text-transform: uppercase;
@@ -37,6 +38,19 @@ header h4, h6{
   margin-right: 0.5%;
   margin-left: 0.5%;
 
+}
+
+#right_side{
+  display: none;
+  float: right;
+  width: 10%;
+  margin-right: 7%;
+}
+
+#right_side img{
+  margin-left: 1%;
+  height: 3%;
+  width: auto;
 }
 
 .first_label{

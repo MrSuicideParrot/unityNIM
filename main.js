@@ -10,6 +10,7 @@ function login() {
     document.getElementById('login_form').style.display = "none";
     document.getElementById('barra_lateral').style.display = "inline";
     document.getElementById('login_').innerHTML += ('Welcome, '+user+"!");
+    document.getElementById('right_side').style.display = "inherit";
     document.getElementById('tabuleiro_div').style.display = 'table';
 }
 
