@@ -9,9 +9,10 @@ function login() {
     document.getElementById('registo').style.display = "none";
     document.getElementById('login_form').style.display = "none";
     document.getElementById('barra_lateral').style.display = "inline";
+    document.getElementById('initial_play').style.display = "inline";
     document.getElementById('login_').innerHTML += ('Welcome, '+user+"!");
     document.getElementById('right_side').style.display = "inherit";
-    document.getElementById('tabuleiro_div').style.display = 'table';
+  /*  document.getElementById('tabuleiro_div').style.display = 'table';  */
 }
 
 function close_panels(){
@@ -53,6 +54,10 @@ function generate_table(){
 
       parent_element.appendChild(linha);
   }
+}
 
+function display_game() {
+  close_panels();
+  document.getElementById('tabuleiro_div').style.display = 'table';
 
 }

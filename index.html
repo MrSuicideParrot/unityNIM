@@ -35,6 +35,9 @@
         </div>
         <ul class="barra_lateral" id="barra_lateral">
             <li>
+                <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
+            </li>
+            <li>
                 <img type="image" src="img/Classification-512.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Classificações">
             </li>
             <li>
@@ -68,63 +71,62 @@
             </ul>
 
             <!-- CONFIGURACOES -->
-            <ul class="configuracao_panel" id="configuracao">
-                <li>
-                    <h3>Configurações</h3>
-                </li>
-                <li>
-                  <div class="">
-                    <li>
-                      <label> Human vs Machine</label>
-                      <input type="radio" name="game_mod" value="machine" checked>
-                    </li>
-
-                    <li>
-                      <label> Human vs Human</label>
-                      <input type="radio" name="game_mod" value="men" checked>
-                    </li>
+            <ul class="configuracao panel" id="configuracao">
+              <li>
+                <h3>Configurações</h3>
+              </li>
 
 
+                  <li>
+                    <label> Human vs Machine</label>
+                    <input type="radio" name="game_mod" value="machine" checked>
+                  </li>
 
-                  </div>
-                  <div class="">
+                  <li>
+                    <label> Human vs Human</label>
+                    <input type="radio" name="game_mod" value="men" checked>
+                  </li>
 
-                  </div>
-
-                </li>
-
-                <li id="botao_submit">
-                    <button type="button" onclick="alert('oi')">Submit</button>
-                </li>
+              <li id="botao_submit">
+                <button type="button" onclick="alert('oi')">Submit</button>
+              </li>
             </ul>
 
-            <div id="tabuleiro_div">
-              <table border="0" cellspacing="0" id="tabuleiro">
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </table>
+            <!-- INICIAL -->
+            <div id="initial_play" class="panel">
+              <h1>PLAY!!!!</h1>
+            </div>
+
+
+            <div id="tabuleiro_div" class="panel">
+                <h1>Inicia</h1>
+                <table border="0" cellspacing="0" id="tabuleiro">
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+
             </div>
 
         </div>
