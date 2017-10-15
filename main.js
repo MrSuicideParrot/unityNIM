@@ -2,7 +2,8 @@
 /* VAriavies globais */
 var tamanho = 4;
 var pecas_array = Array();
-
+var game_type = 0;
+var dificult_level = 0; // 0 - random , 1 - as vezes faz random outras vezes faz a pensar, 2 - pensa sempre
 
 function login() {
     user = "Admin";
@@ -83,4 +84,51 @@ function user_play(clicked_id){
 		pecas_array[i][k].style.display= "none";
 	 }
 	pecas_array[i].splice(j,pecas_array[i].length-j);
+
+	if(is_tabuleiro_empty())
+		alert("Parabéns, ganhou!!!");
+		return;
+
+	// computer time
+	if(game_type == 0){
+		super_IA();		
+	}
+	
+}
+
+function is_tabuleiro_empty(){
+	var count = 0;
+	
+	for (var seg in pecas_array)
+		count += seg.length;
+
+	if(count==0)
+		return true;
+	
+	return false;
+}
+
+function super_IA(){
+	var sorte = Math.floor((Math.random() * 100));
+	if (sorte < dificult_level){
+
+	}
+	else{
+		while(true){
+			var i = Math.floor((Math.random() * tamanho));
+			if (pecas_array[i].length != 0){
+				break;
+			}
+		}
+
+		while(true){
+			var j = Math.floor((Math.random() * tamanho));
+			if (pecas_array[i][j]!= null){
+				break;
+			}
+		}
+		
+		user_play(i+" "+j);
+
+	}
 }
