@@ -132,3 +132,20 @@ function super_IA(){
 
 	}
 }
+ function counter(){
+	var contas = Array();
+	var resultado = Array();
+
+	 for(var i = 0; i <pecas_array.length; ++i){
+		number = pecas_array[i].length;
+		contas[i] = Array();
+		// 0 -> 4 1 -> 2 2-> 1
+		contas[i][0] = (number/4)|0;
+		number = number % 4;
+		contas[i][1] = (number/2)|0;
+		number = number % 2;
+		contas[i][1] = number;
+	 }
+
+	
+}
