@@ -176,9 +176,29 @@ input{
 
   text-align: center;
   font-size: 188%;
-  margin-bottom: 8%;
+  margin-bottom: 5%;
   padding: 1%;
 
+}
+
+.lel{
+  float: right;
+  width: 66%;
+}
+
+.size{
+  margin-top: 2%;
+  width: 33%;
+  float: left
+}
+
+.opponent{
+  width: 45%;
+  float: left;
+}
+
+.difficulty{
+  width: 55%;
 }
 
 .configuracao label{
@@ -189,12 +209,13 @@ input{
   color: #444233;
   text-transform: uppercase;
   font-size: 140%;
-  margin-bottom: 8%;
+  margin-bottom: 7%;
 }
 
 .configuracao button{
   width: 95%;
   margin-left: 2%;
+  margin-top: 2%;
   border: none;
   padding: 15px 32px;
   text-align: center;
@@ -257,4 +278,3 @@ input{
 	width: 195px;*/
 	cursor: pointer;
 }
-

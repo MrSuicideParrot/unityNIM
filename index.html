@@ -1,144 +1,168 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
+<head>
+  <meta charset="utf-8">
 
-        <link rel="stylesheet" href="css/master.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+  <link rel="stylesheet" href="css/master.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
 
-        <script src="main.js" charset="utf-8"></script>
+  <script src="main.js" charset="utf-8"></script>
 
-        <link rel="icon" href="img/icon.png">
-        <title>NIM</title>
-    </head>
+  <link rel="icon" href="img/icon.png">
+  <title>NIM</title>
+</head>
 
-    <body>
-        <header>
-            <h1>NIM</h1>
-            <h4>The mathematical game of strategy, that will change your life.</h4>
-            <h6>Play with your friends or your cute computer!</h6>
-        </header>
+<body>
+  <header>
+    <h1>NIM</h1>
+    <h4>The mathematical game of strategy, that will change your life.</h4>
+    <h6>Play with your friends or your cute computer!</h6>
+  </header>
 
-        <div class="divisor">
-            <div id="login_">
-                <form id="login_form" >
-                    <label class="first_label"for="username">Username:</label><input type="text" name="username" value="admin">
-                    <label for="password">Password:</label><input type="password" name="password" value="">
-                    <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
-                </form>
-                <div id="right_side">
-                  <label for="rank">Raking: #1</label>
-                  <img src="img/logout-512.png" alt="Logout" class="login_icon" onclick="alert('magic')">
-                </div>
-            </div>
-            <hr>
+  <div class="divisor">
+    <div id="login_">
+      <form id="login_form" >
+        <label class="first_label"for="username">Username:</label><input type="text" name="username" value="admin">
+        <label for="password">Password:</label><input type="password" name="password" value="">
+        <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
+      </form>
+      <div id="right_side">
+        <label for="rank">Raking: #1</label>
+        <img src="img/logout-512.png" alt="Logout" class="login_icon" onclick="alert('magic')">
+      </div>
+    </div>
+    <hr>
+  </div>
+  <ul class="barra_lateral" id="barra_lateral">
+    <li>
+      <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
+    </li>
+    <li>
+      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Classificações">
+    </li>
+    <li>
+      <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
+    </li>
+    <li>
+      <img type="image" src="img/info1600.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
+    </li>
+
+  </ul>
+
+  <div class="area_trabalho">
+
+    <!-- REGISTO -->
+    <ul class="registo panel" id=registo>
+      <li>
+        <h3>Register</h3>
+      </li>
+      <li>
+        <label class="first_label"for="username">Username:</label><input type="text" name="regusername" value="newuser">
+      </li>
+      <li>
+        <label for="password">Password:</label><input type="password" name="regpassword" value="">
+      </li>
+      <li>
+        <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
+      </li>
+      <li>
+        <button type="button" onclick="alert('Tenta a tua sorte com admin admin... ;)')">Submit</button>
+      </li>
+    </ul>
+
+    <!-- CONFIGURACOES -->
+    <ul class="configuracao panel" id="configuracao">
+      <li>
+        <h3>Configurações</h3>
+      </li>
+
+      <div class="size">
+        <label>Size of the board</label>
+        <select>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+      <div class="lel">
+        <div class="opponent">
+          <li>
+            <label> Human vs Machine</label>
+            <input type="radio" name="game_mod" value="machine" checked>
+          </li>
+
+          <li>
+            <label> Human vs Human</label>
+            <input type="radio" name="game_mod" value="men" checked>
+          </li>
         </div>
-        <ul class="barra_lateral" id="barra_lateral">
-            <li>
-                <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
-            </li>
-            <li>
-                <img type="image" src="img/Classification-512.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Classificações">
-            </li>
-            <li>
-                <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
-            </li>
-            <li>
-                <img type="image" src="img/info1600.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
-            </li>
 
-        </ul>
-
-        <div class="area_trabalho">
-
-            <!-- REGISTO -->
-            <ul class="registo panel" id=registo>
-                <li>
-                    <h3>Register</h3>
-                </li>
-                <li>
-                    <label class="first_label"for="username">Username:</label><input type="text" name="regusername" value="newuser">
-                </li>
-                <li>
-                    <label for="password">Password:</label><input type="password" name="regpassword" value="">
-                </li>
-                <li>
-                    <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
-                </li>
-                <li>
-                    <button type="button" onclick="alert('Tenta a tua sorte com admin admin... ;)')">Submit</button>
-                </li>
-            </ul>
-
-            <!-- CONFIGURACOES -->
-            <ul class="configuracao panel" id="configuracao">
-              <li>
-                <h3>Configurações</h3>
-              </li>
-
-
-                  <li>
-                    <label> Human vs Machine</label>
-                    <input type="radio" name="game_mod" value="machine" checked>
-                  </li>
-
-                  <li>
-                    <label> Human vs Human</label>
-                    <input type="radio" name="game_mod" value="men" checked>
-                  </li>
-
-              <li id="botao_submit">
-                <button type="button" onclick="alert('oi')">Submit</button>
-              </li>
-            </ul>
-
-            <!-- INICIAL -->
-            <div id="initial_play" class="panel">
-              <h1>PLAY!!!!</h1>
-            </div>
-
-
-            <div id="tabuleiro_div" class="panel">
-                <div id="tabuleiro_menu">
-                  <div id="game_start" onclick="init_game()">
-                    Let the games begin
-                  </div>
-                  <div id="game_continue">
-                    next and play
-                  </div>
-                </div>
-
-                <table border="0" cellspacing="0" id="tabuleiro">
-              <!--    <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr> -->
-                </table>
-
-            </div>
-
+        <div class="dificulty">
+          <label>Difficulty setting</label>
+          <select>
+            <option value="1">Easy</option>
+            <option value="2" selected="selected">Medium</option>
+            <option value="3">Hard</option>
+          </select>
         </div>
+      </div>
+      <li id="botao_submit">
+        <button type="button" onclick="alert('oi')">Submit</button>
+      </li>
+    </ul>
+
+    <!-- INICIAL -->
+    <div id="initial_play" class="panel">
+      <h1>PLAY!!!!</h1>
     </div>
 
-    </body>
+
+    <div id="tabuleiro_div" class="panel">
+      <div id="tabuleiro_menu">
+        <div id="game_start" onclick="init_game()">
+          Let the games begin
+        </div>
+        <div id="game_continue">
+          next and play
+        </div>
+      </div>
+
+      <table border="0" cellspacing="0" id="tabuleiro">
+        <!--    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr> -->
+</table>
+
+</div>
+
+</div>
+</div>
+
+</body>
 </html>
