@@ -248,3 +248,13 @@ input{
 #game_continue{
   display: none;
 }
+
+
+.peca_jogo{
+	/*border-radius: 50%;
+	background-color:#f07057;
+	height:195px;
+	width: 195px;*/
+	cursor: pointer;
+}
+

@@ -1,7 +1,7 @@
 
 /* VAriavies globais */
 var tamanho = 4;
-
+var pecas_array = Array();
 
 
 function login() {
@@ -45,13 +45,19 @@ function generate_table(){
       var linha = document.createElement("tr");
       var length_next =  Math.floor((Math.random() * tamanho) + 1);
 
+	auxiliar = Array();
       for (var j = 0; j < length_next; j++) {
-        var elemento = document.createElement("td");
-        elemento.setAttribute("class", "peca_jogo");
+        var elemento_td = document.createElement("td");
+        var elemento = document.createElement("div");
+	elemento.setAttribute("class", "peca_jogo");
+	elemento.setAttribute("id",i+" "+j);
+	elemento.setAttribute("onclick","user_play(this.id)");
         elemento.textContent="Life";
-        linha.appendChild(elemento);
+	auxiliar.push(elemento);
+	elemento_td.appendChild(elemento);
+        linha.appendChild(elemento_td);
       }
-
+	pecas_array.push(auxiliar);
       parent_element.appendChild(linha);
   }
 }
@@ -65,4 +71,16 @@ function init_game(){
   document.getElementById('game_start').style.display = 'none';
   document.getElementById('game_continue').style.display = 'inline';
   generate_table();
+}
+
+function user_play(clicked_id){
+	clicked_id = clicked_id.split(" ");
+	var i = parseInt(clicked_id[0]);
+	var j = parseInt(clicked_id[1]);
+	
+	for (var k=j ;k<pecas_array[i].length;++k){
+	//	pecas_array[i][k].parentNode.removeChild(pecas_array[i][k]);
+		pecas_array[i][k].style.display= "none";
+	 }
+	pecas_array[i].splice(j,pecas_array[i].length-j);
 }
