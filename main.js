@@ -78,7 +78,7 @@ function user_play(clicked_id){
 	clicked_id = clicked_id.split(" ");
 	var i = parseInt(clicked_id[0]);
 	var j = parseInt(clicked_id[1]);
-	
+
 	for (var k=j ;k<pecas_array[i].length;++k){
 	//	pecas_array[i][k].parentNode.removeChild(pecas_array[i][k]);
 		pecas_array[i][k].style.display= "none";
@@ -91,27 +91,27 @@ function user_play(clicked_id){
 
 	// computer time
 	if(game_type == 0){
-		super_IA();		
+		super_IA();
 	}
-	
+
 }
 
 function is_tabuleiro_empty(){
 	var count = 0;
-	
+
 	for (var seg in pecas_array)
 		count += seg.length;
 
 	if(count==0)
 		return true;
-	
+
 	return false;
 }
 
 function super_IA(){
 	var sorte = Math.floor((Math.random() * 100));
 	if (sorte < dificult_level){
-
+        user_play(count);
 	}
 	else{
 		while(true){
@@ -127,11 +127,12 @@ function super_IA(){
 				break;
 			}
 		}
-		
+
 		user_play(i+" "+j);
 
 	}
 }
+
  function counter(){
 	var contas = Array();
 	var resultado = Array();
@@ -147,5 +148,35 @@ function super_IA(){
 		contas[i][1] = number;
 	 }
 
-	
+     for (var i = 0; i < 3; i++) {
+         for (var j = 0; j < contas; j++) {
+             resultado ^= contas[j][i];
+         }
+     }
+
+     var sum = sumArray(resultado);
+
+     //var remover = Array();
+     if(sum == 0){
+         for (var i in contas) {
+             sum.push(sumArray(i));
+         }
+         indice = indexOfMax(sum, true);
+     }
+     else{
+         sum = initialize_Array(contas.length, 0);
+         for (var i = 0; i < contas.length; i++) {
+             for (var j = 0; j < 3; j++) {
+                 if (resultado[j]!=0) {
+                     sum[i] += resultado[j];
+                 }
+            }
+        }
+        indice = indexOfMax(sum);
+
+     }
+     i = indice;
+     j = pecas_array[i].length-sum[i];
+
+     return i+" "+j;
 }
