@@ -1,7 +1,11 @@
 // Array utils
 
 function sumArray(arr){
-    return arr.reduce(function(pv, cv) { return pv + cv; }, 0);;
+    var aux = 0;
+    for(i in arr){
+        aux += i;
+    }
+    return aux;
 }
 
 function indexOfMax(arr, par=false) {
@@ -11,7 +15,7 @@ function indexOfMax(arr, par=false) {
 
     var not_zero;
 
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
         if(arr[i]%2===0 && arr[i]!==0 || !par){
             var max = arr[i];
             var maxIndex = i;
@@ -37,7 +41,7 @@ function indexOfMax(arr, par=false) {
 }
 
 function initialize_Array(number, target){
-    var arr;
+    var arr = Array();
     for (var i = 0; i < number; i++)
             arr[i] = target;
     return arr;

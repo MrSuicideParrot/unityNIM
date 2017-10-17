@@ -4,7 +4,7 @@ var tamanho = 4;
 var current_tabuleiro;
 var game_type = 0;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
-var dificult_level = 1; // 0 - random , 1 - as vezes faz random outras vezes faz a pensar, 2 - pensa sempre
+var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes faz a pensar, 100 - pensa sempre
 
 const Tabuleiro = {
     init: function(){
@@ -44,11 +44,7 @@ const Tabuleiro = {
         //	pecas_array[i][k].parentNode.removeChild(pecas_array[i][k]);
             this.pecas_array[i][k].style.display= "none";
          }
-        this.pecas_array[i].splice(j,pecas_array[i].length-j);
-
-        if(is_tabuleiro_empty())
-            alert("Parabéns, ganhou!!!");
-            return;
+        this.pecas_array[i].splice(j,this.pecas_array[i].length-j);
 
         /* computer time
         if(game_type == 0 && go){
@@ -60,7 +56,7 @@ const Tabuleiro = {
     	var count = 0;
 
     	for (var seg in this.pecas_array)
-    		count += seg.length;
+    		count += this.pecas_array[seg].length;
 
     	if(count==0)
     		return true;
@@ -68,10 +64,11 @@ const Tabuleiro = {
     	return false;
     },
 
+    pecas_array:Array(),
+
     machine_play:function(){
         var sorte = Math.floor((Math.random() * 100));
         if (sorte < dificult_level){
-            play = function(){
                 var contas = Array();
                 var resultado = Array();
 
@@ -83,12 +80,12 @@ const Tabuleiro = {
                     number = number % 4;
                     contas[i][1] = (number/2)|0;
                     number = number % 2;
-                    contas[i][1] = number;
+                    contas[i][2] = number;
                  }
 
                  for (var i = 0; i < 3; i++) {
-                     for (var j = 0; j < contas; j++) {
-                         resultado ^= contas[j][i];
+                     for (var j = 0; j < contas[i].length; j++) {
+                         resultado[i] ^= contas[j][i];
                      }
                  }
 
@@ -114,10 +111,9 @@ const Tabuleiro = {
 
                  }
                  i = indice;
-                 j = this.pecas_array[i].length-sum[i];
+                 j = this.pecas_array[i].length-sum[i]-1;
 
-                 return i+" "+j;
-            }
+                 play = i+" "+j;
             this.user_play(play);
         }
         else{
@@ -209,10 +205,19 @@ function init_game(){
   document.getElementById('game_start').style.display = 'none';
   document.getElementById('game_continue').style.display = 'inline';
   current_tabuleiro = Object.create(Tabuleiro);
+  current_tabuleiro.init();
 }
 
 
 function move(clicked_id){
     current_tabuleiro.user_play(clicked_id);
+    if(current_tabuleiro.is_tabuleiro_empty()){
+        alert("Parabéns, ganhou!!!");
+        return;
+    }
     current_tabuleiro.machine_play(clicked_id);
+    if(current_tabuleiro.is_tabuleiro_empty()){
+        alert("THE MACHINE WINE!!!");
+        return;
+    }
 }

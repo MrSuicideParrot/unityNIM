@@ -103,7 +103,7 @@
           </li>
         </div>
 
-        <div class="dificulty">
+        <div id="div_dificulty">
           <label>Difficulty setting</label>
           <select id="game_difficulty">
             <option value="0">Easy</option>
@@ -120,6 +120,10 @@
               <input type="radio" id="second_start" name="first_player" value="second" onclick="">
             </li>
           </div>
+        </div>
+        <div class="who_start">
+            <label> Homem</label>
+            <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()" checked>
         </div>
       </div>
       <li id="botao_submit">
