@@ -3,7 +3,7 @@
 var tamanho = 4;
 var current_tabuleiro;
 var game_type = 0;
-var dificult_level = 0; // 0 - random , 1 - as vezes faz random outras vezes faz a pensar, 2 - pensa sempre
+var dificult_level = 1; // 0 - random , 1 - as vezes faz random outras vezes faz a pensar, 2 - pensa sempre
 
 const Tabuleiro = {
     init: function(){
@@ -169,6 +169,34 @@ function open_config(){
 
 }
 
+function flip_adv(){
+  if(document.getElementById('game_machine').checked){
+    document.getElementsByClassName('size').style.width = '33%';
+    document.getElementsByClassName('adv').style.width = '66%';
+    document.getElementsByClassName('opponent').style.width = '55%';
+    document.getElementsByClassName('dificulty').style.display = 'inherit';
+    document.getElementsByClassName('dificulty').style.width = '45%';
+  }
+  else if(document.getElementById('game_human').checked){
+    document.getElementsByClassName('size').style.width = '50%';
+    document.getElementsByClassName('adv').style.width = '50%';
+    document.getElementsByClassName('opponent').style.width = '100%';
+    document.getElementsByClassName('difficulty').style.display = 'none';
+  }
+}
+
+function get_game_type(){
+  if(document.getElementById('game_machine').checked){
+    return 0;
+  }
+  return 1;
+}
+
+function choose_settings(){
+  tamanho = document.getElementById('board_size').options[document.getElementById('board_size').selectedIndex].value;
+  game_type = get_game_type();
+  dificult_level = document.getElementById('game_difficulty').options[document.getElementById('game_difficulty').selectedIndex].value;
+}
 
 function display_game() {
   close_panels();

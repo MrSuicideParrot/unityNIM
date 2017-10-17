@@ -181,16 +181,17 @@ input{
 
 }
 
-.lel{
+.size{
+  margin-top: 4.5%;
+  width: 33%;
+  float: left;
+}
+
+.adv{
   float: right;
   width: 66%;
 }
 
-.size{
-  margin-top: 2%;
-  width: 33%;
-  float: left
-}
 
 .opponent{
   width: 45%;
@@ -199,6 +200,7 @@ input{
 
 .difficulty{
   width: 55%;
+  float: right;
 }
 
 .configuracao label{

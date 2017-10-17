@@ -79,7 +79,7 @@
 
       <div class="size">
         <label>Size of the board</label>
-        <select>
+        <select id="board_size">
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
@@ -90,30 +90,30 @@
           <option value="10">10</option>
         </select>
       </div>
-      <div class="lel">
+      <div class="adv">
         <div class="opponent">
           <li>
             <label> Human vs Machine</label>
-            <input type="radio" name="game_mod" value="machine" checked>
+            <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()" checked>
           </li>
 
           <li>
             <label> Human vs Human</label>
-            <input type="radio" name="game_mod" value="men" checked>
+            <input type="radio" id="game_human" name="game_mode" value="human" onclick="flip_adv()">
           </li>
         </div>
 
         <div class="dificulty">
           <label>Difficulty setting</label>
-          <select>
-            <option value="1">Easy</option>
-            <option value="2" selected="selected">Medium</option>
-            <option value="3">Hard</option>
+          <select id="game_difficulty">
+            <option value="0">Easy</option>
+            <option value="1" selected="selected">Medium</option>
+            <option value="2">Hard</option>
           </select>
         </div>
       </div>
       <li id="botao_submit">
-        <button type="button" onclick="alert('oi')">Submit</button>
+        <button type="button" onclick="choose_settings()">Submit</button>
       </li>
     </ul>
 
