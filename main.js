@@ -3,6 +3,7 @@
 var tamanho = 4;
 var current_tabuleiro;
 var game_type = 0;
+var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
 var dificult_level = 1; // 0 - random , 1 - as vezes faz random outras vezes faz a pensar, 2 - pensa sempre
 
 const Tabuleiro = {
@@ -185,8 +186,8 @@ function flip_adv(){
   }
 }
 
-function get_game_type(){
-  if(document.getElementById('game_machine').checked){
+function get_game_type(id_name){
+  if(document.getElementById(id_name).checked){
     return 0;
   }
   return 1;
@@ -194,8 +195,9 @@ function get_game_type(){
 
 function choose_settings(){
   tamanho = document.getElementById('board_size').options[document.getElementById('board_size').selectedIndex].value;
-  game_type = get_game_type();
+  game_type = get_game_type('game_machine');
   dificult_level = document.getElementById('game_difficulty').options[document.getElementById('game_difficulty').selectedIndex].value;
+  first_to_play = get_game_type('first_start');
 }
 
 function display_game() {

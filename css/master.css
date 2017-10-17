@@ -182,7 +182,7 @@ input{
 }
 
 .size{
-  margin-top: 4.5%;
+  margin-top: 7%;
   width: 33%;
   float: left;
 }
@@ -192,8 +192,9 @@ input{
   width: 66%;
 }
 
-
 .opponent{
+  margin-top: 6%;
+  margin-left: 10%;
   width: 45%;
   float: left;
 }
@@ -201,6 +202,12 @@ input{
 .difficulty{
   width: 55%;
   float: right;
+}
+
+.who_starts{
+  float: right;
+  margin-top: 10%;
+  width: 40%;
 }
 
 .configuracao label{
