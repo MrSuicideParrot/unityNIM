@@ -156,6 +156,12 @@ function close_panels(){
 }
 
 
+function open_scores(){
+  close_panels();
+
+  document.getElementById('scores').style.display = "inherit";
+}
+
 function open_config(){
     close_panels();
 
@@ -168,17 +174,10 @@ function open_config(){
 
 function flip_adv(){
   if(document.getElementById('game_machine').checked){
-    document.getElementsByClassName('size').style.width = '33%';
-    document.getElementsByClassName('adv').style.width = '66%';
-    document.getElementsByClassName('opponent').style.width = '55%';
-    document.getElementsByClassName('dificulty').style.display = 'inherit';
-    document.getElementsByClassName('dificulty').style.width = '45%';
+    document.getElementById('div_dificult').style.display = 'inherit';
   }
   else if(document.getElementById('game_human').checked){
-    document.getElementsByClassName('size').style.width = '50%';
-    document.getElementsByClassName('adv').style.width = '50%';
-    document.getElementsByClassName('opponent').style.width = '100%';
-    document.getElementsByClassName('difficulty').style.display = 'none';
+    document.getElementById('div_dificult').style.display = 'none';
   }
 }
 

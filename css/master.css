@@ -154,6 +154,39 @@ input{
 }
 
 
+/*painel de classificações*/
+#scores{
+  display: none;
+}
+
+#scores h3{
+  color: #f07057;
+  text-align: center;
+  font-size: 188%;
+  margin-bottom: 5%;
+  padding: 1%;
+}
+
+#scores table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+#scores table{
+  display: inline-block;
+  width: 60%;
+  margin-left: 18.5%;
+  color: #444233;
+  text-transform: uppercase;
+  font-size: 140%;
+  margin-bottom: 2%;
+}
+
+#score tr:nth-child(even){
+  background-color: #f07057;
+}
+
+
 /* painel de configurações */
 #configuracao{
   display: none;

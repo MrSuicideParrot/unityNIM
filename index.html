@@ -39,7 +39,7 @@
       <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
     </li>
     <li>
-      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Classificações">
+      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="open_scores()" alt="Classificações">
     </li>
     <li>
       <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
@@ -70,6 +70,25 @@
         <button type="button" onclick="alert('Tenta a tua sorte com admin admin... ;)')">Submit</button>
       </li>
     </ul>
+
+    <!--CLASSIFICACOES-->
+    <div id="scores">
+      <h3>Classificações</h3>
+      <table>
+        <tr>
+          <th>Player</th>
+          <th>Score</th>
+        </tr>
+        <tr>
+          <td>1. Admin</td>
+          <td>321402183</td>
+        </tr>
+        <tr>
+          <td>2. Primera</td>
+          <td>0</td>
+        </tr>
+      </table>
+    </div>
 
     <!-- CONFIGURACOES -->
     <ul class="configuracao panel" id="configuracao">
