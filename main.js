@@ -1,6 +1,6 @@
 
 /* VAriavies globais */
-var tamanho = 4;
+var tamanho = 6;
 var current_tabuleiro;
 var game_type = 0;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
@@ -9,6 +9,7 @@ var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes 
 const Tabuleiro = {
     init: function(){
         var parent_element = document.getElementById('tabuleiro');
+        this.pecas_array = Array();
 
         while (parent_element.hasChildNodes()) {
           parent_element.removeChild(parent_element.lastChild);
@@ -23,8 +24,8 @@ const Tabuleiro = {
               var elemento_td = document.createElement("td");
               var elemento = document.createElement("div");
               elemento.setAttribute("class", "peca_jogo");
-              elemento.setAttribute("id",i+" "+j);
-              elemento.setAttribute("onclick","move(this.id)");
+              /*elemento.setAttribute("id",i+" "+j);*/
+              elemento.setAttribute("onclick","move('"+i+" "+j+"')");
               /*elemento.textContent="Life";*/
               auxiliar.push(elemento);
               elemento_td.appendChild(elemento);
@@ -175,9 +176,11 @@ function open_config(){
 function flip_adv(){
   if(document.getElementById('game_machine').checked){
     document.getElementById('div_dificult').style.display = 'inherit';
+    game_type = 0;
   }
   else if(document.getElementById('game_human').checked){
     document.getElementById('div_dificult').style.display = 'none';
+    game_type = 1;
   }
 }
 
@@ -223,4 +226,12 @@ function move(clicked_id){
         document.getElementById('game_restart').style.display = 'inline';
         return;
     }
+}
+
+function changeBoardSize() {
+  tamanho = document.getElementById('board_size').selectedIndex+3;
+}
+
+function changeDificult() {
+  tamanho = document.getElementById('game_difficulty').selectedIndex*3;
 }

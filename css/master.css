@@ -281,12 +281,14 @@ input{
 }
 
 #tabuleiro{
+  margin-top: 40px;
   border-left: 1px solid black;
   width: 450px;
   height: 450px;
 }
 
 #tabuleiro td{
+  border: none;
   width: 5px;
   height: 5px;
 }

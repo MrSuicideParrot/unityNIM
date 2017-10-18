@@ -72,7 +72,7 @@
     </ul>
 
     <!--CLASSIFICACOES-->
-    <div id="scores">
+    <div id="scores" class="panel">
       <h3>Classificações</h3>
       <table>
         <tr>
@@ -98,7 +98,7 @@
 
       <div class="size">
         <label>Size of the board</label>
-        <select id="board_size">
+        <select id="board_size" onchange="changeBoardSize()">
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
@@ -123,7 +123,7 @@
         </div>
 
 	<div >
-		<div id="div_dificulty">
+		<div id="div_dificult">
          		<label>Difficulty setting</label>
           		<select id="game_difficulty">
             			<option value="0">Easy</option>
@@ -141,12 +141,12 @@
               <input type="radio" id="second_start" name="first_player" value="second" onclick="">
             </li>
           </div>
-        </div>
+      </div>
 
       </div>
-      <li id="botao_submit">
+  <!--    <li id="botao_submit">
         <button type="button" onclick="choose_settings()">Submit</button>
-      </li>
+      </li> -->
     </ul>
 
     <!-- INICIAL -->
