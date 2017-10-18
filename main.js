@@ -104,7 +104,7 @@ const Tabuleiro = {
                      for (var i = 0; i < contas.length; i++) {
                          for (var j = 0; j < 3; j++) {
                              if (resultado[j]!=0) {
-                                 sum[i] += resultado[j];
+                                 sum[i] += contas[i][j];
                              }
                         }
                     }
