@@ -122,13 +122,15 @@
           </li>
         </div>
 
-        <div id="div_dificulty">
-          <label>Difficulty setting</label>
-          <select id="game_difficulty">
-            <option value="0">Easy</option>
-            <option value="1" selected="selected">Medium</option>
-            <option value="2">Hard</option>
-          </select>
+	<div >
+		<div id="div_dificulty">
+         		<label>Difficulty setting</label>
+          		<select id="game_difficulty">
+            			<option value="0">Easy</option>
+            			<option value="50" selected="selected">Medium</option>
+            			<option value="100">Hard</option>
+         		</select>
+		</div>
           <div class="who_starts">
             <li>
               <label>1st player starts</label>
@@ -140,10 +142,7 @@
             </li>
           </div>
         </div>
-    <!--    <div class="who_start">
-            <label> Homem</label>
-            <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()" checked>
-        </div>-->
+
       </div>
       <li id="botao_submit">
         <button type="button" onclick="choose_settings()">Submit</button>
@@ -159,38 +158,18 @@
     <div id="tabuleiro_div" class="panel">
       <div id="tabuleiro_menu">
         <div id="game_start" onclick="init_game()">
-          Let the games begin
+          Let the games begin!
         </div>
-        <div id="game_continue">
-          next and play
+        <div id="game_continue" onclick="alert('YOU WILL NEVER GIVE UP!')">
+          Give up
+        </div>
+        <div id="game_restart" onclick="init_game()">
+          Play Again!
         </div>
       </div>
 
       <table border="0" cellspacing="0" id="tabuleiro">
-        <!--    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-</tr> -->
+
 </table>
 
 </div>

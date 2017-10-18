@@ -25,7 +25,7 @@ const Tabuleiro = {
               elemento.setAttribute("class", "peca_jogo");
               elemento.setAttribute("id",i+" "+j);
               elemento.setAttribute("onclick","move(this.id)");
-              elemento.textContent="Life";
+              /*elemento.textContent="Life";*/
               auxiliar.push(elemento);
               elemento_td.appendChild(elemento);
               linha.appendChild(elemento_td);
@@ -111,7 +111,7 @@ const Tabuleiro = {
 
                  }
                  i = indice;
-                 j = this.pecas_array[i].length-sum[i]-1;
+                 j = this.pecas_array[i].length-sum[i];
 
                  play = i+" "+j;
             this.user_play(play);
@@ -212,11 +212,15 @@ function move(clicked_id){
     current_tabuleiro.user_play(clicked_id);
     if(current_tabuleiro.is_tabuleiro_empty()){
         alert("Parabéns, ganhou!!!");
+        document.getElementById('game_continue').style.display = 'none';
+        document.getElementById('game_restart').style.display = 'inline';
         return;
     }
     current_tabuleiro.machine_play(clicked_id);
     if(current_tabuleiro.is_tabuleiro_empty()){
         alert("THE MACHINE WINE!!!");
+        document.getElementById('game_continue').style.display = 'none';
+        document.getElementById('game_restart').style.display = 'inline';
         return;
     }
 }

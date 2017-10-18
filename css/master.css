@@ -281,13 +281,14 @@ input{
 }
 
 #tabuleiro{
-  border: 1px solid black;
+  border-left: 1px solid black;
   width: 450px;
   height: 450px;
 }
 
 #tabuleiro td{
-  border: 1px solid black;
+  width: 5px;
+  height: 5px;
 }
 
 #initial_play{
@@ -314,9 +315,13 @@ input{
 
 
 .peca_jogo{
-	/*border-radius: 50%;
+	border-radius: 50%;
 	background-color:#f07057;
-	height:195px;
-	width: 195px;*/
+	height:95px;
+	width: 95px;
 	cursor: pointer;
+}
+
+#game_restart{
+  display: none;
 }
