@@ -3,7 +3,7 @@
 function sumArray(arr){
     var aux = 0;
     for(i in arr){
-        aux += i;
+        aux += arr[i];
     }
     return aux;
 }

@@ -40,17 +40,16 @@ const Tabuleiro = {
         clicked_id = clicked_id.split(" ");
         var i = parseInt(clicked_id[0]);
         var j = parseInt(clicked_id[1]);
+        if(this.pecas_array[i][j].style.visibility == "hidden")
+            return false;
 
         for (var k=j ;k<this.pecas_array[i].length;++k){
-        //	pecas_array[i][k].parentNode.removeChild(pecas_array[i][k]);
-            this.pecas_array[i][k].style.display= "none";
+            this.pecas_array[i][k].style.cursor= "auto";
+            this.pecas_array[i][k].style.visibility= "hidden";
          }
         this.pecas_array[i].splice(j,this.pecas_array[i].length-j);
 
-        /* computer time
-        if(game_type == 0 && go){
-            this.machine_play();
-        }*/
+        return true;
     },
 
     is_tabuleiro_empty:function(){
@@ -84,9 +83,9 @@ const Tabuleiro = {
                     contas[i][2] = number;
                  }
 
-                 for (var i = 0; i < 3; i++) {
-                     for (var j = 0; j < contas[i].length; j++) {
-                         resultado[i] ^= contas[j][i];
+                 for (var i = 0; i < contas.length; i++) {
+                     for (var j = 0; j < 3; j++) {
+                         resultado[j] ^= contas[i][j];
                      }
                  }
 
@@ -205,6 +204,7 @@ function display_game() {
 
 function init_game(){
   document.getElementById('game_start').style.display = 'none';
+  document.getElementById('game_restart').style.display = 'none';
   document.getElementById('game_continue').style.display = 'inline';
   current_tabuleiro = Object.create(Tabuleiro);
   current_tabuleiro.init();
@@ -212,8 +212,8 @@ function init_game(){
 
 
 function move(clicked_id){
-    current_tabuleiro.user_play(clicked_id);
-    if(current_tabuleiro.is_tabuleiro_empty()){
+    var flag = current_tabuleiro.user_play(clicked_id);
+    if(current_tabuleiro.is_tabuleiro_empty() && flag){
         alert("Parabéns, ganhou!!!");
         document.getElementById('game_continue').style.display = 'none';
         document.getElementById('game_restart').style.display = 'inline';
