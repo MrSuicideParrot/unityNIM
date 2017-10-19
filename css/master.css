@@ -184,11 +184,12 @@ input{
 
 #scores th{
   font-weight: bold;
-  color: #444233;
+  background-color: #f07057;
+  color: white;
 }
 
 #scores tr:nth-child(even){
-  background-color: #f07057;
+  background-color: #b5a29e;
   color: white;
 }
 

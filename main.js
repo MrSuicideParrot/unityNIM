@@ -138,6 +138,11 @@ const Tabuleiro = {
 }
 
 function login() {
+    /*if((username!=='admin'||password!=='admin')&& false){
+        alert('Fallhou a password!');
+        return;
+    }
+*/
     user = "Admin";
     document.getElementById('registo').style.display = "none";
     document.getElementById('login_form').style.display = "none";
