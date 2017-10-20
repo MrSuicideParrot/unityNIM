@@ -5,6 +5,12 @@ var current_tabuleiro;
 var game_type = 0;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
 var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes faz a pensar, 100 - pensa sempre
+var beutifal_API = {
+  1:['Admin',321402183],
+  2:['efsres',9128390],
+  3:['fsderf',3412],
+  4:['Primera',0],
+};
 
 const Tabuleiro = {
     init: function(){
@@ -163,7 +169,7 @@ function close_panels(){
 
 function open_scores(){
   close_panels();
-
+  tableScore.init();
   document.getElementById('scores').style.display = "inherit";
 }
 
@@ -239,4 +245,40 @@ function changeBoardSize() {
 
 function changeDificult() {
   tamanho = document.getElementById('game_difficulty').selectedIndex*3;
+}
+
+const tableScore ={
+  init:function(){
+    table = document.getElementById('scores_table');
+
+    while (table.hasChildNodes()) {
+      table.removeChild(table.lastChild);
+    }
+
+    var cabecalho = document.createElement('tr');
+
+    var aux = document.createElement('th');
+    aux.textContent = 'Player';
+    cabecalho.appendChild(aux);
+
+    aux = document.createElement('th');
+    aux.textContent = 'Score';
+    cabecalho.appendChild(aux);
+
+    table.appendChild(cabecalho);
+
+    for(var i in beutifal_API){
+      cabecalho = document.createElement('tr');
+      aux = document.createElement('td');
+      aux.textContent = i+'. '+beutifal_API[i][0];
+      cabecalho.appendChild(aux);
+
+      aux = document.createElement('td');
+      aux.textContent = beutifal_API[i][1];
+      cabecalho.appendChild(aux);
+
+      table.appendChild(cabecalho);
+    }
+  }
+
 }
