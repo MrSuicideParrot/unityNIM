@@ -1,6 +1,6 @@
 
 /* VAriavies globais */
-var tamanho = 6;
+var tamanho = 4;
 var current_tabuleiro;
 var game_type = 0;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
@@ -12,8 +12,7 @@ var beutifal_API = {
   4:['Primera',0],
 };
 
-const Tabuleiro = {
-    init: function(){
+function Tabuleiro(){
         var parent_element = document.getElementById('tabuleiro');
         this.pecas_array = Array();
 
@@ -40,9 +39,16 @@ const Tabuleiro = {
             this.pecas_array.push(auxiliar);
             parent_element.appendChild(linha);
         }
-    },
+    }
 
-    user_play: function(clicked_id){
+    Tabuleiro.prototype.not_empty_line = function () {
+        for(var i in this.pecas_array){
+          if(this.pecas_array[i].length!==0)
+            return i;
+        }
+    }
+
+    Tabuleiro.prototype.user_play = function(clicked_id){
         clicked_id = clicked_id.split(" ");
         var i = parseInt(clicked_id[0]);
         var j = parseInt(clicked_id[1]);
@@ -56,9 +62,9 @@ const Tabuleiro = {
         this.pecas_array[i].splice(j,this.pecas_array[i].length-j);
 
         return true;
-    },
+    }
 
-    is_tabuleiro_empty:function(){
+    Tabuleiro.prototype.is_tabuleiro_empty = function(){
     	var count = 0;
 
     	for (var seg in this.pecas_array)
@@ -68,11 +74,11 @@ const Tabuleiro = {
     		return true;
 
     	return false;
-    },
+    }
 
-    pecas_array:Array(),
+    Tabuleiro.prototype.pecas_array = Array();
 
-    machine_play:function(){
+    Tabuleiro.prototype.machine_play = function(){
         var sorte = Math.floor((Math.random() * 100));
         if (sorte < dificult_level){
                 var contas = Array();
@@ -99,8 +105,9 @@ const Tabuleiro = {
 
                  //var remover = Array();
                  if(sum == 0){
+                     sum = Array()
                      for (var i in contas) {
-                         sum.push(sumArray(i));
+                         sum.push(sumArray(contas[i]));
                      }
                      indice = indexOfMax(sum, true);
                  }
@@ -123,25 +130,37 @@ const Tabuleiro = {
             this.user_play(play);
         }
         else{
+            var count = 0;
             while(true){
                 var i = Math.floor((Math.random() * tamanho));
                 if (this.pecas_array[i].length != 0){
                     break;
                 }
+                if(count>=4){
+                  i = this.not_empty_line();
+                  break;
+                }
+                count++;
             }
 
+            count = 0;
             while(true){
                 var j = Math.floor((Math.random() * tamanho));
                 if (this.pecas_array[i][j]!= null){
                     break;
                 }
+                if(count>=4){
+                  j=0;
+                  break;
+                }
+                count++;
             }
 
             this.user_play(i+" "+j);
         }
     }
 
-}
+
 
 function login() {
     /*if((username!=='admin'||password!=='admin')&& false){
@@ -217,8 +236,10 @@ function init_game(){
   document.getElementById('game_start').style.display = 'none';
   document.getElementById('game_restart').style.display = 'none';
   document.getElementById('game_continue').style.display = 'inline';
-  current_tabuleiro = Object.create(Tabuleiro);
-  current_tabuleiro.init();
+  current_tabuleiro = new Tabuleiro();
+  if(first_to_play === 1){
+    current_tabuleiro.machine_play();
+  }
 }
 
 
@@ -280,5 +301,57 @@ const tableScore ={
       table.appendChild(cabecalho);
     }
   }
+
+}
+
+// ***** INIT DA FUNÇÃO ******
+window.onload = function(){
+  //Atualizar setitings
+  document.getElementById('board_size').selectedIndex = tamanho-3;
+
+  if(document.getElementById('game_machine').checked){
+    if(game_type!==0){
+      flip_adv();
+    }
+  }
+  else{
+    if(game_type!==1){
+      flip_adv();
+    }
+  }
+
+  // Dificuldade
+  if(document.getElementById('game_difficulty').options[document.getElementById('game_difficulty').selectedIndex] !== dificult_level){
+    switch (dificult_level) {
+      case 0:
+        document.getElementById('game_difficulty').selectedIndex = 0;
+        break;
+
+      case 50:
+        document.getElementById('game_difficulty').selectedIndex = 1;
+        break;
+
+      case 100:
+        document.getElementById('game_difficulty').selectedIndex = 2;
+        break;
+      default: break;
+    }
+  }
+
+  //inicializar first to start - confirmar pensamento logico
+  if(document.getElementById('first_start').checked){
+    if(first_to_play!==0){
+      document.getElementById('first_start').checked = false;
+      document.getElementById('second_start').checked = true;
+
+    }
+  }
+  else{
+    if(first_to_play!==1){
+      document.getElementById('first_start').checked = true;
+      document.getElementById('second_start').checked = false;
+    }
+  }
+
 
 }
