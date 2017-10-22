@@ -5,11 +5,12 @@ var current_tabuleiro;
 var game_type = 0;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
 var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes faz a pensar, 100 - pensa sempre
-var beutifal_API = {
+var beautiful_API = {
   1:['Admin',321402183],
   2:['efsres',9128390],
   3:['fsderf',3412],
   4:['Primera',0],
+  5:['fersffrds',3]
 };
 
 function Tabuleiro(){
@@ -189,6 +190,7 @@ function close_panels(){
 function open_scores(){
   close_panels();
   tableScore.init();
+  sort_scores();
   document.getElementById('scores').style.display = "inherit";
 }
 
@@ -288,21 +290,44 @@ const tableScore ={
 
     table.appendChild(cabecalho);
 
-    for(var i in beutifal_API){
+    for(var i in beautiful_API){
       cabecalho = document.createElement('tr');
       aux = document.createElement('td');
-      aux.textContent = i+'. '+beutifal_API[i][0];
+      aux.textContent = i+'. '+beautiful_API[i][0];
       cabecalho.appendChild(aux);
 
       aux = document.createElement('td');
-      aux.textContent = beutifal_API[i][1];
+      aux.textContent = beautiful_API[i][1];
       cabecalho.appendChild(aux);
 
       table.appendChild(cabecalho);
     }
   }
-
 }
+
+function sort_scores(){
+  var stable, rows, sflag, i, x, y, to_switch;
+  stable = document.getElementById("scores_table");
+  sflag = true;
+  while(sflag){
+    sflag = false;
+    rows = stable.getElementsByTagName("tr");
+    for(i=1; i<(rows.length-1); i++){
+      to_switch = false;
+      x = rows[i].getElementsByTagName("td")[1];
+      y = rows[i+1].getElementsByTagName("td")[1];
+      if(parseInt(x.innerHTML) < parseInt(y.innerHTML)){
+        to_switch = true;
+        break;
+      }
+    }
+    if(to_switch){
+      rows[i].parentNode.insertBefore(rows[i+1], rows[i]);
+      sflag = true;
+    }
+  }
+}
+
 
 // ***** INIT DA FUNÇÃO ******
 window.onload = function(){
