@@ -65,6 +65,8 @@ function Tabuleiro(){
         return true;
     }
 
+    Tabuleiro.prototype.lock = 1;
+
     Tabuleiro.prototype.is_tabuleiro_empty = function(){
     	var count = 0;
 
@@ -128,7 +130,7 @@ function Tabuleiro(){
                  j = this.pecas_array[i].length-sum[i];
 
                  play = i+" "+j;
-            this.user_play(play);
+
         }
         else{
             var count = 0;
@@ -157,8 +159,12 @@ function Tabuleiro(){
                 count++;
             }
 
-            this.user_play(i+" "+j);
+            play = i+" "+j;
         }
+        this.pecas_array[i][j].setAttribute("class","choosen_piece");
+        setTimeout(function() {
+            current_tabuleiro.user_play(play);
+        }, 2000);
     }
 
 
@@ -240,12 +246,18 @@ function init_game(){
   document.getElementById('game_continue').style.display = 'inline';
   current_tabuleiro = new Tabuleiro();
   if(first_to_play === 1){
-    current_tabuleiro.machine_play();
+      current_tabuleiro.machine_play();
   }
+  current_tabuleiro.lock = 0;
 }
 
-
 function move(clicked_id){
+    if(current_tabuleiro.lock !== 0)
+        return;
+
+    // Lock tabuleiro
+    current_tabuleiro.lock = 1;
+
     var flag = current_tabuleiro.user_play(clicked_id);
     if(current_tabuleiro.is_tabuleiro_empty() && flag){
         alert("Parabéns, ganhou!!!");
@@ -260,6 +272,9 @@ function move(clicked_id){
         document.getElementById('game_restart').style.display = 'inline';
         return;
     }
+
+    //unlock tabuleiro
+    current_tabuleiro.lock =0;
 }
 
 function changeBoardSize() {

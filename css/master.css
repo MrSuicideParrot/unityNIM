@@ -339,3 +339,9 @@ input{
 #game_restart{
   display: none;
 }
+
+.choosen_piece{
+    background-color: white;
+    border-style: solid;
+    border-color: #f07057;
+}
