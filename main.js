@@ -341,6 +341,19 @@ function sort_scores(){
       sflag = true;
     }
   }
+
+  for(i=1; i<(rows.length); i++){
+    change_pos(rows[i].getElementsByTagName("td")[0], i);
+  }
+}
+
+function change_pos(cell, pos){
+  var i;
+  for(i=0; i<(cell.innerText.length-1); i++){
+    if(cell.innerText[i] == '.')
+      break;
+  }
+  cell.innerText = pos + cell.innerText.substr(i,cell.innerText.length-1);
 }
 
 
