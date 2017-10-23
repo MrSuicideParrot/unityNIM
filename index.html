@@ -2,93 +2,93 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <link rel="stylesheet" href="css/master.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+  <link rel="stylesheet" href="css/master.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
 
-    <script src="arrayUtils.js" charset="utf-8"></script>
-    <script src="main.js" charset="utf-8"></script>
+  <script src="arrayUtils.js" charset="utf-8"></script>
+  <script src="main.js" charset="utf-8"></script>
 
-    <link rel="icon" href="img/icon.png">
-    <title>NIM</title>
+  <link rel="icon" href="img/icon.png">
+  <title>NIM</title>
 </head>
 
 <body>
-    <header>
-        <h1>NIM</h1>
-        <h4>The mathematical game of strategy, that will change your life.</h4>
-        <h6>Play with your friends or your cute computer!</h6>
-    </header>
+  <header>
+    <h1>NIM</h1>
+    <h4>The mathematical game of strategy, that will change your life.</h4>
+    <h6>Play with your friends or your cute computer!</h6>
+  </header>
 
-    <div class="divisor">
-        <div id="login_">
-            <form id="login_form">
-                <label class="first_label" for="username">Username:</label><input type="text" name="username" value="admin">
-                <label for="password">Password:</label><input type="password" name="password" value="">
-                <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login(this.username,this.password);" alt="Login">
-            </form>
-            <div id="right_side">
-                <label for="rank">Raking: #1</label>
-                <img src="img/logout-512.png" alt="Logout" class="login_icon" onclick="location.reload()">
-            </div>
-        </div>
-        <hr>
+  <div class="divisor">
+    <div id="login_">
+      <form id="login_form">
+        <label class="first_label" for="username">Username:</label><input type="text" name="username" value="admin">
+        <label for="password">Password:</label><input type="password" name="password" value="">
+        <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login(this.username,this.password);" alt="Login">
+      </form>
+      <div id="right_side">
+        <label for="rank">Raking: #1</label>
+        <img src="img/logout-512.png" alt="Logout" class="login_icon" onclick="location.reload()">
+      </div>
     </div>
-    <ul class="barra_lateral" id="barra_lateral">
-        <li>
-            <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
-        </li>
-        <li>
-            <img type="image" src="img/Classification-512.png" class="login_icon " onclick="open_scores()" alt="Classificações">
-        </li>
-        <li>
-            <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
-        </li>
-        <li>
-            <img type="image" src="img/info1600.png" class="login_icon " onclick="alert('javascript magic ¯\\_(ツ)_/¯')" alt="Info">
-        </li>
+    <hr>
+  </div>
+  <ul class="barra_lateral" id="barra_lateral">
+    <li>
+      <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
+    </li>
+    <li>
+      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="open_scores()" alt="Classificações">
+    </li>
+    <li>
+      <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
+    </li>
+    <li>
+      <img type="image" src="img/info1600.png" class="login_icon " onclick="open_info()" alt="Info">
+    </li>
 
+  </ul>
+
+  <div class="area_trabalho">
+
+    <!-- REGISTO -->
+    <ul class="registo panel" id=registo>
+      <li>
+        <h3>Register</h3>
+      </li>
+      <li>
+        <label class="first_label" for="username">Username:</label><input type="text" name="regusername" value="newuser">
+      </li>
+      <li>
+        <label for="password">Password:</label><input type="password" name="regpassword" value="">
+      </li>
+      <li>
+        <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
+      </li>
+      <li>
+        <button type="button" onclick="alert('Tenta a tua sorte com admin admin... ;)')">Submit</button>
+      </li>
     </ul>
 
-    <div class="area_trabalho">
+    <!--CLASSIFICACOES-->
+    <div id="scores" class="panel">
+      <h3>Classificações</h3>
+      <table id="scores_table">
 
-        <!-- REGISTO -->
-        <ul class="registo panel" id=registo>
-            <li>
-                <h3>Register</h3>
-            </li>
-            <li>
-                <label class="first_label" for="username">Username:</label><input type="text" name="regusername" value="newuser">
-            </li>
-            <li>
-                <label for="password">Password:</label><input type="password" name="regpassword" value="">
-            </li>
-            <li>
-                <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
-            </li>
-            <li>
-                <button type="button" onclick="alert('Tenta a tua sorte com admin admin... ;)')">Submit</button>
-            </li>
-        </ul>
+      </table>
+    </div>
 
-        <!--CLASSIFICACOES-->
-        <div id="scores" class="panel">
-            <h3>Classificações</h3>
-            <table id="scores_table">
+    <!-- CONFIGURACOES -->
+    <ul class="configuracao panel" id="configuracao">
+      <li>
+        <h3>Configurações</h3>
+      </li>
 
-            </table>
-        </div>
-
-        <!-- CONFIGURACOES -->
-        <ul class="configuracao panel" id="configuracao">
-            <li>
-                <h3>Configurações</h3>
-            </li>
-
-            <div class="size">
-                <label>Size of the board</label>
-                <select id="board_size" onchange="changeBoardSize()">
+      <div class="size">
+        <label>Size of the board</label>
+        <select id="board_size" onchange="changeBoardSize()">
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
@@ -98,74 +98,80 @@
           <option value="9">9</option>
           <option value="10">10</option>
         </select>
-            </div>
-            <div class="adv">
-                <div class="opponent">
-                    <li>
-                        <label> Human vs Machine</label>
-                        <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()" checked>
-                    </li>
+      </div>
+      <div class="adv">
+        <div class="opponent">
+          <li>
+            <label> Human vs Machine</label>
+            <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()" checked>
+          </li>
 
-                    <li>
-                        <label> Human vs Human</label>
-                        <input type="radio" id="game_human" name="game_mode" value="human" onclick="flip_adv()">
-                    </li>
-                </div>
-
-                <div>
-                    <div id="div_dificult">
-                        <label>Difficulty setting</label>
-                        <select id="game_difficulty">
-            			<option value="0">Easy</option>
-            			<option value="50" selected="selected">Medium</option>
-            			<option value="100">Hard</option>
-         		</select>
-                    </div>
-                    <div class="who_starts">
-                        <li>
-                            <label>1st player starts</label>
-                            <input type="radio" id="first_start" name="first_player" value="first" onclick="" checked>
-                        </li>
-                        <li>
-                            <label>2nd player/pc starts</label>
-                            <input type="radio" id="second_start" name="first_player" value="second" onclick="">
-                        </li>
-                    </div>
-                </div>
-
-            </div>
-            <!--    <li id="botao_submit">
-        <button type="button" onclick="choose_settings()">Submit</button>
-      </li> -->
-        </ul>
-
-        <!-- INICIAL -->
-        <div id="initial_play" class="panel">
-            <h1>PLAY!!!!</h1>
+          <li>
+            <label> Human vs Human</label>
+            <input type="radio" id="game_human" name="game_mode" value="human" onclick="flip_adv()">
+          </li>
         </div>
 
-
-        <div id="tabuleiro_div" class="panel">
-            <div id="tabuleiro_menu">
-                <div id="game_start" onclick="init_game()">
-                    Let the games begin!
-                </div>
-                <div id="game_continue" onclick="alert('YOU WILL NEVER GIVE UP!')">
-                    Give up
-                </div>
-                <div id="game_restart" onclick="init_game()">
-                    Play Again!
-                </div>
-            </div>
-
-            <table border="0" cellspacing="0" id="tabuleiro">
-
-            </table>
-
+        <div>
+          <div id="div_dificult">
+            <label>Difficulty setting</label>
+            <select id="game_difficulty">
+              <option value="0">Easy</option>
+              <option value="50">Medium</option>
+              <option value="100">Hard</option>
+            </select>
+          </div>
+          <div class="who_starts">
+            <li>
+              <label>1st player starts</label>
+              <input type="radio" id="first_start" name="first_player" value="first" onclick="" checked>
+            </li>
+            <li>
+              <label>2nd player/pc starts</label>
+              <input type="radio" id="second_start" name="first_player" value="second" onclick="">
+            </li>
+          </div>
         </div>
 
+      </div>
+      <!--    <li id="botao_submit">
+      <button type="button" onclick="choose_settings()">Submit</button>
+    </li> -->
+  </ul>
+
+  <!--Info-->
+  <div id="info" class="panel">
+    <h3>About the game</h3>
+    <p>Nim is a strategy game in which two players take turns taking off objects from different stacks. With each turn the player must take at least one object from one stack and all objects removed must come from a single stack. <br><br>Who ever takes out the last object wins.</p>
+  </div>
+
+  <!-- INICIAL -->
+  <div id="initial_play" class="panel">
+    <h1>PLAY!!!!</h1>
+  </div>
+
+
+  <div id="tabuleiro_div" class="panel">
+    <div id="tabuleiro_menu">
+      <div id="game_start" onclick="init_game()">
+        Let the games begin!
+      </div>
+      <div id="game_continue" onclick="alert('YOU WILL NEVER GIVE UP!')">
+        Give up
+      </div>
+      <div id="game_restart" onclick="init_game()">
+        Play Again!
+      </div>
     </div>
-    </div>
+
+    <table border="0" cellspacing="0" id="tabuleiro">
+
+    </table>
+
+  </div>
+
+</div>
+</div>
 
 </body>
 

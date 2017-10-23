@@ -281,6 +281,29 @@ input{
   cursor: pointer;
 }
 
+
+#info{
+  display: none;
+}
+
+#info h3{
+  color: #f07057;
+  text-align: center;
+  font-size: 188%;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  padding: 1%;
+}
+
+#info p{
+  color: #444233;
+  font-size: 120%;
+  text-align: center;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+
 /*#botao_submit{
   display: none;
 }*/

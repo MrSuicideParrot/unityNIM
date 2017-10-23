@@ -210,6 +210,11 @@ function open_config(){
 
 }
 
+function open_info(){
+  close_panels();
+  document.getElementById('info').style.display = "inline";
+}
+
 function flip_adv(){
   if(document.getElementById('game_machine').checked){
     document.getElementById('div_dificult').style.display = 'inherit';
