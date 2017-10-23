@@ -324,7 +324,7 @@ const tableScore ={
     for(var i in beautiful_API){
       cabecalho = document.createElement('tr');
       aux = document.createElement('td');
-      aux.textContent = i+'. '+beautiful_API[i][0];
+      aux.textContent = beautiful_API[i][0];
       cabecalho.appendChild(aux);
 
       aux = document.createElement('td');
@@ -359,7 +359,8 @@ function sort_scores(){
   }
 
   for(i=1; i<(rows.length); i++){
-    change_pos(rows[i].getElementsByTagName("td")[0], i);
+    rows[i].getElementsByTagName("td")[0].innerText = i + '.' + rows[i].getElementsByTagName("td")[0].innerText;
+    /*change_pos(rows[i].getElementsByTagName("td")[0], i);*/
   }
 }
 
