@@ -161,10 +161,13 @@ function Tabuleiro(){
 
             play = i+" "+j;
         }
-        this.pecas_array[i][j].setAttribute("class","choosen_piece");
+        this.pecas_array[i][j].style.background="white";
+        this.pecas_array[i][j].style.borderStyle="solid";
+        this.pecas_array[i][j].style.borderColor="#f07057";
+
         setTimeout(function() {
             current_tabuleiro.user_play(play);
-        }, 2000);
+        }, 1250);
     }
 
 
@@ -282,9 +285,17 @@ function changeBoardSize() {
 }
 
 function changeDificult() {
-  tamanho = document.getElementById('game_difficulty').selectedIndex*3;
+  dificult_level = document.getElementById('game_difficulty').selectedIndex*3;
 }
 
+function changeWhoStart(){
+  if(document.getElementById('first_start').checked){
+    first_to_play = 0;
+  }
+  else{
+    first_to_play = 1;
+  }
+}
 const tableScore ={
   init:function(){
     table = document.getElementById('scores_table');
