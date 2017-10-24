@@ -3,6 +3,7 @@
 var tamanho = 4;
 var current_tabuleiro;
 var game_type = 0;
+var piramide = true;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
 var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes faz a pensar, 100 - pensa sempre
 var beautiful_API = {
@@ -21,10 +22,13 @@ function Tabuleiro(){
           parent_element.removeChild(parent_element.lastChild);
         }
 
-         for (var i = 0; i < tamanho; i++) {
+        var length_next = 0;
+        for (var i = 0; i < tamanho; i++) {
             var linha = document.createElement("tr");
-            var length_next =  Math.floor((Math.random() * tamanho) + 1);
-
+            if(!piramide)
+              length_next =  Math.floor((Math.random() * tamanho) + 1);
+            else
+              ++length_next;
           auxiliar = Array();
             for (var j = 0; j < length_next; j++) {
               var elemento_td = document.createElement("td");
@@ -423,5 +427,20 @@ window.onload = function(){
     }
   }
 
+  if(piramide){
+    document.getElementById("Iluminati_mode").selectedIndex = 0;
+  }
+  else{
+    document.getElementById("Iluminati_mode").selectedIndex = 1;
+  }
 
+}
+
+function iluminatiState(){
+  if(document.getElementById("Iluminati_mode").selectedIndex===0){
+    piramide = true;
+  }
+  else{
+    piramide = false;
+  }
 }
