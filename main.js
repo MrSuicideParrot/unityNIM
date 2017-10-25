@@ -103,79 +103,7 @@ Tabuleiro.prototype.is_tabuleiro_empty = function(){
   return false;
 }
 
-Tabuleiro.prototype.pecas_array = Array();
-
-Tabuleiro.prototype.machine_play = function(){
-  var sorte = Math.floor((Math.random() * 100));
-  var play;
-
-  if (sorte < dificult_level){
-    var contas = Array();
-    var resultado = Array();
-
-    //heuristica
-
-    //Conversão para binário
-    for(var i = 0; i <this.pecas_array.length; ++i){
-        var numero = this.pecas_array[i].length;
-        contas[i] = Array();
-        //pode falhar condições não virificadas
-        for(var j = Math.log2(tamanho)+1; j >0; --j){
-            var [resto, quociente] = division(numero);
-            contas[i][j] = resto;
-            numero = quociente;
-        }
-        contas[i][j] = numero;
-    }
-
-    for (var i = 0; i < contas.length; i++) {
-      for (var j = 0; j < contas[0].length; j++) {
-        resultado[j] ^= contas[i][j];
-      }
-    }
-
-    if(sumArray(resultado) === 0){
-        alert("lixei me");
-    }
-
-    //escolher linha
-    var pos_final = Array();
-
-    for (var i = 0; i < contas[0].length; i++) { //Colunas
-      var pos_inter = Array();
-      for (var j = 0; j < contas.length; j++) { //linhas
-          //resultado[i]
-          if(resultado[i]==1 && contas[j][i]==1 && (pos_final.length === 0| pos_final.includes(j))){
-              pos_inter.push(j);
-          }
-      }
-      //esta errado tens de pensar
-      pos_final = pos_inter;
-
-      if(pos_final.length === 1)
-        break;
-    }
-
-    var l_target = pos_final.pop();
-
-    //Colunaa
-    var target = contas[l_target]; //alvo a alterar
-    var inicial = toBin(target);
-    for(var t=0; t<target.length; ++t){
-        if(resultado[t] === 1)
-            target[t] = target[t]===1 ? 0 : 1;
-    }
-
-    var final = toBin(target);
-
-    i = l_target;
-    j = this.pecas_array[l_target].length - (inicial - final)
-
-    play = i+" "+j;
-    }
-    //var remover = Array();
-  else{
-
+Tabuleiro.prototype.random_pos = function() {
     var count = 0;
     while(true){
       var i = Math.floor((Math.random() * tamanho));
@@ -201,7 +129,84 @@ Tabuleiro.prototype.machine_play = function(){
       }
       count++;
     }
+    return [i,j];
+}
 
+Tabuleiro.prototype.pecas_array = Array();
+
+Tabuleiro.prototype.machine_play = function(){
+  var sorte = Math.floor((Math.random() * 100));
+  var play;
+
+  if (sorte < dificult_level){
+    var contas = Array();
+    var resultado = Array();
+
+    //heuristica
+
+    //Conversão para binário
+    for(var i = 0; i <this.pecas_array.length; ++i){
+        var numero = this.pecas_array[i].length;
+        contas[i] = Array();
+        //pode falhar condições não virificadas
+        for(var j = Math.trunc(Math.log2(tamanho))+1; j >0; --j){
+            var [resto, quociente] = division(numero);
+            contas[i][j] = resto;
+            numero = quociente;
+        }
+        contas[i][j] = numero;
+    }
+
+    for (var i = 0; i < contas.length; i++) {
+      for (var j = 0; j < contas[0].length; j++) {
+        resultado[j] ^= contas[i][j];
+      }
+    }
+
+    if(sumArray(resultado) === 0){
+        [i,j] = this.random_pos();
+    }
+    else{
+        //escolher linha
+        var pos_final = Array();
+
+        for (var i = 0; i < contas[0].length; i++) { //Colunas
+          var pos_inter = Array();
+          for (var j = 0; j < contas.length; j++) { //linhas
+              //resultado[i]
+              if(resultado[i]==1 && contas[j][i]==1 && (pos_final.length === 0| pos_final.includes(j))){
+                  pos_inter.push(j);
+              }
+          }
+          //esta errado tens de pensar
+          pos_final = pos_inter;
+
+          if(pos_final.length === 1)
+            break;
+        }
+
+        var l_target = pos_final.pop();
+
+        //Colunaa
+        var target = contas[l_target]; //alvo a alterar
+        var inicial = toBin(target);
+        for(var t=0; t<target.length; ++t){
+            if(resultado[t] === 1)
+                target[t] = target[t]===1 ? 0 : 1;
+        }
+
+        var final = toBin(target);
+
+        i = l_target;
+        j = this.pecas_array[l_target].length - (inicial - final)
+
+        play = i+" "+j;
+    }
+    }
+    //var remover = Array();
+  else{
+
+    [i,j] = this.random_pos();
     play = i+" "+j;
   }
   this.pecas_array[i][j].style.background="white";
