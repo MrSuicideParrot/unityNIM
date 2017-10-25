@@ -330,6 +330,10 @@ input{
 
 #initial_play{
   display: none;
+  text-align: center;
+  font-size: 480%;
+  color: #f07057;
+  cursor: pointer;
 }
 
 #tabuleiro_menu{
