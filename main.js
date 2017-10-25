@@ -46,6 +46,15 @@ function Tabuleiro(){
         }
     }
 
+    Tabuleiro.prototype.give_up = function () {
+      var parent_element = document.getElementById('tabuleiro');
+      while (parent_element.hasChildNodes()) {
+        parent_element.removeChild(parent_element.lastChild);
+      }
+      document.getElementById('game_continue').style.display = 'none';
+      document.getElementById('game_restart').style.display = 'inline';
+    }
+
     Tabuleiro.prototype.not_empty_line = function () {
         for(var i in this.pecas_array){
           if(this.pecas_array[i].length!==0)
@@ -53,7 +62,7 @@ function Tabuleiro(){
         }
     }
 
-    Tabuleiro.prototype.user_play = function(clicked_id){
+    Tabuleiro.prototype.user_play = function(clicked_id, machine){
         clicked_id = clicked_id.split(" ");
         var i = parseInt(clicked_id[0]);
         var j = parseInt(clicked_id[1]);
@@ -66,6 +75,17 @@ function Tabuleiro(){
          }
         this.pecas_array[i].splice(j,this.pecas_array[i].length-j);
 
+        if(machine){
+          if(current_tabuleiro.is_tabuleiro_empty()){
+              alert("THE MACHINE WINE!!!");
+              document.getElementById('game_continue').style.display = 'none';
+              document.getElementById('game_restart').style.display = 'inline';
+              return;
+          }
+
+          //unlock tabuleiro
+          current_tabuleiro.lock =0;
+        }
         return true;
     }
 
@@ -170,7 +190,7 @@ function Tabuleiro(){
         this.pecas_array[i][j].style.borderColor="#f07057";
 
         setTimeout(function() {
-            current_tabuleiro.user_play(play);
+            current_tabuleiro.user_play(play, true);
         }, 1250);
     }
 
@@ -270,7 +290,7 @@ function move(clicked_id){
     // Lock tabuleiro
     current_tabuleiro.lock = 1;
 
-    var flag = current_tabuleiro.user_play(clicked_id);
+    var flag = current_tabuleiro.user_play(clicked_id, false);
     if(current_tabuleiro.is_tabuleiro_empty() && flag){
         alert("Parabéns, ganhou!!!");
         document.getElementById('game_continue').style.display = 'none';
@@ -278,15 +298,7 @@ function move(clicked_id){
         return;
     }
     current_tabuleiro.machine_play(clicked_id);
-    if(current_tabuleiro.is_tabuleiro_empty()){
-        alert("THE MACHINE WINE!!!");
-        document.getElementById('game_continue').style.display = 'none';
-        document.getElementById('game_restart').style.display = 'inline';
-        return;
-    }
 
-    //unlock tabuleiro
-    current_tabuleiro.lock =0;
 }
 
 function changeBoardSize() {
