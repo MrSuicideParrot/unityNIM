@@ -221,11 +221,14 @@ Tabuleiro.prototype.machine_play = function(){
 
 
 function login() {
-  /*if((username!=='admin'||password!=='admin')&& false){
+    var username = document.getElementById("login_form").username.value;
+    var password = document.getElementById("login_form").password.value;
+
+ if(username!=='admin'||password!=='admin'){
   alert('Fallhou a password!');
   return;
 }
-*/
+
 user = "Admin";
 document.getElementById('registo').style.display = "none";
 document.getElementById('login_form').style.display = "none";
