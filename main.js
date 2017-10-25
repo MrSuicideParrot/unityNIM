@@ -107,56 +107,75 @@ Tabuleiro.prototype.pecas_array = Array();
 
 Tabuleiro.prototype.machine_play = function(){
   var sorte = Math.floor((Math.random() * 100));
+  var play;
+
   if (sorte < dificult_level){
     var contas = Array();
     var resultado = Array();
 
+    //heuristica
+
+    //Conversão para binário
     for(var i = 0; i <this.pecas_array.length; ++i){
-      number = this.pecas_array[i].length;
-      contas[i] = Array();
-      // 0 -> 4 1 -> 2 2-> 1
-      contas[i][0] = (number/4)|0;
-      number = number % 4;
-      contas[i][1] = (number/2)|0;
-      number = number % 2;
-      contas[i][2] = number;
+        var numero = this.pecas_array[i].length;
+        contas[i] = Array();
+        //pode falhar condições não virificadas
+        for(var j = Math.log2(tamanho)+1; j >0; --j){
+            var [resto, quociente] = division(numero);
+            contas[i][j] = resto;
+            numero = quociente;
+        }
+        contas[i][j] = numero;
     }
 
     for (var i = 0; i < contas.length; i++) {
-      for (var j = 0; j < 3; j++) {
+      for (var j = 0; j < contas[0].length; j++) {
         resultado[j] ^= contas[i][j];
       }
     }
 
-    var sum = sumArray(resultado);
-
-    //var remover = Array();
-    if(sum == 0){
-      sum = Array()
-      for (var i in contas) {
-        sum.push(sumArray(contas[i]));
-      }
-      indice = indexOfMax(sum, true);
+    if(sumArray(resultado) === 0){
+        alert("lixei me");
     }
-    else{
-      sum = initialize_Array(contas.length, 0);
-      for (var i = 0; i < contas.length; i++) {
-        for (var j = 0; j < 3; j++) {
-          if (resultado[j]!=0) {
-            sum[i] += contas[i][j];
+
+    //escolher linha
+    var pos_final = Array();
+
+    for (var i = 0; i < contas[0].length; i++) { //Colunas
+      var pos_inter = Array();
+      for (var j = 0; j < contas.length; j++) { //linhas
+          //resultado[i]
+          if(resultado[i]==1 && contas[j][i]==1 && (pos_final.length === 0| pos_final.includes(j))){
+              pos_inter.push(j);
           }
-        }
       }
-      indice = indexOfMax(sum);
+      //esta errado tens de pensar
+      pos_final = pos_inter;
 
+      if(pos_final.length === 1)
+        break;
     }
-    i = indice;
-    j = this.pecas_array[i].length-sum[i];
+
+    var l_target = pos_final.pop();
+
+    //Colunaa
+    var target = contas[l_target]; //alvo a alterar
+    var inicial = toBin(target);
+    for(var t=0; t<target.length; ++t){
+        if(resultado[t] === 1)
+            target[t] = target[t]===1 ? 0 : 1;
+    }
+
+    var final = toBin(target);
+
+    i = l_target;
+    j = this.pecas_array[l_target].length - (inicial - final)
 
     play = i+" "+j;
-
-  }
+    }
+    //var remover = Array();
   else{
+
     var count = 0;
     while(true){
       var i = Math.floor((Math.random() * tamanho));

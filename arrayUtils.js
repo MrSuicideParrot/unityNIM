@@ -46,3 +46,18 @@ function initialize_Array(number, target){
             arr[i] = target;
     return arr;
 }
+
+function division(number){
+    return [number%2,Math.trunc(number/2)];
+}
+
+function toBin(arr){
+    var max = arr.length;
+    var num = 0;
+    var ind = 0;
+    for (var i = max-1; i >= 0; i--) {
+        num += arr[ind]*Math.pow(2,i);
+        ++ind;
+    }
+    return num;
+}
