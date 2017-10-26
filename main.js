@@ -47,6 +47,7 @@ function Tabuleiro(){
 }
 
 Tabuleiro.prototype.give_up = function () {
+  change_msg(-1);
   var parent_element = document.getElementById('tabuleiro');
   while (parent_element.hasChildNodes()) {
     parent_element.removeChild(parent_element.lastChild);
@@ -77,7 +78,7 @@ Tabuleiro.prototype.user_play = function(clicked_id, machine){
 
   if(machine){
     if(current_tabuleiro.is_tabuleiro_empty()){
-      alert("The machine wins!!!");
+      change_msg(2);
       document.getElementById('game_continue').style.display = 'none';
       document.getElementById('game_restart').style.display = 'inline';
       return;
@@ -104,32 +105,32 @@ Tabuleiro.prototype.is_tabuleiro_empty = function(){
 }
 
 Tabuleiro.prototype.random_pos = function() {
-    var count = 0;
-    while(true){
-      var i = Math.floor((Math.random() * tamanho));
-      if (this.pecas_array[i].length != 0){
-        break;
-      }
-      if(count>=4){
-        i = this.not_empty_line();
-        break;
-      }
-      count++;
+  var count = 0;
+  while(true){
+    var i = Math.floor((Math.random() * tamanho));
+    if (this.pecas_array[i].length != 0){
+      break;
     }
+    if(count>=4){
+      i = this.not_empty_line();
+      break;
+    }
+    count++;
+  }
 
-    count = 0;
-    while(true){
-      var j = Math.floor((Math.random() * tamanho));
-      if (this.pecas_array[i][j]!= null){
-        break;
-      }
-      if(count>=4){
-        j=0;
-        break;
-      }
-      count++;
+  count = 0;
+  while(true){
+    var j = Math.floor((Math.random() * tamanho));
+    if (this.pecas_array[i][j]!= null){
+      break;
     }
-    return [i,j];
+    if(count>=4){
+      j=0;
+      break;
+    }
+    count++;
+  }
+  return [i,j];
 }
 
 Tabuleiro.prototype.pecas_array = Array();
@@ -146,15 +147,15 @@ Tabuleiro.prototype.machine_play = function(){
 
     //Conversão para binário
     for(var i = 0; i <this.pecas_array.length; ++i){
-        var numero = this.pecas_array[i].length;
-        contas[i] = Array();
-        //pode falhar condições não virificadas
-        for(var j = Math.trunc(Math.log2(tamanho))+1; j >0; --j){
-            var [resto, quociente] = division(numero);
-            contas[i][j] = resto;
-            numero = quociente;
-        }
-        contas[i][j] = numero;
+      var numero = this.pecas_array[i].length;
+      contas[i] = Array();
+      //pode falhar condições não virificadas
+      for(var j = Math.trunc(Math.log2(tamanho))+1; j >0; --j){
+        var [resto, quociente] = division(numero);
+        contas[i][j] = resto;
+        numero = quociente;
+      }
+      contas[i][j] = numero;
     }
 
     for (var i = 0; i < contas.length; i++) {
@@ -164,46 +165,46 @@ Tabuleiro.prototype.machine_play = function(){
     }
 
     if(sumArray(resultado) === 0){
-        [i,j] = this.random_pos();
+      [i,j] = this.random_pos();
     }
     else{
-        //escolher linha
-        var pos_final = Array();
+      //escolher linha
+      var pos_final = Array();
 
-        for (var i = 0; i < contas[0].length; i++) { //Colunas
-          var pos_inter = Array();
-          for (var j = 0; j < contas.length; j++) { //linhas
-              //resultado[i]
-              if(resultado[i]==1 && contas[j][i]==1 && (pos_final.length === 0| pos_final.includes(j))){
-                  pos_inter.push(j);
-              }
+      for (var i = 0; i < contas[0].length; i++) { //Colunas
+        var pos_inter = Array();
+        for (var j = 0; j < contas.length; j++) { //linhas
+          //resultado[i]
+          if(resultado[i]==1 && contas[j][i]==1 && (pos_final.length === 0| pos_final.includes(j))){
+            pos_inter.push(j);
           }
-          //esta errado tens de pensar
-          pos_final = pos_inter;
-
-          if(pos_final.length === 1)
-            break;
         }
+        //esta errado tens de pensar
+        pos_final = pos_inter;
 
-        var l_target = pos_final.pop();
+        if(pos_final.length === 1)
+        break;
+      }
 
-        //Colunaa
-        var target = contas[l_target]; //alvo a alterar
-        var inicial = toBin(target);
-        for(var t=0; t<target.length; ++t){
-            if(resultado[t] === 1)
-                target[t] = target[t]===1 ? 0 : 1;
-        }
+      var l_target = pos_final.pop();
 
-        var final = toBin(target);
+      //Colunaa
+      var target = contas[l_target]; //alvo a alterar
+      var inicial = toBin(target);
+      for(var t=0; t<target.length; ++t){
+        if(resultado[t] === 1)
+        target[t] = target[t]===1 ? 0 : 1;
+      }
 
-        i = l_target;
-        j = this.pecas_array[l_target].length - (inicial - final)
+      var final = toBin(target);
 
-        play = i+" "+j;
+      i = l_target;
+      j = this.pecas_array[l_target].length - (inicial - final)
+
+      play = i+" "+j;
     }
-    }
-    //var remover = Array();
+  }
+  //var remover = Array();
   else{
 
     [i,j] = this.random_pos();
@@ -218,25 +219,23 @@ Tabuleiro.prototype.machine_play = function(){
   }, 1250);
 }
 
-
-
 function login() {
-    var username = document.getElementById("login_form").username.value;
-    var password = document.getElementById("login_form").password.value;
+  var username = document.getElementById("login_form").username.value;
+  var password = document.getElementById("login_form").password.value;
 
- if(username!=='admin'||password!=='admin'){
-  alert('Fallhou a password!');
-  return;
-}
+  if(username!=='admin'||password!=='admin'){
+    alert('Fallhou a password!');
+    return;
+  }
 
-user = "Admin";
-document.getElementById('registo').style.display = "none";
-document.getElementById('login_form').style.display = "none";
-document.getElementById('barra_lateral').style.display = "inline";
-document.getElementById('initial_play').style.display = "inline";
-document.getElementById('login_').innerHTML += ('Welcome, '+user+"!");
-document.getElementById('right_side').style.display = "inherit";
-/*  document.getElementById('tabuleiro_div').style.display = 'table';  */
+  user = "Admin";
+  document.getElementById('registo').style.display = "none";
+  document.getElementById('login_form').style.display = "none";
+  document.getElementById('barra_lateral').style.display = "inline";
+  document.getElementById('initial_play').style.display = "inline";
+  document.getElementById('login_').innerHTML += ('Welcome, '+user+"!");
+  document.getElementById('right_side').style.display = "inherit";
+  /*  document.getElementById('tabuleiro_div').style.display = 'table';  */
 }
 
 function close_panels(){
@@ -290,6 +289,7 @@ function get_game_type(id_name){
 
 function choose_settings(){
   tamanho = document.getElementById('board_size').options[document.getElementById('board_size').selectedIndex].value;
+  randomState();
   game_type = get_game_type('game_machine');
   dificult_level = document.getElementById('game_difficulty').options[document.getElementById('game_difficulty').selectedIndex].value;
   first_to_play = get_game_type('first_start');
@@ -309,11 +309,14 @@ function init_game(){
     current_tabuleiro.machine_play();
   }
   current_tabuleiro.lock = 0;
+  change_msg(0);
 }
 
 function move(clicked_id){
-  if(current_tabuleiro.lock !== 0)
-  return;
+  if(current_tabuleiro.lock !== 0){
+    change_msg(-2);
+    return;
+  }
 
   // Lock tabuleiro
   current_tabuleiro.lock = 1;
@@ -321,7 +324,7 @@ function move(clicked_id){
   var flag = current_tabuleiro.user_play(clicked_id, false);
   if(current_tabuleiro.is_tabuleiro_empty() && flag){
     addpointstouser();
-    alert("Congratulations, you win!!!");
+    change_msg(1);
     document.getElementById('game_continue').style.display = 'none';
     document.getElementById('game_restart').style.display = 'inline';
     return;
@@ -443,6 +446,24 @@ function points_incr(p){
   }
 }
 
+function change_msg(val){
+  if(val==1){
+    document.getElementById("message_board").innerText = "You won the game!!!"
+  }
+  else if(val==2) {
+    document.getElementById("message_board").innerText = "The machine won the game!!!"
+  }
+  else if(val==-1) {
+    document.getElementById("message_board").innerText = "You gave up (and lost)."
+  }
+  else if(val==-2) {
+    document.getElementById("message_board").innerText = "Play not possible (opponents turn)!"
+  }
+  else if(val==0) {
+    document.getElementById("message_board").innerText = ""
+  }
+}
+
 
 // ***** INIT DA FUNÇÃO ******
 window.onload = function(){
@@ -494,40 +515,40 @@ window.onload = function(){
   }
 
   if(piramide){
-    document.getElementById("Iluminati_mode").selectedIndex = 0;
+    document.getElementById("random_mode").checked = false;
   }
   else{
-    document.getElementById("Iluminati_mode").selectedIndex = 1;
+    document.getElementById("random_mode").checked = true;
   }
 
 }
 
-function iluminatiState(){
-  if(document.getElementById("Iluminati_mode").selectedIndex===0){
-    piramide = true;
+function randomState(){
+  if(document.getElementById("random_mode").checked){
+    piramide = false;
   }
   else{
-    piramide = false;
+    piramide = true;
   }
 }
 
 function log_game(type) {
-    switch (type) {
-        case 0:
-            document.getElementsByClassName('message_board').value = "Parabéns! Ganhaste!";
-            break;
-        case 1:
-            document.getElementsByClassName('message_board').value = "A jogada não é possivel, vez do adversário!";
-            break;
+  switch (type) {
+    case 0:
+    document.getElementsByClassName('message_board').value = "Parabéns! Ganhaste!";
+    break;
+    case 1:
+    document.getElementsByClassName('message_board').value = "A jogada não é possivel, vez do adversário!";
+    break;
 
-        case 2:
-            document.getElementsByClassName('message_board').value = "A máquina ganhou...";
-            break;
+    case 2:
+    document.getElementsByClassName('message_board').value = "A máquina ganhou...";
+    break;
 
-        case 3:
-            document.getElementsByClassName('message_board').value = "Para próxima nao desistas.";
-            break;
-        default:
-            break;
-    }
+    case 3:
+    document.getElementsByClassName('message_board').value = "Para próxima nao desistas.";
+    break;
+    default:
+    break;
+  }
 }

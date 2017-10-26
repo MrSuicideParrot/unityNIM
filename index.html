@@ -26,10 +26,10 @@
       <form id="login_form">
         <label class="first_label" for="username">Username:</label><input type="text" name="username" value="admin">
         <label for="password">Password:</label><input type="password" name="password" value="">
-        <img type="image" src="img/fingerprint-gui.png" alt="login" class="login_icon " onclick="login();" alt="Login">
+        <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
       </form>
       <div id="right_side">
-        <label for="rank">Raking: #1</label>
+        <label for="rank">Ranking: #1</label>
         <img src="img/logout-512.png" alt="Logout" class="login_icon" onclick="location.reload()">
       </div>
     </div>
@@ -89,21 +89,14 @@
       <div class="size">
         <label>Size of the board</label>
         <select id="board_size" onchange="changeBoardSize()">
-          <option value="3">3</option>
           <option value="4">4</option>
-          <option value="5">5</option>
           <option value="6">6</option>
-          <option value="7">7</option>
           <option value="8">8</option>
-          <option value="9">9</option>
           <option value="10">10</option>
         </select>
 
-        <label>Iluminati Mode</label>
-        <select id="Iluminati_mode" onchange="iluminatiState()">
-          <option value="true">ON</option>
-          <option value="false">OFF</option>
-        </select>
+        <label>Random Mode</label>
+        <input type="checkbox" id="random_mode">
       </div>
       <div class="adv">
         <div class="opponent">
