@@ -180,8 +180,20 @@ Tabuleiro.prototype.machine_play = function(){
           }
         }
         //esta errado tens de pensar
-        pos_final = pos_inter;
-
+        if(pos_inter.length !==0 && pos_final.length !== pos_inter.length){
+            if(pos_final.length === 0){
+                pos_final = pos_inter;
+            }
+            else{
+                remIndex = Array();
+                for (var v in pos_final) {
+                    if(pos_inter.includes(pos_final[v])){
+                        remIndex.push(pos_final[v]);
+                    }
+                }
+                pos_final = remIndex;
+            }
+        }
         if(pos_final.length === 1)
         break;
       }
@@ -201,19 +213,19 @@ Tabuleiro.prototype.machine_play = function(){
       i = l_target;
       j = this.pecas_array[l_target].length - (inicial - final)
 
-      play = i+" "+j;
+      //play = i+" "+j;
     }
   }
   //var remover = Array();
   else{
 
     [i,j] = this.random_pos();
-    play = i+" "+j;
+    //play = i+" "+j;
   }
   this.pecas_array[i][j].style.background="white";
   this.pecas_array[i][j].style.borderStyle="solid";
   this.pecas_array[i][j].style.borderColor="#f07057";
-
+  play = i+" "+j;
   setTimeout(function() {
     current_tabuleiro.user_play(play, true);
   }, 1250);
