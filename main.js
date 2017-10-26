@@ -510,3 +510,24 @@ function iluminatiState(){
     piramide = false;
   }
 }
+
+function log_game(type) {
+    switch (type) {
+        case 0:
+            document.getElementsByClassName('message_board').value = "Parabéns! Ganhaste!";
+            break;
+        case 1:
+            document.getElementsByClassName('message_board').value = "A jogada não é possivel, vez do adversário!";
+            break;
+
+        case 2:
+            document.getElementsByClassName('message_board').value = "A máquina ganhou...";
+            break;
+
+        case 3:
+            document.getElementsByClassName('message_board').value = "Para próxima nao desistas.";
+            break;
+        default:
+            break;
+    }
+}

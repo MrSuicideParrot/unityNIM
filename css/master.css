@@ -354,6 +354,11 @@ input{
   display: none;
 }
 
+#message_board{
+    width: 100%;
+    color: #f07057;
+    text-align: center;
+}
 
 .peca_jogo{
 	border-radius: 50%;
