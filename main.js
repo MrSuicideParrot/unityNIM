@@ -327,6 +327,7 @@ function init_game(){
 function move(clicked_id){
   if(current_tabuleiro.lock !== 0){
     change_msg(-2);
+    setTimeout(function(){change_msg(0)},1000);
     return;
   }
 

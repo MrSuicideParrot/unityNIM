@@ -169,7 +169,7 @@ input{
 }
 
 #scores table, th, td {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 #scores table{
@@ -305,7 +305,7 @@ input{
 
 
 /*#botao_submit{
-  display: none;
+display: none;
 }*/
 
 #tabuleiro_div{
@@ -316,10 +316,10 @@ input{
 }
 
 #tabuleiro{
-  margin-top: 40px;
+  margin-top: 5%;
   border-left: 1px solid black;
-  width: 450px;
-  height: 450px;
+  width: 50%;
+  height: 50%;
 }
 
 #tabuleiro td{
@@ -355,17 +355,18 @@ input{
 }
 
 #message_board{
-    width: 100%;
-    color: #f07057;
-    text-align: center;
+  width: 100%;
+  margin-left: 2%;
+  color: #f07057;
+  text-align: center;
 }
 
 .peca_jogo{
-	border-radius: 50%;
-	background-color:#f07057;
-	height:95px;
-	width: 95px;
-	cursor: pointer;
+  border-radius: 50%;
+  background-color:#f07057;
+  height:95px;
+  width: 95px;
+  cursor: pointer;
 }
 
 #game_restart{
@@ -373,7 +374,7 @@ input{
 }
 
 .choosen_piece{
-    background-color: white;
-    border-style: solid;
-    border-color: #f07057;
+  background-color: white;
+  border-style: solid;
+  border-color: #f07057;
 }
