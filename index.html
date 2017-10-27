@@ -24,12 +24,12 @@
   <div class="divisor">
     <div id="login_">
       <form id="login_form">
-        <label class="first_label" for="username">Username:</label><input type="text" name="username" value="admin">
-        <label for="password">Password:</label><input type="password" name="password" value="">
-        <img type="image" src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
+        <label class="first_label">Username:</label><input type="text" name="username" value="admin">
+        <label>Password:</label><input type="password" name="password" value="">
+        <img src="img/fingerprint-gui.png" class="login_icon " onclick="login();" alt="Login">
       </form>
       <div id="right_side">
-        <label for="rank">Ranking: #1</label>
+        <label>Ranking: #1</label>
         <img src="img/logout-512.png" alt="Logout" class="login_icon" onclick="location.reload()">
       </div>
     </div>
@@ -37,16 +37,16 @@
   </div>
   <ul class="barra_lateral" id="barra_lateral">
     <li>
-      <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
+      <img src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
     </li>
     <li>
-      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="open_scores()" alt="Classificações">
+      <img src="img/Classification-512.png" class="login_icon " onclick="open_scores()" alt="Rankings">
     </li>
     <li>
-      <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
+      <img src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
     </li>
     <li>
-      <img type="image" src="img/info1600.png" class="login_icon " onclick="open_info()" alt="Info">
+      <img src="img/info1600.png" class="login_icon " onclick="open_info()" alt="Info">
     </li>
 
   </ul>
@@ -59,13 +59,13 @@
         <h3>Register</h3>
       </li>
       <li>
-        <label class="first_label" for="username">Username:</label><input type="text" name="regusername" value="newuser">
+        <label class="first_label">Username:</label><input type="text" name="regusername" value="newuser">
       </li>
       <li>
-        <label for="password">Password:</label><input type="password" name="regpassword" value="">
+        <label>Password:</label><input type="password" name="regpassword" value="">
       </li>
       <li>
-        <label for="password">Confirm Password:</label><input type="password" name="regpasswordconf" value="">
+        <label>Confirm Password:</label><input type="password" name="regpasswordconf" value="">
       </li>
       <li>
         <button type="button" onclick="alert('Tenta a tua sorte com admin admin... ;)')">Submit</button>
@@ -74,17 +74,17 @@
 
     <!--CLASSIFICACOES-->
     <div id="scores" class="panel">
-      <h3>Classificações</h3>
+      <h3>Rankings</h3>
       <table id="scores_table">
 
       </table>
     </div>
 
     <!-- CONFIGURACOES -->
-    <ul class="configuracao panel" id="configuracao">
-      <li>
-        <h3>Configurações</h3>
-      </li>
+    <div class="configuracao panel" id="configuracao">
+      <div>
+        <h3>Settings</h3>
+      </div>
 
       <div class="size">
         <label>Size of the board</label>
@@ -100,15 +100,15 @@
       </div>
       <div class="adv">
         <div class="opponent">
-          <li>
+          <div>
             <label> Human vs Machine</label>
             <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()" checked>
-          </li>
+          </div>
 
-          <li>
+          <div>
             <label> Human vs Human</label>
             <input type="radio" id="game_human" name="game_mode" value="human" onclick="flip_adv()">
-          </li>
+          </div>
         </div>
 
         <div>
@@ -121,14 +121,14 @@
             </select>
           </div>
           <div class="who_starts">
-            <li>
+            <div>
               <label>1st player starts</label>
               <input type="radio" id="first_start" name="first_player" value="first" onclick="changeWhoStart()" checked>
-            </li>
-            <li>
+            </div>
+            <div>
               <label>2nd player/pc starts</label>
               <input type="radio" id="second_start" name="first_player" value="second" onclick="changeWhoStart()">
-            </li>
+            </div>
           </div>
         </div>
 
@@ -137,12 +137,27 @@
       <!--    <li id="botao_submit">
       <button type="button" onclick="choose_settings()">Submit</button>
     </li> -->
-  </ul>
+  </div>
 
   <!--Info-->
   <div id="info" class="panel">
     <h3>About the game</h3>
     <p>Nim is a strategy game in which two players take turns taking off objects from different rows. With each turn the player must take at least one object from one row and all objects removed must come from a single row. <br><br>Who ever takes out the last object wins.</p>
+    <br>
+    <br>
+    <br>
+    <p>You can play this game with a friend or against the computer. To choose your adversary type you only need to change the corresponding setting on the settings tab.</p>
+    <br>
+    <br>
+    <img src="img/jogada.gif" alt="imagem exemplo" class="imag_config">
+    <br>
+    <br>
+    <p>It's important to draw attention to the Random Mode on the settings tab. With this option enabled, the number of pieces in each row will be random, not respecting the triangle form, for when you get bored of the standard game.</p>
+    <br>
+    <br>
+    <p>Playing is simple, using the defaults or tweaking the settings to your preference. To start, go to the play tab, press "Let The Games Begin" and then simply click on the piece from which you want to remove. The rest of the line to the right, including the selected piece, will be removed.</p>
+    <br>
+    <br>
   </div>
 
   <!-- INICIAL -->
@@ -176,7 +191,6 @@
     <textarea id="message_board" disabled>Welcome!</textarea>
   </div>
 
-</div>
 </div>
 
 </body>

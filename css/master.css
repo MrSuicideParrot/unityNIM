@@ -303,6 +303,10 @@ input{
   margin-right: 20%;
 }
 
+#info img{
+  margin-left: 29%;
+}
+
 
 /*#botao_submit{
 display: none;
