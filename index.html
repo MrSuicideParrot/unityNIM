@@ -153,15 +153,20 @@
 
   <div id="tabuleiro_div" class="panel">
     <div id="tabuleiro_menu">
-      <div id="game_start" onclick="init_game()">
-        Let the games begin!
+      <div onclick="init_game()">
+        <div id="game_start">
+          Let the games begin!
+        </div>
+        <div id="game_restart">
+          Play Again!
+        </div>
       </div>
-      <div id="game_continue" onclick="current_tabuleiro.give_up()">
-        Give up
+      <div onclick="current_tabuleiro.give_up()">
+        <div id="game_continue" >
+          Give up
+        </div>
       </div>
-      <div id="game_restart" onclick="init_game()">
-        Play Again!
-      </div>
+
     </div>
 
     <table border="0" cellspacing="0" id="tabuleiro">
