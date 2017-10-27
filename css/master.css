@@ -42,7 +42,7 @@ header h4, h6{
 #right_side{
   display: none;
   float: right;
-  width: 10%;
+  width: 12%;
   margin-right: 7%;
 }
 
@@ -298,7 +298,7 @@ input{
 #info p{
   color: #444233;
   font-size: 120%;
-  text-align: center;
+  text-align: justify;
   margin-left: 20%;
   margin-right: 20%;
 }
@@ -311,7 +311,8 @@ display: none;
 #tabuleiro_div{
   display: none;
   float: right;
-  margin-right: 38.5%;
+  /*margin-right: 30%;*/
+  width: 100%;
   margin-top: 4%;
 }
 
@@ -375,6 +376,13 @@ display: none;
 
 .choosen_piece{
   background-color: white;
+  border-style: solid;
+  border-color: #f07057;
+}
+
+.imag_config{
+  width: 50%;
+  margin-left: 24%;
   border-style: solid;
   border-color: #f07057;
 }

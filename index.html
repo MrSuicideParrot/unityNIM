@@ -40,7 +40,7 @@
       <img type="image" src="img/play.png" class="login_icon " onclick="display_game()" alt="play">
     </li>
     <li>
-      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="open_scores()" alt="Classificações">
+      <img type="image" src="img/Classification-512.png" class="login_icon " onclick="open_scores()" alt="Score board">
     </li>
     <li>
       <img type="image" src="img/preferences.png" class="login_icon " onclick="open_config()" alt="preferences">
@@ -74,7 +74,7 @@
 
     <!--CLASSIFICACOES-->
     <div id="scores" class="panel">
-      <h3>Classificações</h3>
+      <h3>Score board</h3>
       <table id="scores_table">
 
       </table>
@@ -83,7 +83,7 @@
     <!-- CONFIGURACOES -->
     <ul class="configuracao panel" id="configuracao">
       <li>
-        <h3>Configurações</h3>
+        <h3>Settings</h3>
       </li>
 
       <div class="size">
@@ -92,7 +92,7 @@
           <option value="4">4</option>
           <option value="6">6</option>
           <option value="8">8</option>
-          <option value="10">10</option>
+        <!--  <option value="10">10</option> -->
         </select>
 
         <label>Random Mode</label>
@@ -134,15 +134,26 @@
 
 
       </div>
-      <!--    <li id="botao_submit">
-      <button type="button" onclick="choose_settings()">Submit</button>
-    </li> -->
   </ul>
 
   <!--Info-->
   <div id="info" class="panel">
     <h3>About the game</h3>
     <p>Nim is a strategy game in which two players take turns taking off objects from different rows. With each turn the player must take at least one object from one row and all objects removed must come from a single row. <br><br>Who ever takes out the last object wins.</p>
+    <p>You can play this game with your friends or your cute computer, for that you only need to change the settings on tab settings.</p>
+    <br>
+    <img src="img/settings_example.jpg" alt="imagem exemplo" class="imag_config">
+    <br>
+    <p>On the settings tab is important to draw attention to the Random Mode, with that option activated
+    the postion of the checkers on the board it will be random, and not respecting the triangle form.
+    </p>
+    <p>Playing is simple, after you tweak your setitings or only use the default,
+      go to the play tab, press "Let The Games Begin" and then simple click on the piece more at left that you want to remove
+    and the rest of the line including the selected piece will be removed.</p>
+    <br>
+    <img src="img/jogada.gif" alt="gif exemplo jogada" class="imag_config">
+    <br>
+    <br>
   </div>
 
   <!-- INICIAL -->
@@ -174,6 +185,7 @@
     </table>
     <br>
     <textarea id="message_board" disabled>Welcome!</textarea>
+    <br>
   </div>
 
 </div>
