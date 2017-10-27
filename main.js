@@ -7,11 +7,7 @@ var piramide = true;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
 var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes faz a pensar, 100 - pensa sempre
 var beautiful_API = {
-  1:['Admin',321402183],
-  2:['efsres',9128390],
-  3:['fsderf',3412],
-  4:['Primera',0],
-  5:['fersffrds',3]
+  1:['Admin',0],
 };
 
 function Tabuleiro(){
@@ -34,9 +30,9 @@ function Tabuleiro(){
       var elemento_td = document.createElement("td");
       var elemento = document.createElement("div");
       elemento.setAttribute("class", "peca_jogo");
-      /*elemento.setAttribute("id",i+" "+j);*/
+
       elemento.setAttribute("onclick","move('"+i+" "+j+"')");
-      /*elemento.textContent="Life";*/
+
       auxiliar.push(elemento);
       elemento_td.appendChild(elemento);
       linha.appendChild(elemento_td);
@@ -99,7 +95,7 @@ Tabuleiro.prototype.is_tabuleiro_empty = function(){
   count += this.pecas_array[seg].length;
 
   if(count==0)
-  return true;
+    return true;
 
   return false;
 }
@@ -213,15 +209,13 @@ Tabuleiro.prototype.machine_play = function(){
       i = l_target;
       j = this.pecas_array[l_target].length - (inicial - final)
 
-      //play = i+" "+j;
     }
   }
-  //var remover = Array();
   else{
 
     [i,j] = this.random_pos();
-    //play = i+" "+j;
   }
+
   this.pecas_array[i][j].style.background="white";
   this.pecas_array[i][j].style.borderStyle="solid";
   this.pecas_array[i][j].style.borderColor="#f07057";
@@ -247,7 +241,6 @@ function login() {
   document.getElementById('initial_play').style.display = "inline";
   document.getElementById('login_').innerHTML += ('Welcome, '+user+"!");
   document.getElementById('right_side').style.display = "inherit";
-  /*  document.getElementById('tabuleiro_div').style.display = 'table';  */
 }
 
 function close_panels(){
@@ -421,7 +414,6 @@ function sort_scores(){
 
   for(i=1; i<(rows.length); i++){
     rows[i].getElementsByTagName("td")[0].innerText = i + '.' + rows[i].getElementsByTagName("td")[0].innerText;
-    /*change_pos(rows[i].getElementsByTagName("td")[0], i);*/
   }
 }
 
@@ -542,26 +534,5 @@ function randomState(){
   }
   else{
     piramide = true;
-  }
-}
-
-function log_game(type) {
-  switch (type) {
-    case 0:
-    document.getElementsByClassName('message_board').value = "Parabéns! Ganhaste!";
-    break;
-    case 1:
-    document.getElementsByClassName('message_board').value = "A jogada não é possivel, vez do adversário!";
-    break;
-
-    case 2:
-    document.getElementsByClassName('message_board').value = "A máquina ganhou...";
-    break;
-
-    case 3:
-    document.getElementsByClassName('message_board').value = "Para próxima nao desistas.";
-    break;
-    default:
-    break;
   }
 }
