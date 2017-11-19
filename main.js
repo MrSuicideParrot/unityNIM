@@ -229,12 +229,11 @@ function login() {
   var username = document.getElementById("login_form").username.value;
   var password = document.getElementById("login_form").password.value;
 
-  if(username!=='admin'||password!=='admin'){
-    alert('Fallhou a password!');
-    return;
-  }
+  registerApi(username, password);
+}
 
-  user = "Admin";
+function changeToLoged(username){
+  user = username;
   document.getElementById('registo').style.display = "none";
   document.getElementById('login_form').style.display = "none";
   document.getElementById('barra_lateral').style.display = "inline";

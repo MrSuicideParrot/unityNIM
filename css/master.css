@@ -72,6 +72,10 @@ input{
   cursor: pointer;
 }
 
+input .login_icon{
+  background:url("https://i.imgur.com/ZZrTeOf.png") no-repeat scroll 0 0 transparent;;
+}
+
 .divisor hr{
   height: 10px;
   border: 0;
@@ -324,7 +328,7 @@ display: none;
   margin-top: 5%;
   border-left: 1px solid black;
   width: 50%;
-  height: 50%; 
+  height: 50%;
 }
 
 #tabuleiro td{

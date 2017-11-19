@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
 
   <script src="arrayUtils.js" charset="utf-8"></script>
+  <script src="requests.js" charset="utf-8"></script>
   <script src="main.js" charset="utf-8"></script>
 
   <link rel="icon" href="https://i.imgur.com/vrkFVCc.png">
@@ -23,11 +24,12 @@
 
   <div class="divisor">
     <div id="login_">
-      <form id="login_form">
+      <form id="login_form" method="post">
         <label class="first_label">Username:</label><input type="text" name="username" value="admin">
         <label>Password:</label><input type="password" name="password" value="">
-        <img src="https://i.imgur.com/ZZrTeOf.png" class="login_icon " onclick="login();" alt="Login">
+        <input type="submit" value="Login" onclick="login()">
       </form>
+
       <div id="right_side">
         <label>Ranking: #1</label>
         <img src="https://i.imgur.com/BXv8Drk.png" alt="Logout" class="login_icon" onclick="location.reload()">
