@@ -145,7 +145,7 @@ Tabuleiro.prototype.machine_play = function(){
     for(var i = 0; i <this.pecas_array.length; ++i){
       var numero = this.pecas_array[i].length;
       contas[i] = Array();
-      //pode falhar condições não virificadas
+
       for(var j = Math.trunc(Math.log2(tamanho))+1; j >0; --j){
         var [resto, quociente] = division(numero);
         contas[i][j] = resto;
