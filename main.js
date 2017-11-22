@@ -1,8 +1,14 @@
 
 /* VAriavies globais */
 var tamanho = 4;
+
+//Utilizador
 var user;
 var pass_;
+
+//Grupo
+var group = 334;
+
 var current_tabuleiro;
 var game_type = 0;
 var piramide = true;
@@ -89,6 +95,10 @@ Tabuleiro.prototype.user_play = function(clicked_id, machine){
 }
 
 Tabuleiro.prototype.lock = 1;
+
+Tabuleiro.prototype.game_id = null;
+
+Tabuleiro.prototype.eventSource = null;
 
 Tabuleiro.prototype.is_tabuleiro_empty = function(){
   var count = 0;
@@ -234,8 +244,7 @@ function login() {
   registerApi(username, password);
 }
 
-function changeToLoged(username){
-  user = username;
+function changeToLoged(){
   document.getElementById('registo').style.display = "none";
   document.getElementById('login_form').style.display = "none";
   document.getElementById('barra_lateral').style.display = "inline";
@@ -280,10 +289,14 @@ function flip_adv(){
   if(document.getElementById('game_machine').checked){
     document.getElementById('div_dificult').style.display = 'inherit';
     game_type = 0;
+    document.getElementById("random_mode").disabled = false;
   }
   else if(document.getElementById('game_human').checked){
     document.getElementById('div_dificult').style.display = 'none';
     game_type = 1;
+    piramide=true;
+    document.getElementById("random_mode").checked = true;
+    document.getElementById("random_mode").disabled = true;
   }
 }
 
@@ -312,10 +325,17 @@ function init_game(){
   document.getElementById('game_restart').style.display = 'none';
   document.getElementById('game_continue').style.display = 'inline';
   current_tabuleiro = new Tabuleiro();
-  if(first_to_play === 1){
-    current_tabuleiro.machine_play();
+  if(game_type == 0){
+      //Contra a máquina
+      if(first_to_play === 1){
+        current_tabuleiro.machine_play();
+      }
+      current_tabuleiro.lock = 0;
   }
-  current_tabuleiro.lock = 0;
+  else{
+      //contra outro jogador
+      joinAPI();
+  }
   change_msg(0);
 }
 
