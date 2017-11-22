@@ -253,6 +253,7 @@ function close_panels(){
 
 function open_scores(){
   close_panels();
+  beautiful_API = rankingAPI(tamanho);
   tableScore.init();
   sort_scores();
   document.getElementById('scores').style.display = "inherit";
