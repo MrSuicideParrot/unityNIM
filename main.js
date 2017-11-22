@@ -9,7 +9,7 @@ var piramide = true;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
 var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes faz a pensar, 100 - pensa sempre
 var beautiful_API = {
-  1:['Admin',0],
+  1:['Admin',0,0],
 };
 
 function Tabuleiro(){
@@ -97,7 +97,7 @@ Tabuleiro.prototype.is_tabuleiro_empty = function(){
   count += this.pecas_array[seg].length;
 
   if(count==0)
-    return true;
+  return true;
 
   return false;
 }
@@ -179,18 +179,18 @@ Tabuleiro.prototype.machine_play = function(){
         }
         //esta errado tens de pensar
         if(pos_inter.length !==0 && pos_final.length !== pos_inter.length){
-            if(pos_final.length === 0){
-                pos_final = pos_inter;
+          if(pos_final.length === 0){
+            pos_final = pos_inter;
+          }
+          else{
+            remIndex = Array();
+            for (var v in pos_final) {
+              if(pos_inter.includes(pos_final[v])){
+                remIndex.push(pos_final[v]);
+              }
             }
-            else{
-                remIndex = Array();
-                for (var v in pos_final) {
-                    if(pos_inter.includes(pos_final[v])){
-                        remIndex.push(pos_final[v]);
-                    }
-                }
-                pos_final = remIndex;
-            }
+            pos_final = remIndex;
+          }
         }
         if(pos_final.length === 1)
         break;
@@ -252,12 +252,10 @@ function close_panels(){
   }
 }
 
-
 function open_scores(){
   close_panels();
-  beautiful_API = rankingAPI(tamanho);
   tableScore.init();
-  sort_scores();
+  order_scores();
   document.getElementById('scores').style.display = "inherit";
 }
 
@@ -372,7 +370,11 @@ const tableScore ={
     cabecalho.appendChild(aux);
 
     aux = document.createElement('th');
-    aux.textContent = 'Score';
+    aux.textContent = 'Victories';
+    cabecalho.appendChild(aux);
+
+    aux = document.createElement('th');
+    aux.textContent = 'Victories';
     cabecalho.appendChild(aux);
 
     table.appendChild(cabecalho);
@@ -387,47 +389,24 @@ const tableScore ={
       aux.textContent = beautiful_API[i][1];
       cabecalho.appendChild(aux);
 
+      aux = document.createElement('td');
+      aux.textContent = beautiful_API[i][2];
+      cabecalho.appendChild(aux);
+
       table.appendChild(cabecalho);
     }
   }
 }
 
-function sort_scores(){
-  var stable, rows, sflag, i, x, y, to_switch;
+function order_scores(){
+  var stable, rows, i;
   stable = document.getElementById("scores_table");
-  sflag = true;
-  while(sflag){
-    sflag = false;
-    rows = stable.getElementsByTagName("tr");
-    for(i=1; i<(rows.length-1); i++){
-      to_switch = false;
-      x = rows[i].getElementsByTagName("td")[1];
-      y = rows[i+1].getElementsByTagName("td")[1];
-      if(parseInt(x.innerHTML) < parseInt(y.innerHTML)){
-        to_switch = true;
-        break;
-      }
-    }
-    if(to_switch){
-      rows[i].parentNode.insertBefore(rows[i+1], rows[i]);
-      sflag = true;
-    }
-  }
+  rows = stable.getElementsByTagName("tr");
 
   for(i=1; i<(rows.length); i++){
     rows[i].getElementsByTagName("td")[0].innerText = i + '.' + rows[i].getElementsByTagName("td")[0].innerText;
   }
 }
-
-function change_pos(cell, pos){
-  var i;
-  for(i=0; i<(cell.innerText.length-1); i++){
-    if(cell.innerText[i] == '.')
-    break;
-  }
-  cell.innerText = pos + cell.innerText.substr(i,cell.innerText.length-1);
-}
-
 
 function addpointstouser(){
   if(dificult_level == 100){

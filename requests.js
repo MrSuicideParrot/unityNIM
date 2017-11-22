@@ -38,9 +38,9 @@ function registerApi(login, password) {
 }
 
 
-function rankingAPI(size){
+function rankingAPI(){
   content ={
-    "size":size,
+    "size":tamanho,
   }
   post_content = JSON.stringify(content);
   if(!XMLHttpRequest) {
@@ -61,7 +61,12 @@ function rankingAPI(size){
         alert(res["error"]);
       }
       else{
-        return res;
+        var auxarray = {};
+        for(var i in res["ranking"]){
+          auxarray[i] = [res["ranking"][i]["nick"], res["ranking"][i]["victories"], res["ranking"][i]["games"],]
+        }
+        beautiful_API = auxarray;
+        open_scores();
       }
     }
     else{
