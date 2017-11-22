@@ -24,9 +24,9 @@
 
   <div class="divisor">
     <div id="login_">
-      <form id="login_form" method="post">
-        <label class="first_label">Username:</label><input type="text" name="username">
-        <label>Password:</label><input type="password" name="password">
+      <form id="login_form" method="post" onsubmit="event.preventDefault()">
+        <label class="first_label">Username:</label><input type="text" name="username" value="admin">
+        <label>Password:</label><input type="password" name="password" value="">
         <input type="submit" value="Login" onclick="login()">
       </form>
 
