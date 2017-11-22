@@ -36,3 +36,7 @@ function registerApi(login, password) {
 
   xhr.send(post_content);
 }
+
+function joinAPI() {
+
+}

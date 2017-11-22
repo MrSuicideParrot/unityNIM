@@ -1,6 +1,8 @@
 
 /* VAriavies globais */
 var tamanho = 4;
+var user;
+var pass_;
 var current_tabuleiro;
 var game_type = 0;
 var piramide = true;
@@ -534,4 +536,19 @@ function randomState(){
   else{
     piramide = true;
   }
+}
+
+function register(){
+  var username = document.getElementById("registo").regusername.value;
+  var password1 = document.getElementById("registo").regpassword.value;
+  var password2 = document.getElementById("registo").regpasswordconf.value;
+
+  if(password1 !== password2){
+    alert('Passowrd não coincidem!');
+    document.getElementById("registo").regpassword.value = "";
+    document.getElementById("registo").regpasswordconf.value ="";
+    return;
+  }
+  //tratar de erros de especificos
+  registerApi(username, password1);
 }
