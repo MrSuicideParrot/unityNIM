@@ -394,7 +394,7 @@ const tableScore ={
     cabecalho.appendChild(aux);
 
     aux = document.createElement('th');
-    aux.textContent = 'Victories';
+    aux.textContent = 'Games';
     cabecalho.appendChild(aux);
 
     table.appendChild(cabecalho);
