@@ -93,7 +93,15 @@ Tabuleiro.prototype.user_play = function(clicked_id, machine){
   }
   return true;
 }
+Tabuleiro.prototype.posConverter = function(clicked_id){
+    clicked_id = clicked_id.split(" ");
+    var i = clicked_id[0]*1;
+    var j = clicked_id[1]*1;
 
+    true_j = (this.pecas_array[i].length-j);
+
+    return [i, true_j];
+}
 Tabuleiro.prototype.lock = 1;
 
 Tabuleiro.prototype.game_id = null;
@@ -142,6 +150,11 @@ Tabuleiro.prototype.random_pos = function() {
 }
 
 Tabuleiro.prototype.pecas_array = Array();
+
+Tabuleiro.prototype.moveConverter = function(rack, stack, pieces){
+    var tmp = stack+" "+(rack[stack]-pieces);
+    this.user_play(tmp,false);
+}
 
 Tabuleiro.prototype.machine_play = function(){
   var sorte = Math.floor((Math.random() * 100));
@@ -293,7 +306,6 @@ function flip_adv(){
     document.getElementById('div_dificult').style.display = 'none';
     game_type = 1;
     piramide=true;
-    document.getElementById("random_mode").checked = true;
     document.getElementById("random_mode").disabled = true;
   }
 }
@@ -338,6 +350,12 @@ function init_game(){
 }
 
 function move(clicked_id){
+    if(game_type === 1){
+        var [i, j] =current_tabuleiro.posConverter(clicked_id)
+        notifyAPI(i,j);
+        return;
+    }
+
   if(current_tabuleiro.lock !== 0){
     change_msg(-2);
     setTimeout(function(){change_msg(0)},1000);
@@ -468,6 +486,21 @@ function change_msg(val){
   else if(val==0) {
     document.getElementById("message_board").innerText = ""
   }
+  else if (val==-3) {
+    document.getElementById("message_board").innerText = "Comunication error"
+  }
+}
+
+function verbose_msg(type, name){
+    if(type == 0){
+        document.getElementById("message_board").innerText = "The "+name+" won the game!!!"
+    }
+    else if (type == 1) {
+        document.getElementById("message_board").innerText = "It's "+name+"turn."
+    }
+    else if (type == -1) {
+        document.getElementById("message_board").innerText = name
+    }
 }
 
 
@@ -544,7 +577,7 @@ function register(){
   var password2 = document.getElementById("registo").regpasswordconf.value;
 
   if(password1 !== password2){
-    alert('Passowrd não coincidem!');
+    alert('Password não coincidem!');
     document.getElementById("registo").regpassword.value = "";
     document.getElementById("registo").regpasswordconf.value ="";
     return;

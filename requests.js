@@ -108,7 +108,9 @@ function joinAPI(){
         current_tabuleiro.lock = 0;
       }
       else{
-        alert(res["error"]);
+        console.log(res["error"]);
+        document.getElementById('game_continue').style.display = 'none';
+        document.getElementById('game_restart').style.display = 'inline';
       }
     }
      xhr.send(post_content);
@@ -116,10 +118,80 @@ function joinAPI(){
 
 function updateAPI(){
     url = serverApi + "/update?game="+current_tabuleiro.game_id+"&nick="+user;
-    Tabuleiro.prototype.eventSource = new EventSource(encodeURI(url));
-    ss.onmessage = function(event) {
+    current_tabuleiro.eventSource = new EventSource(encodeURI(url));
+    current_tabuleiro.eventSource.onmessage = function(event) {
         var data = JSON.parse(event.data);
-        //to do
+
+        //Erro de comunicação
+        if (data.hasOwnProperty("error")){
+            console.log(data["error"]);
+            ss.close();
+            current_tabuleiro.give_up();
+            change_msg(-3);
+        }
+
+        //turn
+        if (data.hasOwnProperty("turn")){
+            verbose_msg(1, data["turn"]);
+        }
+
+        //Atualização de tabuleiro
+        if (data.hasOwnProperty("rack") && data.hasOwnProperty("stack") && data.hasOwnProperty("pieces")) {
+            current_tabuleiro.moveConverter(data["rack"],data["stack"],data["pieces"]);
+        }
+
+        //Winner
+        if (data.hasOwnProperty("winner")){
+            if(data["winner"]===user){
+                change_msg(1);
+                document.getElementById('game_continue').style.display = 'none';
+                document.getElementById('game_restart').style.display = 'inline';
+            }
+            else{
+                verbose_msg(0, data["winner"]);
+                document.getElementById('game_continue').style.display = 'none';
+                document.getElementById('game_restart').style.display = 'inline';
+            }
+        }
     };
 
+}
+
+function notifyAPI(stack, pieces){
+    content ={
+      "stack":stack,
+      "pieces":pieces,
+    };
+
+    post_content = JSON.stringify(content);
+
+    if(!XMLHttpRequest) {
+      console.log("XHR não é suportado");
+      return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST",serverApi+"/notify", true);
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState < 4){
+        return;
+      }
+      res  = JSON.parse(xhr.responseText);
+      if(xhr.status == 200){
+        if(isEmpty(res)){
+            user = login;
+            pass_ = password;
+          changeToLoged();
+        }
+        else{
+          console.log(res["error"]);
+          alert(res["error"]);
+        }
+      }
+      else{
+        alert(res["error"]);
+      }
+    }
+
+    xhr.send(post_content);
 }
