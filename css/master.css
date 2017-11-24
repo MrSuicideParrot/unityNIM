@@ -44,10 +44,16 @@ header h4, h6{
   float: right;
   width: 12%;
   margin-right: 7%;
+  cursor: pointer;
+}
+
+#right_side label{
+  text-transform: none;
+  cursor: pointer;
 }
 
 #right_side img{
-  margin-left: 1%;
+  margin-left: 0.5%;
   height: 3%;
   width: auto;
 }
