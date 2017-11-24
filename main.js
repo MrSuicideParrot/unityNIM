@@ -300,11 +300,15 @@ function open_info(){
 function flip_adv(){
   if(document.getElementById('game_machine').checked){
     document.getElementById('div_dificult').style.display = 'inherit';
+    document.getElementById('who_starts').style.display = 'inherit';
+    document.getElementById('group').style.display = 'none';
     game_type = 0;
     document.getElementById("random_mode").disabled = false;
   }
   else if(document.getElementById('game_human').checked){
     document.getElementById('div_dificult').style.display = 'none';
+    document.getElementById('who_starts').style.display = 'none';
+    document.getElementById('group').style.display = 'inherit';
     game_type = 1;
     piramide=true;
     document.getElementById("random_mode").disabled = true;
@@ -324,6 +328,7 @@ function choose_settings(){
   game_type = get_game_type('game_machine');
   dificult_level = document.getElementById('game_difficulty').options[document.getElementById('game_difficulty').selectedIndex].value;
   first_to_play = get_game_type('first_start');
+  group = document.getElementById('group').value;
 }
 
 function display_game() {

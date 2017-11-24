@@ -265,6 +265,16 @@ input .login_icon{
   width: 40%;
 }
 
+#group{
+  display: none;
+  margin-top: 8%;
+}
+
+#group input{
+  width: 6%;
+}
+
+
 .configuracao label{
   display: inline-block;
   width: 44%;
