@@ -3,11 +3,11 @@
 var tamanho = 4;
 
 //Utilizador
-var user;
+var user_;
 var pass_;
 
 //Grupo
-var group = 334;
+var group = 337;
 
 var current_tabuleiro;
 var game_type = 0;
@@ -51,7 +51,10 @@ function Tabuleiro(){
 }
 
 Tabuleiro.prototype.give_up = function () {
-  change_msg(-1);
+  if(game_type===1)
+    leaveAPI();
+  else
+    change_msg(-1);
   var parent_element = document.getElementById('tabuleiro');
   while (parent_element.hasChildNodes()) {
     parent_element.removeChild(parent_element.lastChild);
@@ -98,9 +101,7 @@ Tabuleiro.prototype.posConverter = function(clicked_id){
     var i = clicked_id[0]*1;
     var j = clicked_id[1]*1;
 
-    true_j = (this.pecas_array[i].length-j);
-
-    return [i, true_j];
+    return [i, j];
 }
 Tabuleiro.prototype.lock = 1;
 
@@ -152,7 +153,7 @@ Tabuleiro.prototype.random_pos = function() {
 Tabuleiro.prototype.pecas_array = Array();
 
 Tabuleiro.prototype.moveConverter = function(rack, stack, pieces){
-    var tmp = stack+" "+(rack[stack]-pieces);
+    var tmp = stack+" "+(pieces);
     this.user_play(tmp,false);
 }
 
@@ -262,7 +263,7 @@ function changeToLoged(){
   document.getElementById('login_form').style.display = "none";
   document.getElementById('barra_lateral').style.display = "inline";
   document.getElementById('initial_play').style.display = "inline";
-  document.getElementById('login_').innerHTML += ('Welcome, '+user+"!");
+  document.getElementById('login_').innerHTML += ('Welcome, '+user_+"!");
   document.getElementById('right_side').style.display = "inherit";
 }
 
@@ -334,9 +335,9 @@ function init_game(){
   document.getElementById('game_start').style.display = 'none';
   document.getElementById('game_restart').style.display = 'none';
   document.getElementById('game_continue').style.display = 'inline';
-  current_tabuleiro = new Tabuleiro();
   if(game_type == 0){
       //Contra a máquina
+      current_tabuleiro = new Tabuleiro();
       if(first_to_play === 1){
         current_tabuleiro.machine_play();
       }
@@ -496,7 +497,7 @@ function verbose_msg(type, name){
         document.getElementById("message_board").innerText = "The "+name+" won the game!!!"
     }
     else if (type == 1) {
-        document.getElementById("message_board").innerText = "It's "+name+"turn."
+        document.getElementById("message_board").innerText = "It's "+name+" turn."
     }
     else if (type == -1) {
         document.getElementById("message_board").innerText = name

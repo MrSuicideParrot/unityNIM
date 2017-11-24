@@ -22,7 +22,7 @@ function registerApi(login, password) {
     res  = JSON.parse(xhr.responseText);
     if(xhr.status == 200){
       if(isEmpty(res)){
-          user = login;
+          user_ = login;
           pass_ = password;
         changeToLoged();
       }
@@ -83,7 +83,7 @@ function rankingAPI(){
 function joinAPI(){
     content ={
         'group':group,
-        'nick':user,
+        'nick':user_,
         'pass':pass_,
         'size':tamanho,
     };
@@ -103,7 +103,9 @@ function joinAPI(){
       }
       res  = JSON.parse(xhr.responseText);
       if(xhr.status == 200){
+        current_tabuleiro = new Tabuleiro();
         current_tabuleiro.game_id = res["game"];
+        verbose_msg(-1,"Waiting for other player...");
         updateAPI();
         current_tabuleiro.lock = 0;
       }
@@ -111,13 +113,14 @@ function joinAPI(){
         console.log(res["error"]);
         document.getElementById('game_continue').style.display = 'none';
         document.getElementById('game_restart').style.display = 'inline';
+        verbose_msg(-1,res["error"]);
       }
     }
      xhr.send(post_content);
 }
 
 function updateAPI(){
-    url = serverApi + "/update?game="+current_tabuleiro.game_id+"&nick="+user;
+    url = serverApi + "/update?game="+current_tabuleiro.game_id+"&nick="+user_;
     current_tabuleiro.eventSource = new EventSource(encodeURI(url));
     current_tabuleiro.eventSource.onmessage = function(event) {
         var data = JSON.parse(event.data);
@@ -142,7 +145,7 @@ function updateAPI(){
 
         //Winner
         if (data.hasOwnProperty("winner")){
-            if(data["winner"]===user){
+            if(data["winner"]===user_){
                 change_msg(1);
                 document.getElementById('game_continue').style.display = 'none';
                 document.getElementById('game_restart').style.display = 'inline';
@@ -152,6 +155,7 @@ function updateAPI(){
                 document.getElementById('game_continue').style.display = 'none';
                 document.getElementById('game_restart').style.display = 'inline';
             }
+            current_tabuleiro.eventSource.close();
         }
     };
 
@@ -161,6 +165,9 @@ function notifyAPI(stack, pieces){
     content ={
       "stack":stack,
       "pieces":pieces,
+      "game":current_tabuleiro.game_id,
+      "nick":user_,
+      "pass":pass_,
     };
 
     post_content = JSON.stringify(content);
@@ -179,9 +186,7 @@ function notifyAPI(stack, pieces){
       res  = JSON.parse(xhr.responseText);
       if(xhr.status == 200){
         if(isEmpty(res)){
-            user = login;
-            pass_ = password;
-          changeToLoged();
+
         }
         else{
           console.log(res["error"]);
@@ -189,9 +194,40 @@ function notifyAPI(stack, pieces){
         }
       }
       else{
-        alert(res["error"]);
+        verbose_msg(-1,res["error"]);
       }
     }
 
     xhr.send(post_content);
+}
+
+function leaveAPI(){
+  content ={
+      'game':current_tabuleiro.game_id,
+      'nick':user_,
+      'pass':pass_,
+  };
+
+  post_content = JSON.stringify(content);
+
+  if(!XMLHttpRequest) {
+    console.log("XHR não é suportado");
+    return;
+  }
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST",serverApi+"/leave", true);
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState < 4){
+      return;
+    }
+    res  = JSON.parse(xhr.responseText);
+    if(xhr.status != 200){
+      console.log(res["error"]);
+      document.getElementById('game_continue').style.display = 'none';
+      document.getElementById('game_restart').style.display = 'inline';
+      verbose_msg(-1,res["error"]);
+    }
+  }
+   xhr.send(post_content);
 }
