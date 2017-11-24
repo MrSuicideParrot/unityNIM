@@ -328,7 +328,7 @@ function choose_settings(){
   game_type = get_game_type('game_machine');
   dificult_level = document.getElementById('game_difficulty').options[document.getElementById('game_difficulty').selectedIndex].value;
   first_to_play = get_game_type('first_start');
-  group = document.getElementById('group').value;
+  group = document.getElementById('group_val').value;
 }
 
 function display_game() {
