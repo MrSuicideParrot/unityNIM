@@ -107,7 +107,6 @@ function joinAPI(){
         current_tabuleiro.game_id = res["game"];
         verbose_msg(-1,"Waiting for other player...");
         updateAPI();
-        current_tabuleiro.lock = 0;
       }
       else{
         console.log(res["error"]);
@@ -141,6 +140,9 @@ function updateAPI(){
         //Atualização de tabuleiro
         if (data.hasOwnProperty("rack") && data.hasOwnProperty("stack") && data.hasOwnProperty("pieces")) {
             current_tabuleiro.moveConverter(data["rack"],data["stack"],data["pieces"]);
+        }
+        else{
+          current_tabuleiro.lock = 0;
         }
 
         //Winner

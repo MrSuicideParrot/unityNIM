@@ -61,6 +61,7 @@ Tabuleiro.prototype.give_up = function () {
   }
   document.getElementById('game_continue').style.display = 'none';
   document.getElementById('game_restart').style.display = 'inline';
+  verbose_msg(-1,"You give up!!");
 }
 
 Tabuleiro.prototype.not_empty_line = function () {
@@ -357,6 +358,8 @@ function init_game(){
 
 function move(clicked_id){
     if(game_type === 1){
+        if(current_tabuleiro.lock !== 0)
+          return;
         var [i, j] =current_tabuleiro.posConverter(clicked_id)
         notifyAPI(i,j);
         return;
