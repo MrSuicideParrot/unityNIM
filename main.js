@@ -1,6 +1,6 @@
 
 /* VAriavies globais */
-var tamanho = 4;
+var tamanho = 6;
 
 //Utilizador
 var user_;
@@ -387,7 +387,7 @@ function move(clicked_id){
 }
 
 function changeBoardSize() {
-  tamanho = document.getElementById('board_size').selectedIndex+3;
+  //tamanho = document.getElementById('board_size').selectedIndex+3;
 }
 
 function changeDificult() {
@@ -516,7 +516,7 @@ function verbose_msg(type, name){
 // ***** INIT DA FUNÇÃO ******
 window.onload = function(){
   //Atualizar setitings
-  document.getElementById('board_size').selectedIndex = tamanho-3;
+  //document.getElementById('board_size').selectedIndex = tamanho-3;
 
   if(document.getElementById('game_machine').checked){
     if(game_type!==0){

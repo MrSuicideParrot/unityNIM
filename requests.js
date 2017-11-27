@@ -41,6 +41,7 @@ function registerApi(login, password) {
 
 
 function rankingAPI(){
+  choose_settings();
   content ={
     "size":tamanho,
   }
