@@ -581,9 +581,9 @@ function randomState(){
 }
 
 function register(){
-  var username = document.getElementById("registo").regusername.value;
-  var password1 = document.getElementById("registo").regpassword.value;
-  var password2 = document.getElementById("registo").regpasswordconf.value;
+  var username = document.getElementById("regusername").value;
+  var password1 = document.getElementById("regpassword").value;
+  var password2 = document.getElementById("regpasswordconf").value;
 
   if(password1 !== password2){
     alert('Password não coincidem!');
