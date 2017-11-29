@@ -14,9 +14,10 @@ var game_type = 0;
 var piramide = true;
 var first_to_play = 0; //0 - jogador 1 , 1 - jogador 2 / maquina
 var dificult_level = 100; // 0 - random , 50 - as vezes faz random outras vezes faz a pensar, 100 - pensa sempre
-var beautiful_API = {
-  1:['Admin',0,0],
-};
+var beautiful_API = {};
+
+checkwebs();
+localStorage.clear();
 
 function Tabuleiro(){
   var parent_element = document.getElementById('tabuleiro');
@@ -52,9 +53,11 @@ function Tabuleiro(){
 
 Tabuleiro.prototype.give_up = function () {
   if(game_type===1)
-    leaveAPI();
-  else
+  leaveAPI();
+  else{
     change_msg(-1);
+    offlost();
+  }
   var parent_element = document.getElementById('tabuleiro');
   while (parent_element.hasChildNodes()) {
     parent_element.removeChild(parent_element.lastChild);
@@ -86,6 +89,7 @@ Tabuleiro.prototype.user_play = function(clicked_id, machine){
 
   if(machine){
     if(current_tabuleiro.is_tabuleiro_empty()){
+      offlost();
       change_msg(2);
       document.getElementById('game_continue').style.display = 'none';
       document.getElementById('game_restart').style.display = 'inline';
@@ -98,11 +102,11 @@ Tabuleiro.prototype.user_play = function(clicked_id, machine){
   return true;
 }
 Tabuleiro.prototype.posConverter = function(clicked_id){
-    clicked_id = clicked_id.split(" ");
-    var i = clicked_id[0]*1;
-    var j = clicked_id[1]*1;
+  clicked_id = clicked_id.split(" ");
+  var i = clicked_id[0]*1;
+  var j = clicked_id[1]*1;
 
-    return [i, j];
+  return [i, j];
 }
 Tabuleiro.prototype.lock = 1;
 
@@ -154,8 +158,8 @@ Tabuleiro.prototype.random_pos = function() {
 Tabuleiro.prototype.pecas_array = Array();
 
 Tabuleiro.prototype.moveConverter = function(rack, stack, pieces){
-    var tmp = stack+" "+(pieces);
-    this.user_play(tmp,false);
+  var tmp = stack+" "+(pieces);
+  this.user_play(tmp,false);
 }
 
 Tabuleiro.prototype.machine_play = function(){
@@ -342,28 +346,28 @@ function init_game(){
   document.getElementById('game_restart').style.display = 'none';
   document.getElementById('game_continue').style.display = 'inline';
   if(game_type == 0){
-      //Contra a máquina
-      current_tabuleiro = new Tabuleiro();
-      if(first_to_play === 1){
-        current_tabuleiro.machine_play();
-      }
-      current_tabuleiro.lock = 0;
+    //Contra a máquina
+    current_tabuleiro = new Tabuleiro();
+    if(first_to_play === 1){
+      current_tabuleiro.machine_play();
+    }
+    current_tabuleiro.lock = 0;
   }
   else{
-      //contra outro jogador
-      joinAPI();
+    //contra outro jogador
+    joinAPI();
   }
   change_msg(0);
 }
 
 function move(clicked_id){
-    if(game_type === 1){
-        if(current_tabuleiro.lock !== 0)
-          return;
-        var [i, j] =current_tabuleiro.posConverter(clicked_id)
-        notifyAPI(i,j);
-        return;
-    }
+  if(game_type === 1){
+    if(current_tabuleiro.lock !== 0)
+    return;
+    var [i, j] =current_tabuleiro.posConverter(clicked_id)
+    notifyAPI(i,j);
+    return;
+  }
 
   if(current_tabuleiro.lock !== 0){
     change_msg(-2);
@@ -376,7 +380,7 @@ function move(clicked_id){
 
   var flag = current_tabuleiro.user_play(clicked_id, false);
   if(current_tabuleiro.is_tabuleiro_empty() && flag){
-    addpointstouser();
+    offwon();
     change_msg(1);
     document.getElementById('game_continue').style.display = 'none';
     document.getElementById('game_restart').style.display = 'inline';
@@ -426,21 +430,43 @@ const tableScore ={
 
     table.appendChild(cabecalho);
 
-    for(var i in beautiful_API){
-      cabecalho = document.createElement('tr');
-      aux = document.createElement('td');
-      aux.textContent = beautiful_API[i][0];
-      cabecalho.appendChild(aux);
+    if(document.getElementById('game_machine').checked){
+      for(var i in offsto){
+        cabecalho = document.createElement('tr');
+        aux = document.createElement('td');
+        aux.textContent = offsto[i][0];
+        cabecalho.appendChild(aux);
 
-      aux = document.createElement('td');
-      aux.textContent = beautiful_API[i][1];
-      cabecalho.appendChild(aux);
+        aux = document.createElement('td');
+        aux.textContent = offsto[i][1];
+        cabecalho.appendChild(aux);
 
-      aux = document.createElement('td');
-      aux.textContent = beautiful_API[i][2];
-      cabecalho.appendChild(aux);
+        aux = document.createElement('td');
+        aux.textContent = offsto[i][2];
+        cabecalho.appendChild(aux);
 
-      table.appendChild(cabecalho);
+        table.appendChild(cabecalho);
+      }
+      sort_scores();
+    }
+
+    else {
+      for(var i in beautiful_API){
+        cabecalho = document.createElement('tr');
+        aux = document.createElement('td');
+        aux.textContent = beautiful_API[i][0];
+        cabecalho.appendChild(aux);
+
+        aux = document.createElement('td');
+        aux.textContent = beautiful_API[i][1];
+        cabecalho.appendChild(aux);
+
+        aux = document.createElement('td');
+        aux.textContent = beautiful_API[i][2];
+        cabecalho.appendChild(aux);
+
+        table.appendChild(cabecalho);
+      }
     }
   }
 }
@@ -455,29 +481,29 @@ function order_scores(){
   }
 }
 
-function addpointstouser(){
-  if(dificult_level == 100){
-    //add 3
-    points_incr(3);
-  }
-  else if(dificult_level == 50){
-    //add 2
-    points_incr(2);
-  }
-  else{
-    //add 1
-    points_incr(1);
-  }
+/*function addpointstouser(){
+if(dificult_level == 100){
+//add 3
+points_incr(3);
+}
+else if(dificult_level == 50){
+//add 2
+points_incr(2);
+}
+else{
+//add 1
+points_incr(1);
+}
 }
 
 function points_incr(p){
-  for(var i in beautiful_API){
-    if (beautiful_API[i][0] == 'Admin'){
-      beautiful_API[i][1]+=p;
-      break;
-    }
-  }
+for(var i in beautiful_API){
+if (beautiful_API[i][0] == 'Admin'){
+beautiful_API[i][1]+=p;
+break;
 }
+}
+}*/
 
 function change_msg(val){
   if(val==1){
@@ -501,15 +527,15 @@ function change_msg(val){
 }
 
 function verbose_msg(type, name){
-    if(type == 0){
-        document.getElementById("message_board").innerText = "The "+name+" won the game!!!"
-    }
-    else if (type == 1) {
-        document.getElementById("message_board").innerText = "It's "+name+" turn."
-    }
-    else if (type == -1) {
-        document.getElementById("message_board").innerText = name
-    }
+  if(type == 0){
+    document.getElementById("message_board").innerText = "The "+name+" won the game!!!"
+  }
+  else if (type == 1) {
+    document.getElementById("message_board").innerText = "It's "+name+" turn."
+  }
+  else if (type == -1) {
+    document.getElementById("message_board").innerText = name
+  }
 }
 
 
@@ -586,7 +612,7 @@ function register(){
   var password2 = document.getElementById("regpasswordconf").value;
 
   if(password1 !== password2){
-    alert('Password não coincidem!');
+    alert('Passwords não coincidem!');
     document.getElementById("registo").regpassword.value = "";
     document.getElementById("registo").regpasswordconf.value ="";
     return;
