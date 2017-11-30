@@ -431,23 +431,25 @@ const tableScore ={
     table.appendChild(cabecalho);
 
     if(document.getElementById('game_machine').checked){
-      for(var i in offsto){
-        cabecalho = document.createElement('tr');
-        aux = document.createElement('td');
-        aux.textContent = offsto[i][0];
-        cabecalho.appendChild(aux);
+      if(sto_flag){
+        for(var i in offsto){
+          cabecalho = document.createElement('tr');
+          aux = document.createElement('td');
+          aux.textContent = offsto[i][0];
+          cabecalho.appendChild(aux);
 
-        aux = document.createElement('td');
-        aux.textContent = offsto[i][1];
-        cabecalho.appendChild(aux);
+          aux = document.createElement('td');
+          aux.textContent = offsto[i][1];
+          cabecalho.appendChild(aux);
 
-        aux = document.createElement('td');
-        aux.textContent = offsto[i][2];
-        cabecalho.appendChild(aux);
+          aux = document.createElement('td');
+          aux.textContent = offsto[i][2];
+          cabecalho.appendChild(aux);
 
-        table.appendChild(cabecalho);
+          table.appendChild(cabecalho);
+        }
+        sort_scores();
       }
-      sort_scores();
     }
 
     else {
