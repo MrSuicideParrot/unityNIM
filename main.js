@@ -81,7 +81,7 @@ Tabuleiro.prototype.give_up = function () {
       current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
       current_tabuleiro.animac.style.display = "none";
     }
-  }else
+  }else{
     change_msg(-1);
     offlost();
   }
