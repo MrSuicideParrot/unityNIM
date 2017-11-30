@@ -1,73 +1,35 @@
-function Waiter(el) {
-    var c = document.getElementById("myCanvas");
+function Waiter(elem){
+  this.base = elem;
+  this.gc = this.base.getContext("2d");
 
-    this.TIMER_BORDER = 3;
-
-    this.cor1 = "#ececec";  //cor anel interior
-    this.cor2 = "#3366CC"; // Cor do anel exterior
-
-
-    this.TIMER_DURATION = 999;
-    this.TIME_ELAPSED = 0;
-
-    this.r1 = 8; //raio interior
-    this.r2 = 10; //raio exterior
-
-    this.MAXFPS = 60;
-    this.c = c;
-
-    this.ctx = c.getContext('2d');
+  this.center={
+    x: this.base.width/2,
+    y: this.base.height/2,
+  };
 }
 
-Waiter.prototype.clearFrame = function () {
-    this.ctx.clearRect(0, 0, this.el.width, this.el.height);
+Waiter.prototype.base = null;
+//contexto
+Waiter.prototype.gc = null;
+
+//angle
+Waiter.prototype.sAngle = 0;
+Waiter.prototype.eAngle = 0.5;
+Waiter.prototype.alpha = 0;
+Waiter.prototype.center = null;
+Waiter.prototype.length = undefined;
+
+Waiter.prototype.play= function(){
+  this.gc.clearRect(0,0,this.base.width,this.base.height);
+  this.sAngle += 0.008;
+  this.eAngle += 0.008;
+  this.gc.beginPath();
+  this.gc.arc(this.center.x, this.center.y,20,(this.sAngle*Math.PI),(this.eAngle*Math.PI));
+  this.gc.lineWidth = 5;
+  this.gc.strokeStyle = '#f07057';
+  this.gc.stroke();
+  requestAnimationFrame(this.play.bind(this));
 }
 
-Waiter.prototype.drawTimer = function () {
-    var self = this;
-    var ctx = this.ctx;
-    var center = {
-        x: this.el.width / 2,
-        y: this.el.height / 2
-    };
-    var r = (this.el.width - this.TIMER_BORDER) / 3 - this.DOT_RADIUS;
-   var eAngle = (1.6 - 2.0 * this.TIME_ELAPSED / this.TIMER_DURATION) * Math.PI;
-
-    var dot = {
-        x: center.x + r * Math.cos(eAngle),
-        y: center.y + r * Math.sin(eAngle)
-    };
-    dot.r = this.DOT_RADIUS;
-
-    ctx.beginPath();
-    ctx.arc(dot.x, dot.y, this.r2, 0, 2 * Math.PI);
-    ctx.fillStyle = this.cor2;
-    ctx.fill();
-
-     ctx.beginPath();
-    ctx.arc(dot.x, dot.y, this.r1, 0, 2 * Math.PI);
-    ctx.fillStyle = this.cor1;
-    ctx.fill();
-}
-
-Waiter.prototype.render = function () {
-    this.clearFrame();
-    this.drawTimer();
-    return Date.now();
-}
-
-Waiter.prototype.timerRun = function () {
-    var self = this;
-   // if (self.TIME_ELAPSED >= self.TIMER_DURATION) return false;
-    if (!self.lastRender) self.lastRender = Date.now();
-    var delta = Date.now() - self.lastRender;
-    // Trick to throttle FPS
-    if (delta > (1000 / self.MAXFPS)) {
-        self.TIME_ELAPSED += delta;
-        self.lastRender = self.render();
-    }
-    requestAnimationFrame(self.timerRun.bind(self));
-}
-
-var canvas = new Waiter();
-canvas.timerRun();
+//can = new Waiter(document.getElementById("mAnim"));
+//can.play();

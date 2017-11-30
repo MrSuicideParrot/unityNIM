@@ -144,6 +144,10 @@ function updateAPI(){
         }
         else{
           current_tabuleiro.lock = 0;
+          current_tabuleiro.animac.style.display = "none";
+          current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
+          current_tabuleiro.animac = null;
+          document.getElementById('tabuleiro').style.display = "inline";
         }
 
         //Winner

@@ -20,6 +20,20 @@ var beautiful_API = {
 
 function Tabuleiro(){
   var parent_element = document.getElementById('tabuleiro');
+
+  if (game_type == 1) {
+    var can =document.createElement("canvas");
+
+    can.style.width = "200px";
+    can.style.height = "200px";
+    document.getElementById('tabuleiro_div').appendChild(can);
+
+    parent_element.style.display = "none";
+    this.animac = new Waiter(can);
+    this.animac.play();
+    this.animac = can;
+  }
+
   this.pecas_array = Array();
 
   while (parent_element.hasChildNodes()) {
@@ -29,11 +43,14 @@ function Tabuleiro(){
   var length_next = 0;
   for (var i = 0; i < tamanho; i++) {
     var linha = document.createElement("tr");
+
     if(!piramide)
-    length_next =  Math.floor((Math.random() * tamanho) + 1);
+      length_next =  Math.floor((Math.random() * tamanho) + 1);
     else
-    ++length_next;
+      ++length_next;
+
     auxiliar = Array();
+
     for (var j = 0; j < length_next; j++) {
       var elemento_td = document.createElement("td");
       var elemento = document.createElement("div");
@@ -45,15 +62,25 @@ function Tabuleiro(){
       elemento_td.appendChild(elemento);
       linha.appendChild(elemento_td);
     }
+
     this.pecas_array.push(auxiliar);
     parent_element.appendChild(linha);
   }
+/*
+  if(game_type ===0 ){
+
+  }
+  */
 }
 
 Tabuleiro.prototype.give_up = function () {
-  if(game_type===1)
+  if(game_type===1){
     leaveAPI();
-  else
+    if(current_tabuleiro.animac != null){
+      current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
+      current_tabuleiro.animac.style.display = "none";
+    }
+  }else
     change_msg(-1);
   var parent_element = document.getElementById('tabuleiro');
   while (parent_element.hasChildNodes()) {
@@ -104,6 +131,9 @@ Tabuleiro.prototype.posConverter = function(clicked_id){
 
     return [i, j];
 }
+
+Tabuleiro.prototype.animation = null;
+
 Tabuleiro.prototype.lock = 1;
 
 Tabuleiro.prototype.game_id = null;
