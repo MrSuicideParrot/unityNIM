@@ -66,7 +66,7 @@ function rankingAPI(){
       else{
         var auxarray = {};
         for(var i in res["ranking"]){
-          auxarray[i] = [res["ranking"][i]["nick"], res["ranking"][i]["victories"], res["ranking"][i]["games"],]
+          auxarray[i] = [res["ranking"][i]["nick"], res["ranking"][i]["victories"], res["ranking"][i]["games"],];
         }
         beautiful_API = auxarray;
         open_scores();

@@ -9,6 +9,7 @@
 
   <script src="arrayUtils.js" charset="utf-8"></script>
   <script src="requests.js" charset="utf-8"></script>
+  <script src="webstorage.js" charset="utf-8"></script>
   <script src="main.js" charset="utf-8"></script>
   <script src="canvas.js" charset="utf-8"></script>
 
@@ -62,13 +63,13 @@
         <h3>Register</h3>
       </li>
       <li>
-        <label class="first_label">Username:</label><input type="text" name="regusername" value="newuser">
+        <label class="first_label">Username:</label><input type="text" id="regusername" value="newuser">
       </li>
       <li>
-        <label>Password:</label><input type="password" name="regpassword" value="">
+        <label>Password:</label><input type="password" id="regpassword" value="">
       </li>
       <li>
-        <label>Confirm Password:</label><input type="password" name="regpasswordconf" value="">
+        <label>Confirm Password:</label><input type="password" id="regpasswordconf" value="">
       </li>
       <li>
         <button type="button" onclick="register()">Submit</button>
@@ -104,13 +105,13 @@
       <div class="adv">
         <div class="opponent">
           <div>
-            <label> Human vs Machine</label>
-            <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()" checked>
+            <label> Human vs Human</label>
+            <input type="radio" id="game_human" name="game_mode" value="human" onclick="flip_adv()" checked>
           </div>
 
           <div>
-            <label> Human vs Human</label>
-            <input type="radio" id="game_human" name="game_mode" value="human" onclick="flip_adv()">
+            <label> Human vs Machine</label>
+            <input type="radio" id="game_machine" name="game_mode" value="machine" onclick="flip_adv()">
           </div>
         </div>
 
