@@ -25,8 +25,9 @@ function Tabuleiro(){
   if (game_type == 1) {
     var can =document.createElement("canvas");
 
-    can.setAttribute("width","200px");
-    can.setAttribute("height","200px");
+    can.setAttribute("class","animac");
+    can.setAttribute("width","100px");
+    can.setAttribute("height","100px");
     //can.style.width = "200px";
     //can.style.height = "200px";
     document.getElementById('tabuleiro_div').appendChild(can);
