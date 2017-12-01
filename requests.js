@@ -142,7 +142,7 @@ function updateAPI(){
         if (data.hasOwnProperty("rack") && data.hasOwnProperty("stack") && data.hasOwnProperty("pieces")) {
             current_tabuleiro.moveConverter(data["rack"],data["stack"],data["pieces"]);
         }
-        else{
+        else if(!(data.hasOwnProperty("winner") && data["winner"]===null)){
           current_tabuleiro.lock = 0;
           current_tabuleiro.animac.style.display = "none";
           current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
@@ -158,7 +158,14 @@ function updateAPI(){
                 document.getElementById('game_restart').style.display = 'inline';
             }
             else{
-                verbose_msg(0, data["winner"]);
+                if (data["winner"]===null){
+                  verbose_msg(-1,"Game over! The server didn't find a match!");
+                  current_tabuleiro.animac.style.display = "none";
+                  current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
+                  current_tabuleiro.animac = null;
+                }
+                else
+                  verbose_msg(0, data["winner"]);
                 document.getElementById('game_continue').style.display = 'none';
                 document.getElementById('game_restart').style.display = 'inline';
             }
