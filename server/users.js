@@ -8,12 +8,30 @@ var pathDB = "users.json"
 var usersDB = {};
 
 function verify(username, password) {
-
+  if(usersDB[username] === crypto.createHash('md5').update(password).digest('hex')){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 function register(body, response) {
   body = JSON.parse(body);
-  if ('nick' in body && 'pass' in body) {
+
+  if(!('nick' in body)){
+    response.writeHead(400);
+    response.end(JSON.stringify({"error":"Nick is undefined"}));
+    return;
+  }
+
+
+  if(!('pass' in body)){
+    response.writeHead(400);
+    response.end(JSON.stringify({"error":"Pass is undefined"}));
+    return;
+  }
+
     if (body['nick'] in usersDB) {
       //Utilizador já existe necessário verificar a pass
       let hashPass = crypto.createHash('md5').update(body['pass']).digest('hex');
@@ -35,8 +53,7 @@ function register(body, response) {
       response.end(JSON.stringify({}));
       saveUsers();
     }
-  }
-  //retorna erro
+
 }
 
 function loadUsers() {
