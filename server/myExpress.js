@@ -1,14 +1,17 @@
-function body(request){
-  var corpo = []
-  request.on('error', (err) => {
-    console.error(err);
-  }).on('data', (chunk) => {
-    corpo.push(chunk);
-  }).on('end', () => {
-    corpo = Buffer.concat(corpo).toString();
-  });
-  console.log(corpo);
-  return corpo;
+function body(request, response, act){
+    let body = [];
+    request.on('error', function(err) {
+        console.error(err);
+    });
+
+    request.on('data', function(chunk) {
+      body.push(chunk);
+    });
+
+    request.on('end', function() {
+      body = Buffer.concat(body).toString();
+      act(body, response);
+    });
 }
 
 module.exports.body = body;

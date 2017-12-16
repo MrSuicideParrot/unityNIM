@@ -5,14 +5,14 @@ var util = require('./myExpress.js');
 
 var pathDB = "users.json"
 
-var usersDB;
+var usersDB = {};
 
 function verify(username, password) {
 
 }
 
-function register(request, response) {
-  body = JSON.parse(util.body(request));
+function register(body, response) {
+  body = JSON.parse(body);
   if ('nick' in body && 'pass' in body) {
     if (body['nick'] in usersDB) {
       //Utilizador já existe necessário verificar a pass

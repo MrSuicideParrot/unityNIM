@@ -4,6 +4,7 @@ var http = require('http');
 var url = require('url');
 
 var users = require('./users.js')
+var express = require('./myExpress.js')
 
 http.createServer(
   function(request, response) {
@@ -15,7 +16,7 @@ http.createServer(
         break;
 
       case "/register":
-        users.register(request, response);
+        express.body(request, response, users.register);
         break;
 
       default:
