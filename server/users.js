@@ -40,11 +40,17 @@ function register(body, response) {
 }
 
 function loadUsers() {
-
+   fs.readFile(pathDB, function(err,data) {
+     if(! err) {
+       usersDB = JSON.parse(data.toString());
+     }
+   });
 }
 
 function saveUsers(){
-
+   fs.writeFile(pathDB,JSON.stringify(usersDB),function (err){
+     if(err) throw err;
+   });
 }
 
 module.exports.verify = verify;

@@ -6,6 +6,8 @@ var url = require('url');
 var users = require('./users.js')
 var express = require('./myExpress.js')
 
+users.loadUsers();
+
 http.createServer(
   function(request, response) {
     //Verificar se o metodo é o mesmo que nos queremos
