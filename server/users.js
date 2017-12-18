@@ -8,66 +8,71 @@ var pathDB = "users.json"
 var usersDB = {};
 
 function verify(username, password) {
-  if(usersDB[username] === crypto.createHash('md5').update(password).digest('hex')){
+  if (usersDB[username] === crypto.createHash('sha512').update(password).digest('hex')) {
     return true;
   }
-  else{
+  else {
     return false;
   }
 }
 
 function register(body, response) {
-  body = JSON.parse(body);
-
-  if(!('nick' in body)){
+  try {
+    body = JSON.parse(body);
+  } catch (err) {
     response.writeHead(400);
-    response.end(JSON.stringify({"error":"Nick is undefined"}));
+    response.end(JSON.stringify({ "error": "Request body is malformed" }));
+    return;
+  }
+
+  if (!('nick' in body)) {
+    response.writeHead(400);
+    response.end(JSON.stringify({ "error": "Nick is undefined" }));
     return;
   }
 
 
-  if(!('pass' in body)){
+  if (!('pass' in body)) {
     response.writeHead(400);
-    response.end(JSON.stringify({"error":"Pass is undefined"}));
+    response.end(JSON.stringify({ "error": "Pass is undefined" }));
     return;
   }
 
-    if (body['nick'] in usersDB) {
-      //Utilizador já existe necessário verificar a pass
-      let hashPass = crypto.createHash('md5').update(body['pass']).digest('hex');
+  if (body['nick'] in usersDB) {
+    //Utilizador já existe necessário verificar a pass
+    let hashPass = crypto.createHash('sha512').update(body['pass']).digest('hex');
 
-      if (usersDB[body['nick']] === hashPass) {
-        response.writeHead(200);
-        response.end(JSON.stringify({}));
-      }
-      else {
-        response.writeHead(400);
-        response.end(JSON.stringify({"error":"User registered with a different password"}));
-      }
-
-    }
-    else{
-      //Criar utilizador
-      usersDB[body['nick']] = crypto.createHash('md5').update(body['pass']).digest('hex');
+    if (usersDB[body['nick']] === hashPass) {
       response.writeHead(200);
       response.end(JSON.stringify({}));
-      saveUsers();
+    }
+    else {
+      response.writeHead(401);
+      response.end(JSON.stringify({ "error": "User registered with a different password" }));
     }
 
+  }
+  else {
+    //Criar utilizador
+    usersDB[body['nick']] = crypto.createHash('sha512').update(body['pass']).digest('hex');
+    response.writeHead(200);
+    response.end(JSON.stringify({}));
+    saveUsers();
+  }
 }
 
 function loadUsers() {
-   fs.readFile(pathDB, function(err,data) {
-     if(! err) {
-       usersDB = JSON.parse(data.toString());
-     }
-   });
+  fs.readFile(pathDB, function (err, data) {
+    if (!err) {
+      usersDB = JSON.parse(data.toString());
+    }
+  });
 }
 
-function saveUsers(){
-   fs.writeFile(pathDB,JSON.stringify(usersDB),function (err){
-     if(err) throw err;
-   });
+function saveUsers() {
+  fs.writeFile(pathDB, JSON.stringify(usersDB), function (err) {
+    if (err) throw err;
+  });
 }
 
 module.exports.verify = verify;
