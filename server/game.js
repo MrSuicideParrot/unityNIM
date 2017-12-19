@@ -1,4 +1,5 @@
 var crypto = require('crypto');
+var express = require('./myExpress.js')
 
 var db; //Ligação aos modulo users
 
@@ -57,14 +58,20 @@ function join(body, response) {
   response.end(JSON.stringify({"group":game}));
 }
 
+
+/**
+* @param {String} group
+* @param {String} size
+* @param {String} user
+*/
 function retrieveGame(group, size, user){
   var code;
 
   if(dbGames[group] !== undefined && dbGames[group][size] !== undefined && dbGames[group][size].length != 0){
     jo = dbGames[group][size].shift()
     jo.users.push(user);
-    code = jo.id;
-    games[code] = jo;
+    //code = jo.id;
+    //games[code] = jo;
   }
   else{
     code = user + group + size + getDateTime();
@@ -76,7 +83,9 @@ function retrieveGame(group, size, user){
     if(dbGames[group]===undefined)
       dbGames[group] = {};
 
-    dbGames[group][size] = [new Jogo(code, size, user)];
+    tmp = new Jogo(code, size, user);
+    games[code] = tmp;
+    dbGames[group][size] = [tmp];
   }
 
   return code;
@@ -129,8 +138,19 @@ function notify(body, response){
 
 }
 
-function update(response) {
+function update(game, nick, request, response) {
+  if (nick === undefined || !db.isValidUser(nick)) {
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "Nick is undefined" }));
+    return;
+  }
 
+  if(game in games){
+    games[game].addListener(new express.SSEClient(require, response));
+  }
+  else{
+    //Jogo invalido
+  }
 }
 
 function getDateTime() {
@@ -166,6 +186,14 @@ function Jogo(id, d, user) {
 }
 
 Jogo.prototype.users = [];
+Jogo.prototype.SSEcl = [];
+
+Jogo.prototype.addListener = function (s){
+  this.SSEcl.push(s);
+  if(this.SSEcl.length === 2){
+    //começa o jogo
+  }
+}
 
 
 

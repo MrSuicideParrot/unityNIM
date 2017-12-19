@@ -9,6 +9,13 @@ var usersDB = {};
 
 var active = [];
 
+function isValidUser(username){
+  if (username in usersDB)
+    return true;
+  else
+    return false;
+}
+
 function verify(username, password) {
   if (usersDB[username] === crypto.createHash('sha512').update(password).digest('hex')) {
     return true;
