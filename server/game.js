@@ -87,7 +87,7 @@ function retrieveGame(group, size, user) {
     if (dbGames[group] === undefined)
       dbGames[group] = {};
 
-    tmp = new Jogo(code, size, user);
+    tmp = new Jogo(code, size, user, group);
     games[code] = tmp;
     dbGames[group][size] = [tmp];
   }
@@ -178,6 +178,57 @@ function update(game, nick, request, response) {
   }
 }
 
+function leave(body, response) {
+  body = JSON.parse(body);
+
+  if (!('nick' in body)) {
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "Nick is undefined" }));
+    return;
+  }
+
+  if (!('pass' in body)) {
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "Pass is undefined" }));
+    return;
+  }
+
+  if (!db.verify(body['nick'], body['pass'])) {
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "User registered with a different password" }));
+    return;
+  }
+
+  if (!('game' in body)) {
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "Game is undefined" }));
+    return;
+  }
+  
+  am = games[body[game]];
+  var dados = {}
+
+  for(var i in am.users){
+    if(am.users[i]!==body['nick']){
+      dados["winner"] = am.users[i];
+    }
+  }
+
+  if(!("winner" in dados)){
+    dados["winner"]= null;
+    dbGames[am.g][am.id].shift(); //remover dos jogos em espera
+  }
+
+  for (var i in am.SSEcl){
+    am.SSEcl[i].send(JSON.stringify(dados));
+  }
+
+  am.cleanExit();
+
+  response.writeHead(200);
+  response.end(JSON.stringify({}));
+}
+
 function getDateTime() {
 
   var date = new Date();
@@ -203,10 +254,11 @@ function getDateTime() {
 
 }
 
-function Jogo(id, d, user) {
+function Jogo(id, d, user, group) {
   this.id = id;
   this.size = d;
-  this.rack = []
+  this.rack = [];
+  this.g = group;
 
 
   for (var i = 1; i <= d; ++i) {
@@ -261,6 +313,23 @@ Jogo.prototype.update = function (stack, pecas) {
   this.SSEcl[0].send(JSON.stringify(dados));
   this.SSEcl[1].send(JSON.stringify(dados));
 
+  
+  if (this.nPecas === 0) {
+    this.cleanExit();
+  }
+}
+
+Jogo.prototype.cleanExit = function (){
+  for (var i in this.users) {
+    db.turnNotActive(users[i]);
+  }
+
+  for (var i in this.users) {
+    this.SSEcl[i].close();
+  }
+
+  id = this.id;
+  delete games.id;
 }
 
 Jogo.prototype.numValid = function (stack, pecas) {
@@ -281,3 +350,4 @@ module.exports.join = join;
 module.exports.leave = leave;
 module.exports.update = update;
 module.exports.notify = notify;
+module.exports.leave = leave;

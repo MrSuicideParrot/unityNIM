@@ -71,17 +71,21 @@ function register(body, response) {
 }
 
 function turnActive(user) {
-  if(user in active){
-    return false;
+  for (var i in active){
+    if(active[i] === user)
+      return false;
   }
-  else{
+ 
     active.push(user);
     return true;
-  }
+  
 }
 
 function turnNotActive(user) {
-
+  for (var i in active) {
+    if (active[i] === user)
+      active.splice(i,1);
+  }
 }
 
 function loadUsers() {
@@ -102,4 +106,5 @@ module.exports.verify = verify;
 module.exports.register = register;
 module.exports.loadUsers = loadUsers;
 module.exports.turnActive = turnActive;
+module.exports.turnNotActive = turnNotActive;
 module.exports.isValidUser = isValidUser;
