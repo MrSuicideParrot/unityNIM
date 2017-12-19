@@ -30,7 +30,7 @@ http.createServer(
         break;
 
       case "/update":
-        game.update(parsedUrl.query.game, parsedUrl.query.nick, response);
+        game.update(parsedUrl.query.game, parsedUrl.query.nick, request, response);
         break;
 
       default:

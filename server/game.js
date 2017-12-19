@@ -18,44 +18,44 @@ function join(body, response) {
   body = JSON.parse(body);
 
   //verificoes de usernames e passwords
-  if(!('nick' in body)){
+  if (!('nick' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Nick is undefined"}));
+    response.end(JSON.stringify({ "error": "Nick is undefined" }));
     return;
   }
 
-  if(!('pass' in body)){
+  if (!('pass' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Pass is undefined"}));
+    response.end(JSON.stringify({ "error": "Pass is undefined" }));
     return;
   }
 
-  if(!db.verify(body['nick'], body['pass'])){
+  if (!db.verify(body['nick'], body['pass'])) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"User registered with a different password"}));
+    response.end(JSON.stringify({ "error": "User registered with a different password" }));
     return;
   }
 
-  if(!('group' in body)){
+  if (!('group' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Group is undefined"}));
+    response.end(JSON.stringify({ "error": "Group is undefined" }));
     return;
   }
 
-  if(!('size' in body)){
+  if (!('size' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Size is undefined"}));
+    response.end(JSON.stringify({ "error": "Size is undefined" }));
     return;
   }
 
-  if(!db.turnActive(body['nick'])){
+  if (!db.turnActive(body['nick'])) {
     //Não pode jogar consigo mesmo
     return;
   }
 
   var game = retrieveGame(body['group'], body['size'], body['nick']);
   response.writeHead(200);
-  response.end(JSON.stringify({"group":game}));
+  response.end(JSON.stringify({ "game": game }));
 }
 
 
@@ -64,23 +64,22 @@ function join(body, response) {
 * @param {String} size
 * @param {String} user
 */
-function retrieveGame(group, size, user){
+function retrieveGame(group, size, user) {
   var code;
 
-  if(dbGames[group] !== undefined && dbGames[group][size] !== undefined && dbGames[group][size].length != 0){
-    jo = dbGames[group][size].shift()
+  if (dbGames[group] !== undefined && dbGames[group][size] !== undefined && dbGames[group][size].length != 0) {
+    var jo = dbGames[group][size].shift()
     jo.users.push(user);
-    //code = jo.id;
-    //games[code] = jo;
+    code = jo.id;
   }
-  else{
+  else {
     code = user + group + size + getDateTime();
     code = crypto
-               .createHash('md5')
-               .update(size)
-               .digest('hex');
+      .createHash('md5')
+      .update(code)
+      .digest('hex');
 
-    if(dbGames[group]===undefined)
+    if (dbGames[group] === undefined)
       dbGames[group] = {};
 
     tmp = new Jogo(code, size, user);
@@ -95,47 +94,66 @@ function leave(body, response) {
   body = JSON.parse(body);
 }
 
-function notify(body, response){
+function notify(body, response) {
   body = JSON.parse(body);
 
-  if(!('nick' in body)){
+  if (!('nick' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Nick is undefined"}));
+    response.end(JSON.stringify({ "error": "Nick is undefined" }));
     return;
   }
 
-/*  if(!('pass' in body)){
+  if (!('pass' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Pass is undefined"}));
+    response.end(JSON.stringify({ "error": "Pass is undefined" }));
     return;
   }
 
-  if(!db.verify(body['nick'], body['pass'])){
+  if (!db.verify(body['nick'], body['pass'])) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"User registered with a different password"}));
-    return;
-  }*/
-
-  if(!('game' in body)){
-    response.writeHead(401);
-    response.end(JSON.stringify({"error":"Game is undefined"}));
+    response.end(JSON.stringify({ "error": "User registered with a different password" }));
     return;
   }
 
-  if(!('stack' in body)){
+  if (!('game' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Stack is undefined"}));
+    response.end(JSON.stringify({ "error": "Game is undefined" }));
     return;
   }
 
-  if(!('pieces' in body)){
+  if (!('stack' in body)) {
     response.writeHead(401);
-    response.end(JSON.stringify({"error":"Pieces is undefined"}));
+    response.end(JSON.stringify({ "error": "Stack is undefined" }));
     return;
   }
 
+  if (!('pieces' in body)) {
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "Pieces is undefined" }));
+    return;
+  }
 
+  /* --------------------- FALTA   VERIFICAR SE SÂO NUMEROS STACK E PIECES  e se o nick pertence a este jogo----------------------*/
 
+  if(games[body['game']].isHerTurn(body['nick'])){
+    stack = body['stack']*1;
+    pieces = body['pieces']*1;
+
+    if (!games[body['game']].numValid(stack, pieces)){
+        /*----------------ERRRRRORRRRRR------------------------*/
+      return;
+    }
+
+    games[body['game']].update(stack, pieces);
+  }
+  else{
+    response.writeHead(200); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
+    response.end(JSON.stringify({ "error": "Not your turn to play" } ));
+    return;
+  }
+
+  response.writeHead(200);
+  response.end(JSON.stringify({ "game": game }));
 }
 
 function update(game, nick, request, response) {
@@ -145,57 +163,113 @@ function update(game, nick, request, response) {
     return;
   }
 
-  if(game in games){
-    games[game].addListener(new express.SSEClient(require, response));
+  /* -------------- VERIFICAR SE ESTE USER PERTENCE A ESTE JOGO -------------------------*/
+
+  if (game in games) {
+    games[game].addListener(new express.SSEClient(request, response));
   }
-  else{
+  else {
     //Jogo invalido
   }
 }
 
 function getDateTime() {
 
-    var date = new Date();
+  var date = new Date();
 
-    var hour = date.getHours();
-    hour = (hour < 10 ? "0" : "") + hour;
+  var hour = date.getHours();
+  hour = (hour < 10 ? "0" : "") + hour;
 
-    var min  = date.getMinutes();
-    min = (min < 10 ? "0" : "") + min;
+  var min = date.getMinutes();
+  min = (min < 10 ? "0" : "") + min;
 
-    var sec  = date.getSeconds();
-    sec = (sec < 10 ? "0" : "") + sec;
+  var sec = date.getSeconds();
+  sec = (sec < 10 ? "0" : "") + sec;
 
-    var year = date.getFullYear();
+  var year = date.getFullYear();
 
-    var month = date.getMonth() + 1;
-    month = (month < 10 ? "0" : "") + month;
+  var month = date.getMonth() + 1;
+  month = (month < 10 ? "0" : "") + month;
 
-    var day  = date.getDate();
-    day = (day < 10 ? "0" : "") + day;
+  var day = date.getDate();
+  day = (day < 10 ? "0" : "") + day;
 
-    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+  return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
 
 }
 
 function Jogo(id, d, user) {
   this.id = id;
-  this.d = d;
-  this.turn = user;
+  this.size = d;
+  this.rack = []
+
+  for (var i = 1; i <= d; ++i) {
+    this.rack.push(i);
+  }
+
+  tmp = Math.trunc(this.size / 2);
+  this.nPecas = (1 + this.size) * tmp + tmp + 1;
+
+  this.turn = 0;
   this.users.push(user);
 }
 
 Jogo.prototype.users = [];
 Jogo.prototype.SSEcl = [];
 
-Jogo.prototype.addListener = function (s){
+Jogo.prototype.addListener = function (s) {
   this.SSEcl.push(s);
-  if(this.SSEcl.length === 2){
-    //começa o jogo
+  if (this.SSEcl.length === 2) {
+    this.start();
   }
 }
 
+Jogo.prototype.start = function () {
+  this.SSEcl[0].send(JSON.stringify({ "turn": this.users[this.turn], "rack": this.rack }));
+  this.SSEcl[1].send(JSON.stringify({ "turn": this.users[this.turn], "rack": this.rack }));
+}
 
+/**
+ * 
+ * @param {Integer} stack 
+ * @param {Integer} pecas 
+ */
+Jogo.prototype.update = function (stack, pecas) {
+  this.rack[stack] = pecas;
+  this.nPecas -= pecas;
+
+  var dados = {
+    "rack": this.rack,
+    "stack": stack,
+    "pieces": pecas,
+  }
+
+  if (n.nPecas === 0) {
+    dados["winner"] = this.users[this.turn];
+  }
+  else {
+    /* ---------------------------------------- AVALIAR SE MANTEM SE POR ESTA ORDEM --------------------------*/
+    this.turn = this.turn == 0 ? 1 : 0;
+    dados["turn"] = this.users[this.turn];
+  }
+
+  this.SSEcl[0].send(JSON.stringify(dados));
+  this.SSEcl[1].send(JSON.stringify(dados));
+
+}
+
+Jogo.prototype.numValid = function (stack, pecas) {
+  if(stack>=0 && stack< this.size && pecas >= 0 && pecas < this.rack[stack]){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+Jogo.prototype.isHerTurn = function (user){
+  return this.users[this.turn] === user ? true : false;
+}
 
 module.exports.connect = connect;
 module.exports.join = join;

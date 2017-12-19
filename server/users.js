@@ -102,3 +102,4 @@ module.exports.verify = verify;
 module.exports.register = register;
 module.exports.loadUsers = loadUsers;
 module.exports.turnActive = turnActive;
+module.exports.isValidUser = isValidUser;
