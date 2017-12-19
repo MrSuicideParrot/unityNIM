@@ -27,7 +27,6 @@ function rankings(body, response) {
 function loadrankings() {
     fs.readFile(pathDB, function (err, data) {
         if (err) throw err;
-        console.log(data);
         rankingsDB = JSON.parse(data.toString());
     });
 }
