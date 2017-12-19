@@ -53,7 +53,8 @@ function join(body, response) {
   }
 
   if (!db.turnActive(body['nick'])) {
-    //Não pode jogar consigo mesmo
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "You cannot play against yourself!" }));
     return;
   }
 
@@ -157,7 +158,7 @@ function notify(body, response) {
   }
 
   response.writeHead(200);
-  response.end(JSON.stringify({ "game": game }));
+  response.end(JSON.stringify({}));
 }
 
 function update(game, nick, request, response) {
@@ -207,12 +208,11 @@ function Jogo(id, d, user) {
   this.size = d;
   this.rack = []
 
+
   for (var i = 1; i <= d; ++i) {
     this.rack.push(i);
+    this.nPecas += i;
   }
-
-  tmp = Math.trunc(this.size / 2);
-  this.nPecas = (1 + this.size) * tmp + tmp + 1;
 
   this.turn = 0;
   this.users.push(user);
@@ -220,6 +220,7 @@ function Jogo(id, d, user) {
 
 Jogo.prototype.users = [];
 Jogo.prototype.SSEcl = [];
+Jogo.prototype.nPecas = 0;
 
 Jogo.prototype.addListener = function (s) {
   this.SSEcl.push(s);
@@ -239,8 +240,8 @@ Jogo.prototype.start = function () {
  * @param {Integer} pecas 
  */
 Jogo.prototype.update = function (stack, pecas) {
+  this.nPecas = this.nPecas - (this.rack[stack]-pecas);
   this.rack[stack] = pecas;
-  this.nPecas -= pecas;
 
   var dados = {
     "rack": this.rack,
@@ -248,7 +249,7 @@ Jogo.prototype.update = function (stack, pecas) {
     "pieces": pecas,
   }
 
-  if (n.nPecas === 0) {
+  if (this.nPecas === 0) {
     dados["winner"] = this.users[this.turn];
   }
   else {
