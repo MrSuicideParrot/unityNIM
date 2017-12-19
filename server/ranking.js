@@ -14,27 +14,21 @@ function rankings(body, response) {
         response.end(JSON.stringify({ "error": "Request body is malformed" }));
         return;
     }
-    if (!('size' in body) || body['size']!==parseInt(body['size']) || body['size'] < 2) {
+    if (!('size' in body) || body['size'] !== parseInt(body['size']) || body['size'] < 3) {
         response.writeHead(400);
         response.end(JSON.stringify({ "error": "Size is undefined" }));
         return;
     }
 
-    if (rankingsDB[body['size']]) {
-        response.writeHead(200);
-        response.end(JSON.stringify(rankingsDB[body['size']]));
-    }
-    else {
-        response.writeHead(200);
-        response.end(JSON.stringify({}));
-    }
+    response.writeHead(200);
+    response.end(JSON.stringify(rankingsDB));
 }
 
 function loadrankings() {
     fs.readFile(pathDB, function (err, data) {
-        if (!err) {
-            rankingsDB = JSON.parse(data.toString());
-        }
+        if (err) throw err;
+        console.log(data);
+        rankingsDB = JSON.parse(data.toString());
     });
 }
 

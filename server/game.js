@@ -12,10 +12,14 @@ function connect(users) {
 
 //Command Join
 function join(body, response) {
-  /*
-            PARA FAZER VERIFICAR SE O SIZE E O GROUP SÂO NUEMROS
-  */
-  body = JSON.parse(body);
+
+  try {
+    body = JSON.parse(body);
+  } catch (err) {
+    response.writeHead(400);
+    response.end(JSON.stringify({ "error": "Request body is malformed" }));
+    return;
+  }
 
   //verificoes de usernames e passwords
   if (!('nick' in body)) {
@@ -36,14 +40,14 @@ function join(body, response) {
     return;
   }
 
-  if (!('group' in body)) {
-    response.writeHead(401);
+  if (!('group' in body) || body['group']!==parseInt(body['group']) || body['group']<1) {
+    response.writeHead(400);
     response.end(JSON.stringify({ "error": "Group is undefined" }));
     return;
   }
 
-  if (!('size' in body)) {
-    response.writeHead(401);
+  if (!('size' in body) || body['size']!==parseInt(body['size']) || body['size']<3) {
+    response.writeHead(400);
     response.end(JSON.stringify({ "error": "Size is undefined" }));
     return;
   }
