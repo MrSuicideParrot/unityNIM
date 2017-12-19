@@ -39,6 +39,10 @@ http.createServer(
         game.update(parsedUrl.query.game, parsedUrl.query.nick, request, response);
         break;
 
+      case "/notify":
+        express.body(request, response, game.notify);
+        break;
+
       default:
           response.writeHead(404, "pedido desconhecido");
           response.end();

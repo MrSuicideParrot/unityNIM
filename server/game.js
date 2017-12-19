@@ -279,3 +279,4 @@ module.exports.connect = connect;
 module.exports.join = join;
 module.exports.leave = leave;
 module.exports.update = update;
+module.exports.notify = notify;
