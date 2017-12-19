@@ -12,8 +12,14 @@ users.loadUsers();
 game.connect(users);
 ranking.loadrankings();
 
+
+
 http.createServer(
   function(request, response) {
+    response.setHeader('Access-Control-Allow-Origin','*');
+    response.setHeader('Cache-Control','no-cache');
+    response.setHeader('Content-Type','application/javascript');
+
     //Verificar se o metodo é o mesmo que nos queremos
     var parsedUrl = url.parse(request.url,true);
     switch (parsedUrl.pathname) {

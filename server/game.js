@@ -40,13 +40,13 @@ function join(body, response) {
     return;
   }
 
-  if (!('group' in body) || body['group']!==parseInt(body['group']) || body['group']<1) {
+  if (!('group' in body) || parseInt(body['group'])<1) {
     response.writeHead(400);
     response.end(JSON.stringify({ "error": "Group is undefined" }));
     return;
   }
 
-  if (!('size' in body) || body['size']!==parseInt(body['size']) || body['size']<3) {
+  if (!('size' in body) || parseInt(body['size'])<3) {
     response.writeHead(400);
     response.end(JSON.stringify({ "error": "Size is undefined" }));
     return;

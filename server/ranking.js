@@ -14,7 +14,7 @@ function rankings(body, response) {
         response.end(JSON.stringify({ "error": "Request body is malformed" }));
         return;
     }
-    if (!('size' in body) || body['size'] !== parseInt(body['size']) || body['size'] < 3) {
+    if (!('size' in body) || parseInt(body['size'])<3) {
         response.writeHead(400);
         response.end(JSON.stringify({ "error": "Size is undefined" }));
         return;
