@@ -5,8 +5,10 @@ var url = require('url');
 
 var users = require('./users.js')
 var express = require('./myExpress.js')
+var game = require('./game.js')
 
 users.loadUsers();
+game.connect(users);
 
 http.createServer(
   function(request, response) {
@@ -15,6 +17,10 @@ http.createServer(
     switch (parsedUrl.pathname) {
       case "/ranking":
 
+        break;
+
+      case "/join":
+        express.body(request, response, game.join);
         break;
 
       case "/register":

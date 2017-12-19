@@ -7,6 +7,8 @@ var pathDB = "users.json"
 
 var usersDB = {};
 
+var active = [];
+
 function verify(username, password) {
   if(usersDB[username] === crypto.createHash('md5').update(password).digest('hex')){
     return true;
@@ -56,6 +58,20 @@ function register(body, response) {
 
 }
 
+function turnActive(user) {
+  if(user in active){
+    return false;
+  }
+  else{
+    active.push(user);
+    return true;
+  }
+}
+
+function turnNotActive(user) {
+
+}
+
 function loadUsers() {
    fs.readFile(pathDB, function(err,data) {
      if(! err) {
@@ -73,3 +89,4 @@ function saveUsers(){
 module.exports.verify = verify;
 module.exports.register = register;
 module.exports.loadUsers = loadUsers;
+module.exports.turnActive = turnActive;
