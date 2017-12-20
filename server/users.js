@@ -25,6 +25,16 @@ function verify(username, password) {
   }
 }
 
+function gensalt(){
+  var salt = "";
+  var pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 32; i++)
+    salt += pool.charAt(Math.floor(Math.random() * pool.length));
+
+  return salt;
+}
+
 function register(body, response) {
   try {
     body = JSON.parse(body);
@@ -49,9 +59,9 @@ function register(body, response) {
 
   if (body['nick'] in usersDB) {
     //Utilizador já existe necessário verificar a pass
-    let hashPass = crypto.createHash('sha512').update(body['pass']).digest('hex');
+    let hashPass = crypto.createHash('sha512').update(body['pass']+usersDB[body['nick']][1]).digest('hex');
 
-    if (usersDB[body['nick']] === hashPass) {
+    if (usersDB[body['nick']][0] === hashPass) {
       response.writeHead(200);
       response.end(JSON.stringify({}));
     }
@@ -63,7 +73,8 @@ function register(body, response) {
   }
   else {
     //Criar utilizador
-    usersDB[body['nick']] = crypto.createHash('sha512').update(body['pass']).digest('hex');
+    salt = gensalt();
+    usersDB[body['nick']] = [crypto.createHash('sha512').update(body['pass']+salt).digest('hex'),salt];
     response.writeHead(200);
     response.end(JSON.stringify({}));
     saveUsers();
