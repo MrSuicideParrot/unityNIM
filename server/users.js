@@ -17,7 +17,7 @@ function isValidUser(username){
 }
 
 function verify(username, password) {
-  if (usersDB[username] === crypto.createHash('sha512').update(password).digest('hex')) {
+  if (usersDB[username][0] === crypto.createHash('sha512').update(password+usersDB[username][1]).digest('hex')) {
     return true;
   }
   else {
