@@ -107,4 +107,4 @@ module.exports.register = register;
 module.exports.loadUsers = loadUsers;
 module.exports.turnActive = turnActive;
 module.exports.turnNotActive = turnNotActive;
-module.exports.isValidUser = isValidUser;
+module.exports.isValidUser = isValidUser; 

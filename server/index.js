@@ -43,6 +43,10 @@ http.createServer(
         express.body(request, response, game.notify);
         break;
 
+      case "/leave":
+        express.body(request, response, game.leave);
+        break;
+      
       default:
           response.writeHead(404, "pedido desconhecido");
           response.end();

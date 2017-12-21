@@ -95,10 +95,6 @@ function retrieveGame(group, size, user) {
   return code;
 }
 
-function leave(body, response) {
-  body = JSON.parse(body);
-}
-
 function notify(body, response) {
   body = JSON.parse(body);
 
@@ -205,12 +201,15 @@ function leave(body, response) {
     return;
   }
   
-  am = games[body[game]];
+  var am = games[body["game"]];
   var dados = {}
-
+  
+  /* Se ouver mais que um jogador sinaliza o que não desistiu
+  como vencedor caso contrário dá o winner como null */ 
   for(var i in am.users){
     if(am.users[i]!==body['nick']){
       dados["winner"] = am.users[i];
+      break;
     }
   }
 
@@ -219,7 +218,7 @@ function leave(body, response) {
     dbGames[am.g][am.id].shift(); //remover dos jogos em espera
   }
 
-  for (var i in am.SSEcl){
+  for (var i in am.SSEcl){ // Fecha os SSE correntes que existirem e envia o vencerdor
     am.SSEcl[i].send(JSON.stringify(dados));
   }
 
@@ -321,10 +320,10 @@ Jogo.prototype.update = function (stack, pecas) {
 
 Jogo.prototype.cleanExit = function (){
   for (var i in this.users) {
-    db.turnNotActive(users[i]);
+    db.turnNotActive(this.users[i]);
   }
 
-  for (var i in this.users) {
+  for (var i in this.SSEcl) {
     this.SSEcl[i].close();
   }
 
