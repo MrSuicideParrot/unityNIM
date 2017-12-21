@@ -24,17 +24,13 @@ function SSEClient(req, response) {
     'Cache-Control': 'no-cache',
     'Connection': 'keep-alive',
   });
-  this.res.write(':ok\n\n')
-  this.id = 0
-  this.send("{}")
 }
 
 /**
  * @param {String} data 
  */
 SSEClient.prototype.send = function (data) {
-  var toSend = `id: ${this.id++}\n\n`
-  toSend += "data: " + data + "\n\n"
+  var toSend = "data: " + data + "\n\n"
   this.res.write(toSend)
 }
 
