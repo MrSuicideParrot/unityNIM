@@ -73,7 +73,7 @@ function retrieveGame(group, size, user) {
   var code;
 
   if (dbGames[group] !== undefined && dbGames[group][size] !== undefined && dbGames[group][size].length != 0) {
-    var jo = dbGames[group][size].shift()
+    var jo = dbGames[group][size].shift();
     jo.users.push(user);
     code = jo.id;
   }
@@ -148,7 +148,7 @@ function notify(body, response) {
     games[body['game']].update(stack, pieces);
   }
   else{
-    response.writeHead(200); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
+    response.writeHead(401); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
     response.end(JSON.stringify({ "error": "Not your turn to play" } ));
     return;
   }
@@ -215,7 +215,7 @@ function leave(body, response) {
 
   if(!("winner" in dados)){
     dados["winner"]= null;
-    dbGames[am.g][am.id].shift(); //remover dos jogos em espera
+    dbGames[am.g][am.size].shift(); //remover dos jogos em espera
   }
 
   for (var i in am.SSEcl){ // Fecha os SSE correntes que existirem e envia o vencerdor
@@ -323,12 +323,12 @@ Jogo.prototype.cleanExit = function (){
     db.turnNotActive(this.users[i]);
   }
 
-  for (var i in this.SSEcl) {
+ /* for (var i in this.SSEcl) {
     this.SSEcl[i].close();
-  }
+  }*/
 
   id = this.id;
-  delete games.id;
+  delete games[id];
 }
 
 Jogo.prototype.numValid = function (stack, pecas) {
