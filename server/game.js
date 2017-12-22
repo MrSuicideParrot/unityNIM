@@ -285,13 +285,39 @@ function Jogo(id, d, user, group) {
 
   this.turn = 0;
   this.users.push(user);
+
+  var am = this;
+  //timeout
+  this.timeout = setTimeout(function(){
+    dbGames[am.g][am.size].shift();
+    
+    for (var i in am.SSEcl){ // Fecha os SSE correntes que existirem e envia o vencerdor
+      am.SSEcl[i].send(JSON.stringify({"winner":null}));
+    }
+
+    am.cleanExit();
+  }, 120000);
+
 }
 
-
+//Tem de se prevenir mais que dois??
 Jogo.prototype.addListener = function (s) {
   this.SSEcl.push(s);
   if (this.SSEcl.length === 2) {
     this.start();
+    clearTimeout(this.timeout);
+
+  am = this;
+  //timeout de 2 minutos para um jogo senão é eliminado de forma automatica
+  this.timeout = setTimeout(function(){
+  
+      for (var i in am.SSEcl){ // Fecha os SSE correntes que existirem e envia o vencedor
+        am.SSEcl[i].send(JSON.stringify({"winner":null}));
+      }
+
+      am.cleanExit();
+    }, 120000);
+
   }
 }
 
