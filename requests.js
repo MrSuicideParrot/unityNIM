@@ -1,4 +1,5 @@
-var serverApi = "http://localhost:8002";
+//var serverApi = "http://localhost:8002";
+var serverApi = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
 function registerApi(login, password) {
   content ={
@@ -144,9 +145,11 @@ function updateAPI(){
         }
         else if(!(data.hasOwnProperty("winner") && data["winner"]===null)){
           current_tabuleiro.lock = 0;
-          current_tabuleiro.animac.style.display = "none";
-          current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
-          current_tabuleiro.animac = null;
+          if(current_tabuleiro.animac !== null){
+            current_tabuleiro.animac.style.display = "none";
+            current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
+            current_tabuleiro.animac = null;
+          }
           document.getElementById('tabuleiro').style.display = "inline";
         }
 
@@ -161,7 +164,8 @@ function updateAPI(){
                 if (data["winner"]===null){
                   verbose_msg(-1,"Game over! The server didn't find a match!");
                   current_tabuleiro.animac.style.display = "none";
-                  current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
+                  if (current_tabuleiro.animac.parentNode !== null)
+                    current_tabuleiro.animac.parentNode.removeChild(current_tabuleiro.animac);
                   current_tabuleiro.animac = null;
                 }
                 else
