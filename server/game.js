@@ -176,8 +176,7 @@ function update(game, nick, request, response) {
     games[game].addListener(new express.SSEClient(request, response));
   }
   else {
-    /* ------------------ VERIFICAR SE EXISTE O JOGO ALTERARARRARARA------------------- */
-    response.writeHead(401);
+    response.writeHead(400);
     response.end(JSON.stringify({ "error": "Game is undefined" }));
     return;
   }
@@ -209,7 +208,13 @@ function leave(body, response) {
     response.end(JSON.stringify({ "error": "Game is undefined" }));
     return;
   }
-  
+ 
+  if (games[body['game']]===undefined){
+    response.writeHead(400);
+    response.end(JSON.stringify({ "error": "Game not found" }));
+    return;
+  }
+
   var am = games[body["game"]];
   var dados = {}
   
