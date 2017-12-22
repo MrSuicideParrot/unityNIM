@@ -1,8 +1,8 @@
 var fs = require('fs');
 
-var util = require('./myExpress.js');
+var util = require(__dirname+'/myExpress.js');
 
-var pathDB = "rankings.json";
+var pathDB = __dirname+"/rankings.json";
 
 var rankingsDB = {};
 

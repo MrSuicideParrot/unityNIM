@@ -3,15 +3,14 @@ var port = 8002;
 var http = require('http');
 var url = require('url');
 
-var users = require('./users.js')
-var ranking = require('./ranking.js')
-var express = require('./myExpress.js')
-var game = require('./game.js')
+var users = require(__dirname+'/users.js');
+var ranking = require(__dirname+'/ranking.js');
+var express = require(__dirname+'/myExpress.js');
+var game = require(__dirname+'/game.js');
 
 users.loadUsers();
 game.connect(users);
 ranking.loadrankings();
-
 
 
 http.createServer(

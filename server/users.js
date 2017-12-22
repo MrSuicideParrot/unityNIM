@@ -1,9 +1,9 @@
 var fs = require('fs');
 var crypto = require('crypto');
 
-var util = require('./myExpress.js');
+var util = require(__dirname+'/myExpress.js');
 
-var pathDB = "users.json"
+var pathDB = __dirname+"/users.json"
 
 var usersDB = {};
 

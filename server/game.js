@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-var express = require('./myExpress.js')
+var express = require(__dirname+'/myExpress.js');
 
 var db; //Ligação aos modulo users
 
