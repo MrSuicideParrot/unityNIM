@@ -1,5 +1,6 @@
 var crypto = require('crypto');
-var express = require(__dirname+'/myExpress.js');
+var express = require(__dirname + '/myExpress.js');
+var ranking = require(__dirname + '/ranking.js');
 
 var db; //Ligação aos modulo users
 
@@ -40,13 +41,13 @@ function join(body, response) {
     return;
   }
 
-  if (!('group' in body) || parseInt(body['group'])<1) {
+  if (!('group' in body) || parseInt(body['group']) < 1) {
     response.writeHead(400);
     response.end(JSON.stringify({ "error": "Group is undefined" }));
     return;
   }
 
-  if (!('size' in body) || parseInt(body['size'])<3) {
+  if (!('size' in body) || parseInt(body['size']) < 3) {
     response.writeHead(400);
     response.end(JSON.stringify({ "error": "Size is undefined" }));
     return;
@@ -134,7 +135,7 @@ function notify(body, response) {
     return;
   }
 
-  if (games[body['game']]===undefined){
+  if (games[body['game']] === undefined) {
     response.writeHead(400);
     response.end(JSON.stringify({ "error": "Game not found" }));
     return;
@@ -142,20 +143,20 @@ function notify(body, response) {
 
   /* --------------------- FALTA   VERIFICAR SE SÂO NUMEROS STACK E PIECES  e se o nick pertence a este jogo----------------------*/
 
-  if(games[body['game']].isHerTurn(body['nick'])){
-    stack = body['stack']*1;
-    pieces = body['pieces']*1;
+  if (games[body['game']].isHerTurn(body['nick'])) {
+    stack = body['stack'] * 1;
+    pieces = body['pieces'] * 1;
 
-    if (!games[body['game']].numValid(stack, pieces)){
-        /*----------------ERRRRRORRRRRR------------------------*/
+    if (!games[body['game']].numValid(stack, pieces)) {
+      /*----------------ERRRRRORRRRRR------------------------*/
       return;
     }
 
     games[body['game']].update(stack, pieces);
   }
-  else{
+  else {
     response.writeHead(401); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
-    response.end(JSON.stringify({ "error": "Not your turn to play" } ));
+    response.end(JSON.stringify({ "error": "Not your turn to play" }));
     return;
   }
 
@@ -208,8 +209,8 @@ function leave(body, response) {
     response.end(JSON.stringify({ "error": "Game is undefined" }));
     return;
   }
- 
-  if (games[body['game']]===undefined){
+
+  if (games[body['game']] === undefined) {
     response.writeHead(400);
     response.end(JSON.stringify({ "error": "Game not found" }));
     return;
@@ -217,22 +218,22 @@ function leave(body, response) {
 
   var am = games[body["game"]];
   var dados = {}
-  
+
   /* Se ouver mais que um jogador sinaliza o que não desistiu
-  como vencedor caso contrário dá o winner como null */ 
-  for(var i in am.users){
-    if(am.users[i]!==body['nick']){
+  como vencedor caso contrário dá o winner como null */
+  for (var i in am.users) {
+    if (am.users[i] !== body['nick']) {
       dados["winner"] = am.users[i];
       break;
     }
   }
 
-  if(!("winner" in dados)){
-    dados["winner"]= null;
+  if (!("winner" in dados)) {
+    dados["winner"] = null;
     dbGames[am.g][am.size].shift(); //remover dos jogos em espera
   }
 
-  for (var i in am.SSEcl){ // Fecha os SSE correntes que existirem e envia o vencerdor
+  for (var i in am.SSEcl) { // Fecha os SSE correntes que existirem e envia o vencerdor
     am.SSEcl[i].send(JSON.stringify(dados));
   }
 
@@ -288,11 +289,11 @@ function Jogo(id, d, user, group) {
 
   var am = this;
   //timeout
-  this.timeout = setTimeout(function(){
+  this.timeout = setTimeout(function () {
     dbGames[am.g][am.size].shift();
-    
-    for (var i in am.SSEcl){ // Fecha os SSE correntes que existirem e envia o vencerdor
-      am.SSEcl[i].send(JSON.stringify({"winner":null}));
+
+    for (var i in am.SSEcl) { // Fecha os SSE correntes que existirem e envia o vencerdor
+      am.SSEcl[i].send(JSON.stringify({ "winner": null }));
     }
 
     am.cleanExit();
@@ -307,12 +308,12 @@ Jogo.prototype.addListener = function (s) {
     this.start();
     clearTimeout(this.timeout);
 
-  am = this;
-  //timeout de 2 minutos para um jogo senão é eliminado de forma automatica
-  this.timeout = setTimeout(function(){
-  
-      for (var i in am.SSEcl){ // Fecha os SSE correntes que existirem e envia o vencedor
-        am.SSEcl[i].send(JSON.stringify({"winner":null}));
+    am = this;
+    //timeout de 2 minutos para um jogo senão é eliminado de forma automatica
+    this.timeout = setTimeout(function () {
+
+      for (var i in am.SSEcl) { // Fecha os SSE correntes que existirem e envia o vencedor
+        am.SSEcl[i].send(JSON.stringify({ "winner": null }));
       }
 
       am.cleanExit();
@@ -332,7 +333,7 @@ Jogo.prototype.start = function () {
  * @param {Integer} pecas 
  */
 Jogo.prototype.update = function (stack, pecas) {
-  this.nPecas = this.nPecas - (this.rack[stack]-pecas);
+  this.nPecas = this.nPecas - (this.rack[stack] - pecas);
   this.rack[stack] = pecas;
 
   var dados = {
@@ -353,35 +354,35 @@ Jogo.prototype.update = function (stack, pecas) {
   this.SSEcl[0].send(JSON.stringify(dados));
   this.SSEcl[1].send(JSON.stringify(dados));
 
-  
+
   if (this.nPecas === 0) {
     this.cleanExit();
   }
 }
 
-Jogo.prototype.cleanExit = function (){
+Jogo.prototype.cleanExit = function () {
   for (var i in this.users) {
     db.turnNotActive(this.users[i]);
   }
 
- /* for (var i in this.SSEcl) {
-    this.SSEcl[i].close();
-  }*/
+  /* for (var i in this.SSEcl) {
+     this.SSEcl[i].close();
+   }*/
 
   id = this.id;
   delete games[id];
 }
 
 Jogo.prototype.numValid = function (stack, pecas) {
-  if(stack>=0 && stack< this.size && pecas >= 0 && pecas < this.rack[stack]){
+  if (stack >= 0 && stack < this.size && pecas >= 0 && pecas < this.rack[stack]) {
     return true;
   }
-  else{
+  else {
     return false;
   }
 }
 
-Jogo.prototype.isHerTurn = function (user){
+Jogo.prototype.isHerTurn = function (user) {
   return this.users[this.turn] === user ? true : false;
 }
 
