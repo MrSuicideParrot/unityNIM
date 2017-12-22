@@ -134,6 +134,12 @@ function notify(body, response) {
     return;
   }
 
+  if (games[body['game']]===undefined){
+    response.writeHead(400);
+    response.end(JSON.stringify({ "error": "Game not found" }));
+    return;
+  }
+
   /* --------------------- FALTA   VERIFICAR SE SÂO NUMEROS STACK E PIECES  e se o nick pertence a este jogo----------------------*/
 
   if(games[body['game']].isHerTurn(body['nick'])){
@@ -170,7 +176,10 @@ function update(game, nick, request, response) {
     games[game].addListener(new express.SSEClient(request, response));
   }
   else {
-    //Jogo invalido
+    /* ------------------ VERIFICAR SE EXISTE O JOGO ALTERARARRARARA------------------- */
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "Game is undefined" }));
+    return;
   }
 }
 
@@ -259,6 +268,10 @@ function Jogo(id, d, user, group) {
   this.rack = [];
   this.g = group;
 
+  //init
+  this.nPecas = 0;
+  this.users = [];
+  this.SSEcl = [];
 
   for (var i = 1; i <= d; ++i) {
     this.rack.push(i);
@@ -269,9 +282,6 @@ function Jogo(id, d, user, group) {
   this.users.push(user);
 }
 
-Jogo.prototype.users = [];
-Jogo.prototype.SSEcl = [];
-Jogo.prototype.nPecas = 0;
 
 Jogo.prototype.addListener = function (s) {
   this.SSEcl.push(s);
