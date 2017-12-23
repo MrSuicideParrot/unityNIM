@@ -53,7 +53,14 @@ function adddef(loser) {
 
 function loadrankings() {
     fs.readFile(pathDB, function (err, data) {
-        if (err) throw err;
+        if (err){
+            if(err.code === "ENOENT"){
+                 fs.writeFile(pathDB, JSON.stringify({}), function (err) {
+                    if (err) throw err;
+                });
+            }
+            return;
+        }
         try {
             rankingsDB = JSON.parse(data.toString());
         } catch (err) {

@@ -104,6 +104,11 @@ function loadUsers() {
     if (!err) {
       usersDB = JSON.parse(data.toString());
     }
+    else if(err.code === "ENOENT"){
+      fs.writeFile(pathDB, JSON.stringify({}), function (err) {
+        if (err) throw err;
+      });
+    }
   });
 }
 
