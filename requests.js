@@ -1,5 +1,5 @@
-//var serverApi = "http://localhost:8002";
-var serverApi = "http://twserver.alunos.dcc.fc.up.pt:8008";
+var serverApi = "http://localhost:8002";
+//var serverApi = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
 function registerApi(login, password) {
   content ={

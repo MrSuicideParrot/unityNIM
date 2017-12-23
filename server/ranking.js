@@ -4,7 +4,7 @@ var util = require(__dirname + '/myExpress.js');
 
 var pathDB = __dirname + "/rankings.json";
 
-var rankingsDB = {};
+var rankingsDB = { ranking: [] };
 
 function rankings(body, response) {
     try {
@@ -48,14 +48,14 @@ function adddef(loser) {
             return;
         }
     }
-    rankingsDB['ranking'].push({ nick: winner, victories: 0, games: 1 });
+    rankingsDB['ranking'].push({ nick: loser, victories: 0, games: 1 });
 }
 
 function loadrankings() {
     fs.readFile(pathDB, function (err, data) {
-        if (err){
-            if(err.code === "ENOENT"){
-                 fs.writeFile(pathDB, JSON.stringify({}), function (err) {
+        if (err) {
+            if (err.code === "ENOENT") {
+                fs.writeFile(pathDB, JSON.stringify({ ranking: [] }), function (err) {
                     if (err) throw err;
                 });
             }
@@ -64,13 +64,13 @@ function loadrankings() {
         try {
             rankingsDB = JSON.parse(data.toString());
         } catch (err) {
-            rankingsDB = {};
+            rankingsDB = { ranking: [] };
         }
     });
 }
 
 function saverankings() {
-    rankingsDB['rankings'].sort(function (a, b) {
+    rankingsDB['ranking'].sort(function (a, b) {
         return parseInt(b.victories) - parseInt(a.victories);
     });
     fs.writeFile(pathDB, JSON.stringify(rankingsDB), function (err) {
