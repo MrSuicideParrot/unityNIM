@@ -9,8 +9,8 @@ var express = require(__dirname+'/myExpress.js');
 var game = require(__dirname+'/game.js');
 
 users.loadUsers();
-game.connect(users);
 ranking.loadrankings();
+game.connect(users, ranking);
 
 
 http.createServer(
