@@ -25,14 +25,9 @@ function verify(username, password) {
   }
 }
 
-function gensalt(){
-  var salt = "";
-  var pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 32; i++)
-    salt += pool.charAt(Math.floor(Math.random() * pool.length));
-
-  return salt;
+function gensalt(length){
+  var salt = Buffer.alloc(length/2);
+  return crypto.randomFillSync(salt).toString('hex');
 }
 
 function register(body, response) {
@@ -73,7 +68,7 @@ function register(body, response) {
   }
   else {
     //Criar utilizador
-    salt = gensalt();
+    salt = gensalt(32);
     usersDB[body['nick']] = [crypto.createHash('sha512').update(body['pass']+salt).digest('hex'),salt];
     response.writeHead(200);
     response.end(JSON.stringify({}));
