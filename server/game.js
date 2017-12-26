@@ -98,7 +98,13 @@ function retrieveGame(group, size, user) {
 }
 
 function notify(body, response) {
-  body = JSON.parse(body);
+  try {
+    body = JSON.parse(body);
+  } catch (err) {
+    response.writeHead(400);
+    response.end(JSON.stringify({ "error": "Request body is malformed" }));
+    return;
+  }
 
   if (!('nick' in body)) {
     response.writeHead(401);
@@ -185,7 +191,13 @@ function update(game, nick, request, response) {
 }
 
 function leave(body, response) {
-  body = JSON.parse(body);
+  try {
+    body = JSON.parse(body);
+  } catch (err) {
+    response.writeHead(400);
+    response.end(JSON.stringify({ "error": "Request body is malformed" }));
+    return;
+  }
 
   if (!('nick' in body)) {
     response.writeHead(401);
