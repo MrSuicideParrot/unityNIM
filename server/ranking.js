@@ -21,7 +21,12 @@ function rankings(body, response) {
     }
 
     response.writeHead(200);
-    response.end(JSON.stringify(rankingsDB[body['size']]));
+    if (rankingsDB[body['size']]) {
+        response.end(JSON.stringify(rankingsDB[body['size']]));
+    }
+    else {
+        response.end(JSON.stringify({}));
+    }
 }
 
 function rankupdate(winner, loser, size) {
