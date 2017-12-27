@@ -239,7 +239,7 @@ function leave(body, response) {
   for (var i in am.users) {
     if (am.users[i] !== body['nick']) {
       dados["winner"] = am.users[i];
-      rak.rankupdate(dados["winner"], body['nick']);
+      rak.rankupdate(dados["winner"], body['nick'],this.size);
       break;
     }
   }
@@ -360,7 +360,7 @@ Jogo.prototype.update = function (stack, pecas) {
 
   if (this.nPecas === 0) {
     dados["winner"] = this.users[this.turn];
-    rak.rankupdate(dados["winner"],this.users[this.turn == 0 ? 1 : 0])
+    rak.rankupdate(dados["winner"],this.users[this.turn == 0 ? 1 : 0],this.size)
   }
   else {
     /* ---------------------------------------- AVALIAR SE MANTEM SE POR ESTA ORDEM --------------------------*/
