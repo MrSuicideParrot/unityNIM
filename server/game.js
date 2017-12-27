@@ -156,6 +156,8 @@ function notify(body, response) {
 
     if (!games[body['game']].numValid(stack, pieces)) {
       /*----------------ERRRRRORRRRRR------------------------*/
+      response.writeHead(401); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
+      response.end(JSON.stringify({ "error": "Invalid move" }));
       return;
     }
 
