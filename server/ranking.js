@@ -4,7 +4,7 @@ var util = require(__dirname + '/myExpress.js');
 
 var pathDB = __dirname + "/rankings.json";
 
-var rankingsDB = { ranking: [] };
+var rankingsDB = {};
 
 function rankings(body, response) {
     try {
@@ -24,38 +24,38 @@ function rankings(body, response) {
     response.end(JSON.stringify(rankingsDB));
 }
 
-function rankupdate(winner, loser) {
-    addwin(winner);
-    adddef(loser);
+function rankupdate(winner, loser, size) {
+    addwin(winner, size);
+    adddef(loser, size);
     saverankings();
 }
 
-function addwin(winner) {
-    for (i in rankingsDB['ranking']) {
-        if (rankingsDB['ranking'][i]['nick'] == winner) {
-            rankingsDB['ranking'][i]['victories']++;
-            rankingsDB['ranking'][i]['games']++;
+function addwin(winner, size) {
+    for (i in rankingsDB[size]['ranking']) {
+        if (rankingsDB[size]['ranking'][i]['nick'] == winner) {
+            rankingsDB[size]['ranking'][i]['victories']++;
+            rankingsDB[size]['ranking'][i]['games']++;
             return;
         }
     }
-    rankingsDB['ranking'].push({ nick: winner, victories: 1, games: 1 });
+    rankingsDB[size]['ranking'].push({ nick: winner, victories: 1, games: 1 });
 }
 
-function adddef(loser) {
-    for (i in rankingsDB['ranking']) {
-        if (rankingsDB['ranking'][i]['nick'] == loser) {
-            rankingsDB['ranking'][i]['games']++;
+function adddef(loser, size) {
+    for (i in rankingsDB[size]['ranking']) {
+        if (rankingsDB[size]['ranking'][i]['nick'] == loser) {
+            rankingsDB[size]['ranking'][i]['games']++;
             return;
         }
     }
-    rankingsDB['ranking'].push({ nick: loser, victories: 0, games: 1 });
+    rankingsDB[size]['ranking'].push({ nick: loser, victories: 0, games: 1 });
 }
 
 function loadrankings() {
     fs.readFile(pathDB, function (err, data) {
         if (err) {
             if (err.code === "ENOENT") {
-                fs.writeFile(pathDB, JSON.stringify({ ranking: [] }), function (err) {
+                fs.writeFile(pathDB, JSON.stringify({}), function (err) {
                     if (err) throw err;
                 });
             }
@@ -64,15 +64,17 @@ function loadrankings() {
         try {
             rankingsDB = JSON.parse(data.toString());
         } catch (err) {
-            rankingsDB = { ranking: [] };
+            rankingsDB = {};
         }
     });
 }
 
 function saverankings() {
-    rankingsDB['ranking'].sort(function (a, b) {
-        return parseInt(b.victories) - parseInt(a.victories);
-    });
+    for (i in rankings[size]) {
+        i['ranking'].sort(function (a, b) {
+            return parseInt(b.victories) - parseInt(a.victories);
+        });
+    }
     fs.writeFile(pathDB, JSON.stringify(rankingsDB), function (err) {
         if (err) throw err;
     });
