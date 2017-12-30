@@ -148,13 +148,12 @@ function notify(body, response) {
     return;
   }
 
-  /* --------------------- FALTA   VERIFICAR SE SÂO NUMEROS STACK E PIECES  e se o nick pertence a este jogo----------------------*/
-
+  /* Verificação de turn */
   if (games[body['game']].isHerTurn(body['nick'])) {
     stack = body['stack'] * 1;
     pieces = body['pieces'] * 1;
 
-    if (!games[body['game']].numValid(stack, pieces)) {
+    if (!games[body['game']].numValid(stack, pieces)) {   //verificar se a jogada e valida
       /*----------------ERRRRRORRRRRR------------------------*/
       response.writeHead(401); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
       response.end(JSON.stringify({ "error": "Invalid move" }));
@@ -180,10 +179,21 @@ function update(game, nick, request, response) {
     return;
   }
 
-  /* -------------- VERIFICAR SE ESTE USER PERTENCE A ESTE JOGO -------------------------*/
+ if (game in games) {
 
-  if (game in games) {
-    games[game].addListener(new express.SSEClient(request, response));
+  var ok = false;
+
+  for(var i in games[game].users){
+    if (nick === games[game].users[i])
+      ok = true;
+  }
+  if(!ok){
+    response.writeHead(401);
+    response.end(JSON.stringify({ "error": "Invalid user" }));
+    return;
+   }
+
+   games[game].addListener(new express.SSEClient(request, response));
   }
   else {
     response.writeHead(400);
@@ -323,18 +333,6 @@ Jogo.prototype.addListener = function (s) {
   if (this.SSEcl.length === 2) {
     this.start();
     clearTimeout(this.timeout);
-
-    am = this;
-    //timeout de 2 minutos para um jogo senão é eliminado de forma automatica
-    this.timeout = setTimeout(function () {
-
-      for (var i in am.SSEcl) { // Fecha os SSE correntes que existirem e envia o vencedor
-        am.SSEcl[i].send(JSON.stringify({ "winner": null }));
-      }
-
-      am.cleanExit();
-    }, 120000);
-
   }
 }
 
