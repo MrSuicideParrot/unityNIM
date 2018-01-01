@@ -333,7 +333,17 @@ Jogo.prototype.addListener = function (s) {
   if (this.SSEcl.length === 2) {
     this.start();
     clearTimeout(this.timeout);
-  }
+
+    //Inicia o timeout do jogo de dois minutos
+    am = this;
+
+    this.timeout = setTimeout(function () {
+        for (var i in am.SSEcl) { // Fecha os SSE correntes que existirem e envia o vencedor
+          am.SSEcl[i].send(JSON.stringify({ "winner": null }));
+        }
+        am.cleanExit();
+      }, 120000);
+    }
 }
 
 Jogo.prototype.start = function () {
@@ -357,6 +367,7 @@ Jogo.prototype.update = function (stack, pecas) {
   }
 
   if (this.nPecas === 0) {
+    clearTimeout(this.timeout);
     dados["winner"] = this.users[this.turn];
     rak.rankupdate(dados["winner"],this.users[this.turn == 0 ? 1 : 0],this.size)
   }
