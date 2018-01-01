@@ -26,8 +26,7 @@ function verify(username, password) {
 }
 
 function gensalt(length){
-  var salt = Buffer.alloc(length/2);
-  return crypto.randomFillSync(salt).toString('hex');
+ return crypto.randomBytes(length/2).toString('hex');
 }
 
 function register(body, response) {
