@@ -125,19 +125,19 @@ function notify(body, response) {
   }
 
   if (!('game' in body)) {
-    response.writeHead(401);
+    response.writeHead(400);
     response.end(JSON.stringify({ "error": "Game is undefined" }));
     return;
   }
 
   if (!('stack' in body)) {
-    response.writeHead(401);
+    response.writeHead(400);
     response.end(JSON.stringify({ "error": "Stack is undefined" }));
     return;
   }
 
   if (!('pieces' in body)) {
-    response.writeHead(401);
+    response.writeHead(400);
     response.end(JSON.stringify({ "error": "Pieces is undefined" }));
     return;
   }
@@ -154,8 +154,7 @@ function notify(body, response) {
     pieces = body['pieces'] * 1;
 
     if (!games[body['game']].numValid(stack, pieces)) {   //verificar se a jogada e valida
-      /*----------------ERRRRRORRRRRR------------------------*/
-      response.writeHead(401); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
+      response.writeHead(401);
       response.end(JSON.stringify({ "error": "Invalid move" }));
       return;
     }
@@ -163,7 +162,7 @@ function notify(body, response) {
     games[body['game']].update(stack, pieces);
   }
   else {
-    response.writeHead(401); /* ------------- NAO ME LEMBRO DO CODIGO DE ERRO --------------------*/
+    response.writeHead(401); 
     response.end(JSON.stringify({ "error": "Not your turn to play" }));
     return;
   }
@@ -183,7 +182,7 @@ function update(game, nick, request, response) {
 
   var ok = false;
 
-  for(var i in games[game].users){
+  for(var i in games[game].users){ //Verificar se o utilizador pertence a este jogo
     if (nick === games[game].users[i])
       ok = true;
   }
@@ -230,7 +229,7 @@ function leave(body, response) {
   }
 
   if (!('game' in body)) {
-    response.writeHead(401);
+    response.writeHead(400);
     response.end(JSON.stringify({ "error": "Game is undefined" }));
     return;
   }
@@ -327,7 +326,6 @@ function Jogo(id, d, user, group) {
 
 }
 
-//Tem de se prevenir mais que dois??
 Jogo.prototype.addListener = function (s) {
   this.SSEcl.push(s);
   if (this.SSEcl.length === 2) {
@@ -372,7 +370,6 @@ Jogo.prototype.update = function (stack, pecas) {
     rak.rankupdate(dados["winner"],this.users[this.turn == 0 ? 1 : 0],this.size)
   }
   else {
-    /* ---------------------------------------- AVALIAR SE MANTEM SE POR ESTA ORDEM --------------------------*/
     this.turn = this.turn == 0 ? 1 : 0;
     dados["turn"] = this.users[this.turn];
   }
@@ -390,10 +387,6 @@ Jogo.prototype.cleanExit = function () {
   for (var i in this.users) {
     db.turnNotActive(this.users[i]);
   }
-
-  /* for (var i in this.SSEcl) {
-     this.SSEcl[i].close();
-   }*/
 
   id = this.id;
   delete games[id];
