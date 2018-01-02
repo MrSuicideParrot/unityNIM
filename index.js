@@ -3,10 +3,10 @@ var port = 8002;
 var http = require('http');
 var url = require('url');
 
-var users = require(__dirname + '/users.js');
-var ranking = require(__dirname + '/ranking.js');
-var express = require(__dirname + '/myExpress.js');
-var game = require(__dirname + '/game.js');
+var users = require(__dirname + '/server/users.js');
+var ranking = require(__dirname + '/server/ranking.js');
+var express = require(__dirname + '/server/myExpress.js');
+var game = require(__dirname + '/server/game.js');
 
 users.loadUsers();
 ranking.loadrankings();
