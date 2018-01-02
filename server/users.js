@@ -1,32 +1,24 @@
 var fs = require('fs');
 var crypto = require('crypto');
 
-var util = require(__dirname+'/myExpress.js');
+var util = require(__dirname + '/myExpress.js');
 
-var pathDB = __dirname+"/users.json"
+var pathDB = __dirname + "/users.json"
 
 var usersDB = {};
 
 var active = [];
 
-function isValidUser(username){
-  if (username in usersDB)
-    return true;
-  else
-    return false;
+function isValidUser(username) {
+  return (username in usersDB);
 }
 
 function verify(username, password) {
-  if (usersDB[username][0] === crypto.createHash('sha512').update(password+usersDB[username][1]).digest('hex')) {
-    return true;
-  }
-  else {
-    return false;
-  }
+  return (usersDB[username][0] === crypto.createHash('sha512').update(password + usersDB[username][1]).digest('hex'));
 }
 
-function gensalt(length){
- return crypto.randomBytes(length/2).toString('hex');
+function gensalt(length) {
+  return crypto.randomBytes(length / 2).toString('hex');
 }
 
 function register(body, response) {
@@ -53,7 +45,7 @@ function register(body, response) {
 
   if (body['nick'] in usersDB) {
     //Utilizador já existe necessário verificar a pass
-    let hashPass = crypto.createHash('sha512').update(body['pass']+usersDB[body['nick']][1]).digest('hex');
+    let hashPass = crypto.createHash('sha512').update(body['pass'] + usersDB[body['nick']][1]).digest('hex');
 
     if (usersDB[body['nick']][0] === hashPass) {
       response.writeHead(200);
@@ -68,7 +60,7 @@ function register(body, response) {
   else {
     //Criar utilizador
     salt = gensalt(32);
-    usersDB[body['nick']] = [crypto.createHash('sha512').update(body['pass']+salt).digest('hex'),salt];
+    usersDB[body['nick']] = [crypto.createHash('sha512').update(body['pass'] + salt).digest('hex'), salt];
     response.writeHead(200);
     response.end(JSON.stringify({}));
     saveUsers();
@@ -76,20 +68,20 @@ function register(body, response) {
 }
 
 function turnActive(user) {
-  for (var i in active){
-    if(active[i] === user)
+  for (var i in active) {
+    if (active[i] === user)
       return false;
   }
- 
-    active.push(user);
-    return true;
-  
+
+  active.push(user);
+  return true;
+
 }
 
 function turnNotActive(user) {
   for (var i in active) {
     if (active[i] === user)
-      active.splice(i,1);
+      active.splice(i, 1);
   }
 }
 
@@ -98,7 +90,7 @@ function loadUsers() {
     if (!err) {
       usersDB = JSON.parse(data.toString());
     }
-    else if(err.code === "ENOENT"){
+    else if (err.code === "ENOENT") {
       fs.writeFile(pathDB, JSON.stringify({}), function (err) {
         if (err) throw err;
       });
