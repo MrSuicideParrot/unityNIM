@@ -35,10 +35,6 @@ http.createServer(
           express.body(request, response, users.register);
           break;
 
-        /* case "/update":
-           game.update(parsedUrl.query.game, parsedUrl.query.nick, request, response);
-           break;*/
-
         case "/notify":
           express.body(request, response, game.notify);
           break;
